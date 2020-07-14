@@ -30,23 +30,26 @@ md_indicator_combine <- function(cases, deaths, prob_deaths, join_key, uk_text =
 		mutate(variable = recode(variable, "cases" = "Confirmed cases", "deaths" = "Confirmed deaths", "prob_deaths" = "Probable deaths"))
 }
 
-
+md_fips <- read_csv("md_fips.csv")
 
 md_counties_cases <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_CasesByCounty/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("3/15/2020", "%m/%d/%y")) %>%
-	select(date, county = name, cases = value)
+	select(date, county = name, cases = value) %>%
+	inner_join(md_fips, by = "county")
 
 md_counties_deaths <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_ConfirmedDeathsByCounty/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("4/3/2020", "%m/%d/%y")) %>%
-	select(date, county = name, deaths = value)
+	select(date, county = name, deaths = value) %>%
+	inner_join(md_fips, by = "county")
 
 md_counties_prob_deaths <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_ProbableDeathsByCounty/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("4/13/2020", "%m/%d/%y")) %>%
-	select(date, county = name, prob_deaths = value)
+	select(date, county = name, prob_deaths = value) %>%
+	inner_join(md_fips, by = "county")
 
-md_counties_today <- inner_join(filter(md_counties_cases, date == max(date)), filter(md_counties_deaths, date == max(date)), by = c("county", "date")) %>%
-	inner_join(filter(md_counties_prob_deaths, date == max(date)), by = c("county", "date")) %>%
-	select(-date)
+md_counties_today <- inner_join(filter(md_counties_cases, date == max(date)), filter(md_counties_deaths, date == max(date)), by = c("county", "date", "fips")) %>%
+	inner_join(filter(md_counties_prob_deaths, date == max(date)), by = c("county", "date", "fips")) %>%
+	select(county, fips, cases, deaths, prob_deaths)
 
 md_zips <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_MASTER_ZIP_CODE_CASES/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("2020-04-11"), "zip_code") %>%
@@ -133,4 +136,7 @@ md_statewide_deaths <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcg
 
 md_population_tested_county <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_TotalPopulationTestedByCounty/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("2020-06-15"), "county") %>%
-	mutate(date = as.Date(str_sub(gsub("[^0-9_]", "", name), start = 2), "%m_%d_%y"))
+	mutate(date = as.Date(str_sub(gsub("[^0-9_]", "", name), start = 2), "%m_%d_%y"),
+				 county = gsub(" ", "_", gsub("[.']", "", tolower(county)))) %>%  # woah... I actually know how to use gsub??
+	select(-name) %>%
+	inner_join(md_fips, by = "county")
