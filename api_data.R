@@ -35,25 +35,37 @@ md_fips <- read_csv("md_fips.csv")
 md_counties_cases <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_CasesByCounty/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("3/15/2020", "%m/%d/%y")) %>%
 	select(date, county = name, cases = value) %>%
-	inner_join(md_fips, by = "county")
+	inner_join(md_fips, by = "county") %>%
+	group_by(county) %>%
+	mutate(new_cases = cases - lag(cases)) %>%
+	ungroup()
 
 md_counties_deaths <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_ConfirmedDeathsByCounty/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("4/3/2020", "%m/%d/%y")) %>%
 	select(date, county = name, deaths = value) %>%
-	inner_join(md_fips, by = "county")
+	inner_join(md_fips, by = "county") %>%
+	group_by(county) %>%
+	mutate(new_deaths = deaths - lag(deaths)) %>%
+	ungroup()
 
 md_counties_prob_deaths <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_ProbableDeathsByCounty/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("4/13/2020", "%m/%d/%y")) %>%
 	select(date, county = name, prob_deaths = value) %>%
-	inner_join(md_fips, by = "county")
+	inner_join(md_fips, by = "county") %>%
+	group_by(county) %>%
+	mutate(new_prob_deaths = prob_deaths - lag(prob_deaths)) %>%
+	ungroup()
 
 md_counties_today <- inner_join(filter(md_counties_cases, date == max(date)), filter(md_counties_deaths, date == max(date)), by = c("county", "date", "fips")) %>%
 	inner_join(filter(md_counties_prob_deaths, date == max(date)), by = c("county", "date", "fips")) %>%
-	select(county, fips, cases, deaths, prob_deaths)
+	select(county, fips, cases, deaths, prob_deaths, new_cases, new_deaths, new_prob_deaths)
 
 md_zips <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_MASTER_ZIP_CODE_CASES/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("2020-04-11"), "zip_code") %>%
-	select(date, zip = zip_code, cases = value)
+	select(date, zip = zip_code, cases = value) %>%
+	group_by(zip) %>%
+	mutate(new_cases = cases - lag(cases)) %>%
+	ungroup()
 
 md_age_cases <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_CasesByAgeDistribution/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("3/29/2020", "%m/%d/%y")) %>%
@@ -129,10 +141,16 @@ md_ever_hospit <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/re
 	mutate(date = seq.Date(as.Date("2020-03-13"), as.Date("2020-03-13") + n() - 1, by = "day"))
 
 md_statewide_cases <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_TotalCasesStatewide/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
-	mutate(date = seq.Date(as.Date("2020-03-04"), as.Date("2020-03-04") + n() - 1, by = "day"))
+	select(date, cases = count) %>%
+	mutate(date = seq.Date(as.Date("2020-03-04"), as.Date("2020-03-04") + n() - 1, by = "day"),
+				 new_cases = cases - lag(cases))
 
 md_statewide_deaths <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_TotalConfirmedDeathsStatewide/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
-	mutate(date = seq.Date(as.Date("2020-03-18"), as.Date("2020-03-18") + n() - 1, by = "day"))
+	select(date, deaths = count) %>%
+	mutate(date = seq.Date(as.Date("2020-03-18"), as.Date("2020-03-18") + n() - 1, by = "day"),
+				 new_deaths = deaths - lag(deaths))
+
+md_statewide <- inner_join(md_statewide_cases, md_statewide_deaths, by = "date")
 
 md_population_tested_county <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_TotalPopulationTestedByCounty/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("2020-06-15"), "county") %>%
