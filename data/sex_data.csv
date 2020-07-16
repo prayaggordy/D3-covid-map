@@ -1,7 +1,3 @@
-sex,variable,value,tt
-Male,Confirmed cases,35936,Confirmed cases for males: 35936
-Male,Confirmed deaths,1632,Confirmed deaths for males: 1632
-Male,Probable deaths,63,Probable deaths for males: 63
-Female,Confirmed cases,39080,Confirmed cases for females: 39080
-Female,Confirmed deaths,1577,Confirmed deaths for females: 1577
-Female,Probable deaths,69,Probable deaths for females: 69
+sex,Confirmed cases,Confirmed deaths,Probable deaths
+Male,35936,1632,63
+Female,39080,1577,69
