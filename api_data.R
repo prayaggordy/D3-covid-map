@@ -121,8 +121,7 @@ md_hospit <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/se
 	setNames(c("date", "Acute", "ICU", "Total")) %>%
 	mutate(date = seq.Date(as.Date("2020-03-26"), as.Date("2020-03-26") + n() - 1, by = "day")) %>%
 	filter(!is.na(Acute)) %>%
-	pivot_longer(cols = -date) %>%
-	mutate(tt = paste0(format(date, "%b %d"), "\n", tools::toTitleCase(paste(name, "beds: ")), value))
+	pivot_longer(cols = -date)
 
 hospit_data <- md_hospit
 
