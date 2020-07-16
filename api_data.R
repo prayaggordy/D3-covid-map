@@ -123,7 +123,8 @@ md_hospit <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/se
 	filter(!is.na(Acute)) %>%
 	pivot_longer(cols = -date)
 
-hospit_data <- md_hospit
+hospit_data <- md_hospit %>%
+	pivot_wider(names_from = date, values_from = value)
 
 md_negatives <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_NumberOfPersonsTestedNegative/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	filter(!is.na(negative_tests)) %>%
