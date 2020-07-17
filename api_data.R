@@ -37,7 +37,7 @@ md_counties_cases <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis
 	select(date, county = name, cases = value) %>%
 	inner_join(md_fips, by = "county") %>%
 	group_by(county) %>%
-	mutate(new_cases = cases - lag(cases)) %>%
+	mutate(new_cases = pmax(cases - lag(cases), 0)) %>%
 	ungroup()
 
 md_counties_deaths <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_ConfirmedDeathsByCounty/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
@@ -45,7 +45,7 @@ md_counties_deaths <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgi
 	select(date, county = name, deaths = value) %>%
 	inner_join(md_fips, by = "county") %>%
 	group_by(county) %>%
-	mutate(new_deaths = deaths - lag(deaths)) %>%
+	mutate(new_deaths = pmax(deaths - lag(deaths), 0)) %>%
 	ungroup()
 
 md_counties_prob_deaths <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_ProbableDeathsByCounty/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
@@ -53,7 +53,7 @@ md_counties_prob_deaths <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/
 	select(date, county = name, prob_deaths = value) %>%
 	inner_join(md_fips, by = "county") %>%
 	group_by(county) %>%
-	mutate(new_prob_deaths = prob_deaths - lag(prob_deaths)) %>%
+	mutate(new_prob_deaths = pmax(prob_deaths - lag(prob_deaths), 0)) %>%
 	ungroup()
 
 md_counties_today <- inner_join(filter(md_counties_cases, date == max(date)), filter(md_counties_deaths, date == max(date)), by = c("county", "date", "fips")) %>%
@@ -64,7 +64,7 @@ md_zips <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/serv
 	md_api_pivot(as.Date("2020-04-11"), "zip_code") %>%
 	select(date, zip = zip_code, cases = value) %>%
 	group_by(zip) %>%
-	mutate(new_cases = cases - lag(cases)) %>%
+	mutate(new_cases = pmax(cases - lag(cases), 0)) %>%
 	ungroup()
 
 md_age_cases <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_CasesByAgeDistribution/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
