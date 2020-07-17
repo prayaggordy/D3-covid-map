@@ -80,9 +80,9 @@ md_age_prob_deaths <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgi
 	select(date, age_range = name, prob_deaths = value)
 
 age_data <- md_indicator_combine(md_age_cases, md_age_deaths, md_age_prob_deaths, "age_range") %>%
-	mutate(age = str_replace_all(str_sub(age_range, 5), c("_to_" = "-", "plus" = "+")),
-				 tt = paste0(variable, " for ages ", age, ": ", value)) %>%
-	select(age, variable, value, tt)
+	mutate(age = str_replace_all(str_sub(age_range, 5), c("_to_" = "-", "plus" = "+"))) %>%
+	select(age, variable, value) %>%
+	pivot_wider(names_from = variable, values_from = value)
 
 md_sex_cases <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_CasesByGenderDistribution/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("3/12/2020", "%m/%d/%y")) %>%
@@ -97,9 +97,9 @@ md_sex_prob_deaths <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgi
 	select(date, sex = name, prob_deaths = value)
 
 sex_data <- md_indicator_combine(md_sex_cases, md_sex_deaths, md_sex_prob_deaths, "sex") %>%
-	mutate(sex = tools::toTitleCase(sex),
-				 tt = paste0(variable, " for ", tolower(sex), "s: ", value)) %>%
-	select(sex, variable, value, tt)
+	mutate(sex = tools::toTitleCase(sex)) %>%
+	select(sex, variable, value) %>%
+	pivot_wider(names_from = variable, values_from = value)
 
 md_race_cases <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_CasesByRaceAndEthnicityDistribution/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("4/6/2020", "%m/%d/%y"), na_to_zero = F) %>%
@@ -114,17 +114,17 @@ md_race_prob_deaths <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcg
 	select(date, race = name, prob_deaths = value)
 
 race_data <- md_indicator_combine(md_race_cases, md_race_deaths, md_race_prob_deaths, "race", uk_text = "not_available") %>%
-	mutate(race = recode(race, "african_american" = "Black", "asian" = "Asian", "white" = "White", "hispanic" = "Hispanic", "other" = "Other"),
-				 tt = paste0(variable, " for ", race, " people: ", value))
+	mutate(race = recode(race, "african_american" = "Black", "asian" = "Asian", "white" = "White", "hispanic" = "Hispanic", "other" = "Other")) %>%
+	pivot_wider(names_from = variable, values_from = value)
 
 md_hospit <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_TotalCurrentlyHospitalizedAcuteAndICU/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	setNames(c("date", "Acute", "ICU", "Total")) %>%
 	mutate(date = seq.Date(as.Date("2020-03-26"), as.Date("2020-03-26") + n() - 1, by = "day")) %>%
 	filter(!is.na(Acute)) %>%
-	pivot_longer(cols = -date) %>%
-	mutate(tt = paste0(format(date, "%b %d"), "\n", tools::toTitleCase(paste(name, "beds: ")), value))
+	pivot_longer(cols = -date)
 
-hospit_data <- md_hospit
+hospit_data <- md_hospit %>%
+	pivot_wider(names_from = date, values_from = value)
 
 md_negatives <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_NumberOfPersonsTestedNegative/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	filter(!is.na(negative_tests)) %>%

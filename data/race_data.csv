@@ -1,16 +1,6 @@
-race,variable,value,tt
-Black,Confirmed cases,21525,Confirmed cases for Black people: 21525
-Black,Confirmed deaths,1301,Confirmed deaths for Black people: 1301
-Black,Probable deaths,49,Probable deaths for Black people: 49
-White,Confirmed cases,15161,Confirmed cases for White people: 15161
-White,Confirmed deaths,1357,Confirmed deaths for White people: 1357
-White,Probable deaths,67,Probable deaths for White people: 67
-Hispanic,Confirmed cases,19701,Confirmed cases for Hispanic people: 19701
-Hispanic,Confirmed deaths,366,Confirmed deaths for Hispanic people: 366
-Hispanic,Probable deaths,8,Probable deaths for Hispanic people: 8
-Asian,Confirmed cases,1446,Confirmed cases for Asian people: 1446
-Asian,Confirmed deaths,124,Confirmed deaths for Asian people: 124
-Asian,Probable deaths,6,Probable deaths for Asian people: 6
-Other,Confirmed cases,3551,Confirmed cases for Other people: 3551
-Other,Confirmed deaths,35,Confirmed deaths for Other people: 35
-Other,Probable deaths,0,Probable deaths for Other people: 0
+race,Confirmed cases,Confirmed deaths,Probable deaths
+Black,22000,1308,49
+White,15599,1365,68
+Hispanic,19937,370,8
+Asian,1475,124,6
+Other,3608,36,0
