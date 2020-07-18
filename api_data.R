@@ -67,6 +67,8 @@ md_zips <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/serv
 	mutate(new_cases = pmax(cases - lag(cases), 0)) %>%
 	ungroup()
 
+md_zips_today <- filter(md_zips, date == max(date))
+
 md_age_cases <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_CasesByAgeDistribution/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("3/29/2020", "%m/%d/%y")) %>%
 	select(date, age_range = name, cases = value)
