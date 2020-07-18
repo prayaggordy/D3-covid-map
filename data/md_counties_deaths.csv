@@ -2611,7 +2611,7 @@ date,county,deaths,fips,new_deaths
 2020-07-16,dorchester,5,24019,0
 2020-07-16,frederick,113,24021,0
 2020-07-16,garrett,0,24023,0
-2020-07-16,harford,63,24025,0
+2020-07-16,harford,63,24025,-1
 2020-07-16,howard,91,24027,0
 2020-07-16,kent,22,24029,0
 2020-07-16,montgomery,725,24031,0
