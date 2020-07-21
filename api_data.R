@@ -2,6 +2,9 @@ library(tidyverse)
 library(jsonify)
 library(janitor)
 
+pop_county <- read_csv("population/county.csv")
+pop_zip <- read_csv("population/zip.csv")
+
 md_api <- function(api_url) {
 	suppressWarnings(from_json(api_url)[["features"]]$attributes) %>%
 		clean_names() %>%
@@ -161,7 +164,9 @@ md_population_tested_county <- md_api("https://services.arcgis.com/njFNhDsUCentV
 	select(-name) %>%
 	inner_join(md_fips, by = "county")
 
-md_population_tested_county_today <- filter(md_population_tested_county, date == max(date))
+md_population_tested_county_today <- filter(md_population_tested_county, date == max(date)) %>%
+	inner_join(pop_county) %>%
+	mutate(tests_per_100k = value/population*100000)
 
 save_dfs <- function(df)
 	write_csv(get(df), paste0("data/", df, ".csv"))
