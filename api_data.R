@@ -178,12 +178,21 @@ counties_proper_names <- data.frame(County = c("Allegany", "Anne Arundel", "Balt
 
 md_counties_today_table <- inner_join(md_counties_today, counties_proper_names, by = "county") %>%
 	inner_join(md_population_tested_county_today) %>%
-	mutate(Deaths = deaths + prob_deaths) %>%
-	select(County, Cases = cases, Deaths, Tests = value)
+	mutate(Deaths = deaths + prob_deaths,
+				 deltas = NA) %>%
+	select(County, Cases = cases, Deaths, Tests = value, deltas)
+
+md_counties_trend_table <- inner_join(md_counties_cases, md_counties_deaths, by = c("county", "date", "fips")) %>%
+	inner_join(md_counties_prob_deaths, by = c("county", "date", "fips")) %>%
+	select(county, date, new_cases) %>%
+	filter(date >= max(date) - 14) %>%
+	inner_join(counties_proper_names, by = "county") %>%
+	select(County, date, new_cases) %>%
+	pivot_wider(names_from = date, values_from = new_cases)
 
 save_dfs <- function(df)
 	write_csv(get(df), paste0("data/", df, ".csv"))
 
-dfs <- c("md_counties_cases", "md_counties_deaths", "md_counties_prob_deaths", "md_counties_today", "md_zips", "md_zips_today", "age_data", "sex_data", "race_data", "hospit_data", "md_negatives", "md_isolation", "md_volume", "md_ever_hospit", "md_statewide", "md_population_tested_county", "md_population_tested_county_today", "md_counties_today_table")
+dfs <- c("md_counties_cases", "md_counties_deaths", "md_counties_prob_deaths", "md_counties_today", "md_zips", "md_zips_today", "age_data", "sex_data", "race_data", "hospit_data", "md_negatives", "md_isolation", "md_volume", "md_ever_hospit", "md_statewide", "md_population_tested_county", "md_population_tested_county_today", "md_counties_today_table", "md_counties_trend_table")
 
 lapply(dfs, save_dfs)
