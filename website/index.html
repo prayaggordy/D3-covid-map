@@ -32,6 +32,13 @@
 		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
 	</script>
 	<script type="module">
+		// county testing map
+		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+		import define from "https://api.observablehq.com/@adamchzn/md-counties-testing-map.js?v=3";
+		const inspect = Inspector.into("#countyTesting");
+		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
+	<script type="module">
 		// hospitalizations
 		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
 		import define from "https://api.observablehq.com/@adamchzn/hospitalizations.js?v=3";
@@ -86,14 +93,14 @@
 	<div class="row">
 		<div class="col-md-5 header">
 			<div class="page-header">
-				<h1>
+				<p>
 					Maryland Coronavirus Dashboard
-				</h1>
+				</p>
 			</div>
 		</div>
-		<div class="col-md-7">
+		<div class="col-md-7 subheader">
 			<p>
-				This is where instructions will go
+				This is where instructions will go. Hopefully these instructions will allow the user to understand why we decided to include what we did.
 			</p>
 		</div>
 	</div>
@@ -112,11 +119,13 @@
 							<div class="toggleMap" id="countyTotalCases"></div>
 							<div class="toggleMap" id="zipNewCases"> </div>
 							<div class="toggleMap" id="zipTotalCases"></div>
-							<div class="instructions"><p>Use the scroll wheel to zoom. Snap to a county or zip code by clicking. Click outside map to reset. </p></div>
+							<div class="toggleMap" id="countyTesting"></div>
+							<div class="instructions"><p>Use the scroll wheel to zoom. Click to snap to county or zip code. Click outside map to reset. </p></div>
 							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyNewCases')"> New cases by county</button>
 							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyTotalCases')"> Total cases by county</button>
 							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('zipNewCases')"> New cases by zip</button>
 							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('zipTotalCases')"> Total cases by zip</button>
+							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyTesting')"> Testing by county</button>
                         </div>
 					</div>
 					<div class="row">
