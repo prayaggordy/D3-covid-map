@@ -67,6 +67,20 @@
         (new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
 	</script>
 	<script type="module">
+		// breakdown by race
+		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+		import define from "https://api.observablehq.com/@adamchzn/grouped-bar-chart.js?v=3";
+		const inspect = Inspector.into("#raceBreakdown");
+		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
+	<script type="module">
+		// breakdown by age
+		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+		import define from "https://api.observablehq.com/@adamchzn/by-age.js?v=3";
+		const inspect = Inspector.into("#ageBreakdown");
+		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
+	<script type="module">
 		// breakdown by gender
 		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
 		import define from "https://api.observablehq.com/@adamchzn/by-gender.js?v=3";
@@ -140,7 +154,12 @@
 							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('positivityRate')"> Positivity rate</button>
 						</div>
 						<div class="col-md-5 barChartContainer">
-							<div id="genderBreakdown"></div>
+							<div class="toggleBar toggleBarVisible" id="raceBreakdown"></div>
+							<div class="toggleBar" id="ageBreakdown"></div>
+							<div class="toggleBar" id="genderBreakdown"></div>
+							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleBar('raceBreakdown')"> Cases by race</button>
+							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleBar('ageBreakdown')"> Cases by age</button>
+							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleBar('genderBreakdown')"> Cases by sex</button>
 						</div>
 					</div>
 				</div>

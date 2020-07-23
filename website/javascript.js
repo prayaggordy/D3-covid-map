@@ -14,3 +14,6 @@ function toggleMap(id) {
 function toggleLine(id) {
     toggle(id, "toggleLine", "toggleLineVisible")
 }
+function toggleBar(id) {
+    toggle(id, "toggleBar", "toggleBarVisible")
+}

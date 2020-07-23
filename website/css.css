@@ -68,6 +68,12 @@
 .toggleLine.toggleLineVisible{
   display: block;
 }
+.toggleBar{
+  display: none;
+}
+.toggleBar.toggleBarVisible{
+  display: block;
+}
 
 
 .header{
