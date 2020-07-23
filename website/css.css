@@ -1,53 +1,53 @@
-.root {
+.root{
   position: relative;
 }
-.cooltip {
+.cooltip{
   background: white;
   border: 1px solid lightgray;
   padding: 10px;
   position: absolute;
   font-family: Helvetica, Arial, sans-serif;
 }
-.container {
+.container{
   padding: 0px;
 }
-.zipName {
+.zipName{
   font-weight: 700;
   font-size: 16px;
 }
-.zip {
+.zip{
   font-weight: 500;
   font-size: 16px;
 }
-.desc {
+.desc{
   font-size: 11px;
   text-transform: uppercase;
   color: gray;
   margin-top: 3px;
 }
-.cases {
+.cases{
   margin-top: 2px;
   font-size: 14px;
   font-weight: 700;
 }
-.twoWeeks {
+.twoWeeks{
   font-size: 14px;
 }
-.lineChart {
+.lineChart{
   float: left;
   width:125px; 
   height:50px; 
   color: gray;
 }
-.county {
+.county{
   font-weight: 700;
   font-size: 16px;
 }
-.date {
+.date{
   font-weight: 700;
   font-size: 14px;
 }
-.num {
+.num{
   font-size: 14px;
 }
 .instructions{
@@ -61,10 +61,18 @@
   text-transform: uppercase;
   color: gray;
 }
-.subhead {
+.subhead{
   font-weight: 700;
-  font-size: 23px;
+  font-size: 22px;
   font-family: Helvetica, sans-serif, Arial;
+}
+.title{
+  font-size: 45px;
+  font-weight: 550;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: Helvetica, sans-serif, Arial;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 
@@ -118,17 +126,13 @@
 .barChartContainer{
   border: 5px solid #e7e7e7;
 }
-.toplineNumbers{
-  background-color: #e7e7e7;
-  text-align: left;
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
 .card{
   background-color: white;
   border: 5px solid #e7e7e7;
   display: flex;
   justify-content: center;
+  padding-top: 25px;
+  padding-bottom: 25px;
 }
 .dataTable{
   background-color: white;
