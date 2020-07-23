@@ -18,6 +18,13 @@
     	(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
 	</script>
 	<script type="module">
+		// hospitalizations
+		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+		import define from "https://api.observablehq.com/@adamchzn/hospitalizations.js?v=3";
+		const inspect = Inspector.into("#hospitalizations");
+		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
+	<script type="module">
 		// new cases line chart
 		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
 		import define from "https://api.observablehq.com/@adamchzn/new-cases.js?v=3";
@@ -89,18 +96,20 @@
 						<div class="col-md-8 mapContainer">
 							<div class="toggleMap toggleMapVisible" id="countyNewCases"> </div>
                             <div class="toggleMap" id="zipNewCases"> </div>
-                            <button type="button" class="btn btn-secondary btn-sm" onclick="toggleMap('countyNewCases')"> New cases by county</button>
-                            <button type="button" class="btn btn-secondary btn-sm" onclick="toggleMap('zipNewCases')"> New cases by zip</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyNewCases')"> New cases by county</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('zipNewCases')"> New cases by zip</button>
                         </div>
 					</div>
 					<div class="row">
 						<div class="col-md-7 lineChartContainer">
-							<div class="toggleLine toggleLineVisible" id="newCases"></div>
+							<div class="toggleLine toggleLineVisible" id="hospitalizations"></div>
+							<div class="toggleLine" id="newCases"></div>
 							<div class="toggleLine" id="newDeaths"></div>
 							<div class="toggleLine" id="positivityRate"></div>
-							<button type="button" class="btn btn-secondary btn-sm" onclick="toggleLine('newCases')"> New cases</button>
-							<button type="button" class="btn btn-secondary btn-sm" onclick="toggleLine('newDeaths')"> New deaths</button>
-							<button type="button" class="btn btn-secondary btn-sm" onclick="toggleLine('positivityRate')"> Positivity rate</button>
+							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('hospitalizations')"> Hospitalizations</button>
+							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('newCases')"> New cases</button>
+							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('newDeaths')"> New deaths</button>
+							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('positivityRate')"> Positivity rate</button>
 						</div>
 						<div class="col-md-5 barChartContainer">
 							<div id="genderBreakdown"></div>

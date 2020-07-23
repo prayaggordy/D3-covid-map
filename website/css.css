@@ -9,7 +9,7 @@
   font-family: Helvetica, Arial, sans-serif;
 }
 .container {
-  padding: 0px
+  padding: 0px;
 }
 .zipName {
   font-weight: 700;
@@ -47,7 +47,7 @@
   font-weight: 700;
   font-size: 14px;
 }
-.posRate {
+.num {
   font-size: 14px;
 }
 .toggleMap{
@@ -63,13 +63,15 @@
   display: block;
 }
 .header{
-  height: 90px;
+  height: 80px;
 }
 .mapContainer{
   border: 2px solid lightgrey;
+  padding-bottom: 10px;
 }
 .lineChartContainer{
   border: 2px solid lightgrey;
+  padding-bottom: 10px;
 }
 .barChartContainer{
   border: 2px solid lightgrey;
