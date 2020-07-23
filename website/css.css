@@ -56,12 +56,36 @@
 .toggleMap.toggleMapVisible{
   display: block;
 }
+.toggleLine{
+  display: none;
+}
+.toggleLine.toggleLineVisible{
+  display: block;
+}
+.header{
+  height: 90px;
+}
 .mapContainer{
-  border: 2px solid lightgrey
+  border: 2px solid lightgrey;
 }
 .lineChartContainer{
-  border: 2px solid lightgrey
+  border: 2px solid lightgrey;
 }
 .barChartContainer{
-  border: 2px solid lightgrey
+  border: 2px solid lightgrey;
+}
+.toplineNumbers{
+  background-color: #f2f2f2;
+  text-align: center;
+  padding-top: 150px;
+  padding-bottom: 150px;
+}
+.dataTable{
+  background-color: #f2f2f2;
+  text-align: center;
+  padding-top: 150px;
+  padding-bottom: 150px;
+}
+.footer{
+  height: 60px;
 }

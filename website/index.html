@@ -16,7 +16,21 @@
         import define from "https://api.observablehq.com/@adamchzn/md-counties-new-cases-map.js?v=3";
         const inspect = Inspector.into("#countyNewCases");
     	(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
-    </script>
+	</script>
+	<script type="module">
+		// new cases line chart
+		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+		import define from "https://api.observablehq.com/@adamchzn/new-cases.js?v=3";
+		const inspect = Inspector.into("#newCases");
+		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
+	<script type="module">
+		// new deaths line chart
+		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+		import define from "https://api.observablehq.com/@adamchzn/new-deaths.js?v=3";
+		const inspect = Inspector.into("#newDeaths");
+		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
     <script type="module">
 		// positivity rate line chart
         import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
@@ -49,17 +63,14 @@
 </script>
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-5">
+		<div class="col-md-5 header">
 			<div class="page-header">
 				<h1>
-					DASHBOARD <small>Coming Soon</small>
+					Maryland Coronavirus Dashboard
 				</h1>
 			</div>
 		</div>
 		<div class="col-md-7">
-			<h2>
-				Heading
-			</h2>
 			<p>
 				This is where instructions will go
 			</p>
@@ -70,31 +81,45 @@
 			<div class="row">
 				<div class="col-md-9">
 					<div class="row">
-						<div class="col-md-4">
+						<div class="col-md-4 toplineNumbers">
+							<h3>
+								Topline Numbers
+							</h3>
 						</div>
 						<div class="col-md-8 mapContainer">
-                            <button onclick="toggleMap('countyNewCases')"> New cases by county</button>
-                            <button onclick="toggleMap('zipNewCases')"> New cases by zip</button>
-                            <div class="toggleMap toggleMapVisible" id="countyNewCases"> </div>
+							<div class="toggleMap toggleMapVisible" id="countyNewCases"> </div>
                             <div class="toggleMap" id="zipNewCases"> </div>
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="toggleMap('countyNewCases')"> New cases by county</button>
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="toggleMap('zipNewCases')"> New cases by zip</button>
                         </div>
 					</div>
 					<div class="row">
 						<div class="col-md-7 lineChartContainer">
-                            <div id="positivityRate"></div>
+							<div class="toggleLine toggleLineVisible" id="newCases"></div>
+							<div class="toggleLine" id="newDeaths"></div>
+							<div class="toggleLine" id="positivityRate"></div>
+							<button type="button" class="btn btn-secondary btn-sm" onclick="toggleLine('newCases')"> New cases</button>
+							<button type="button" class="btn btn-secondary btn-sm" onclick="toggleLine('newDeaths')"> New deaths</button>
+							<button type="button" class="btn btn-secondary btn-sm" onclick="toggleLine('positivityRate')"> Positivity rate</button>
 						</div>
 						<div class="col-md-5 barChartContainer">
 							<div id="genderBreakdown"></div>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-3 dataTable">
+					<h3>
+						Data Table
+					</h3>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-12 footer">
+			<p>
+				Bottom footer
+			</p>
 		</div>
 	</div>
 </div>

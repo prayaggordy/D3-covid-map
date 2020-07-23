@@ -11,3 +11,6 @@ function toggle(id, className, visibleClassName) {
 function toggleMap(id) {
     toggle(id, "toggleMap", "toggleMapVisible")
 }
+function toggleLine(id) {
+    toggle(id, "toggleLine", "toggleLineVisible")
+}
