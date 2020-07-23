@@ -4,23 +4,33 @@
     <link rel="stylesheet" href="css.css">
     <script src = "javascript.js"></script> 
     <script type="module">
+		// zip code new cases map
         import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
         import define from "https://api.observablehq.com/@adamchzn/md-zip-new-cases-map.js?v=3";
         const inspect = Inspector.into("#zipNewCases");
         (new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
     </script>
-        <script type="module">
+    <script type="module">
+		// county new cases map
         import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
         import define from "https://api.observablehq.com/@adamchzn/md-counties-new-cases-map.js?v=3";
         const inspect = Inspector.into("#countyNewCases");
-    (new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+    	(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
     </script>
     <script type="module">
+		// positivity rate line chart
         import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
         import define from "https://api.observablehq.com/@adamchzn/positivity-rate.js?v=3";
         const inspect = Inspector.into("#positivityRate");
         (new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
-    </script>
+	</script>
+	<script type="module">
+		// breakdown by gender
+		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+		import define from "https://api.observablehq.com/@adamchzn/by-gender.js?v=3";
+		const inspect = Inspector.into("#genderBreakdown");
+		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
 </head>
 
 <body>
@@ -74,6 +84,7 @@
                             <div id="positivityRate"></div>
 						</div>
 						<div class="col-md-5">
+							<div id="genderBreakdown"></div>
 						</div>
 					</div>
 				</div>
