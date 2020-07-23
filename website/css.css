@@ -71,16 +71,15 @@
 
 
 .header{
-  height: 90px;
+  height: 80px;
   font-size: 48px;
   font-weight: 550;
   background-color: #456087;
   color: white;
   text-indent: 1.5%;
-  padding-top: 0.25%;
 }
 .subheader{
-  height: 90px;
+  height: 80px;
   font-size: 16px;
   background-color: #7894ba;
   color: white;
