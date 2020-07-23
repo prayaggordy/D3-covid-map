@@ -126,6 +126,9 @@
 .barChartContainer{
   border: 5px solid #e7e7e7;
 }
+.toplineNumbers{
+  background-color: #e7e7e7;
+}
 .card{
   background-color: white;
   border: 5px solid #e7e7e7;
