@@ -186,7 +186,8 @@ md_counties_trend_table <- inner_join(md_counties_cases, md_counties_deaths, by 
 	select(county, date, new_cases) %>%
 	filter(date >= max(date) - 14) %>%
 	inner_join(counties_proper_names, by = "county") %>%
-	select(County, date, new_cases)
+	select(County, date, new_cases) %>%
+	pivot_wider(names_from = County, values_from = new_cases)
 
 save_dfs <- function(df)
 	write_csv(get(df), paste0("data/", df, ".csv"))
