@@ -186,7 +186,7 @@ md_counties_today_table <- inner_join(md_counties_today, counties_proper_names, 
 md_counties_trend_table <- inner_join(md_counties_cases, md_counties_deaths, by = c("county", "date", "fips")) %>%
 	inner_join(md_counties_prob_deaths, by = c("county", "date", "fips")) %>%
 	select(county, date, new_cases) %>%
-	mutate(rolling_avg = rollmeanr(new_cases, 5, fill = NA)) %>%
+	mutate(rolling_avg = rollmeanr(new_cases, 7, fill = NA)) %>%
 	filter(date > max(date) - 14) %>%
 	inner_join(counties_proper_names, by = "county") %>%
 	select(County, date, new_cases, rolling_avg)
