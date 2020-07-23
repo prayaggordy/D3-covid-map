@@ -117,5 +117,9 @@
   padding-bottom: 150px;
 }
 .footer{
-  height: 30px;
+  text-align: center;
+  font-size: 14px;
+  background-color: #888888;
+  color: white;
+  padding-top: 0.75%;
 }
