@@ -1,6 +1,7 @@
 library(tidyverse)
 library(jsonify)
 library(janitor)
+library(zoo)
 
 pop_county <- read_csv("population/county.csv")
 pop_zip <- read_csv("population/zip.csv")
@@ -185,10 +186,10 @@ md_counties_today_table <- inner_join(md_counties_today, counties_proper_names, 
 md_counties_trend_table <- inner_join(md_counties_cases, md_counties_deaths, by = c("county", "date", "fips")) %>%
 	inner_join(md_counties_prob_deaths, by = c("county", "date", "fips")) %>%
 	select(county, date, new_cases) %>%
-	filter(date >= max(date) - 14) %>%
+	mutate(rolling_avg = rollmeanr(new_cases, 7, fill = NA)) %>%
+	filter(date > max(date) - 14) %>%
 	inner_join(counties_proper_names, by = "county") %>%
-	select(County, date, new_cases) %>%
-	pivot_wider(names_from = date, values_from = new_cases)
+	select(County, date, new_cases, rolling_avg)
 
 save_dfs <- function(df)
 	write_csv(get(df), paste0("data/", df, ".csv"))
