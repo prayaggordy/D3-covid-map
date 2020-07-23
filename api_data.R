@@ -178,8 +178,9 @@ counties_proper_names <- data.frame(County = c("Allegany", "Anne Arundel", "Balt
 
 md_counties_today_table <- inner_join(md_counties_today, counties_proper_names, by = "county") %>%
 	inner_join(md_population_tested_county_today) %>%
-	mutate(Deaths = deaths + prob_deaths) %>%
-	select(County, Cases = cases, Deaths, Tests = value)
+	mutate(Deaths = deaths + prob_deaths,
+				 deltas = NA) %>%
+	select(County, Cases = cases, Deaths, Tests = value, deltas)
 
 md_counties_trend_table <- inner_join(md_counties_cases, md_counties_deaths, by = c("county", "date", "fips")) %>%
 	inner_join(md_counties_prob_deaths, by = c("county", "date", "fips")) %>%
