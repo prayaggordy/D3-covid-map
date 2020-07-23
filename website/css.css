@@ -68,21 +68,28 @@
 .toggleLine.toggleLineVisible{
   display: block;
 }
+.toggleBar{
+  display: none;
+}
+.toggleBar.toggleBarVisible{
+  display: block;
+}
 
 
 .header{
   height: 80px;
-  font-size: 45px;
+  font-size: 47px;
   font-weight: 550;
   background-color: #456087;
   color: white;
-  text-indent: 1.5%;
+  text-indent: 1%;
 }
 .subheader{
   height: 80px;
   font-size: 16px;
   background-color: #7894ba;
   color: white;
+  padding-top: 0.5%;
 }
 .mapContainer{
   border: 5px solid #f2f2f2;
@@ -110,5 +117,9 @@
   padding-bottom: 150px;
 }
 .footer{
-  height: 30px;
+  text-align: center;
+  font-size: 14px;
+  background-color: #888888;
+  color: white;
+  padding-top: 0.75%;
 }
