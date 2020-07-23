@@ -103,7 +103,7 @@
 // new Runtime().module(notebook, Inspector.into(document.body));
 
 </script>
-<div class="container-fluid">
+<div class="container-fluid parent">
 	<div class="row">
 		<div class="col-md-4 header">
 			<div class="page-header">
@@ -118,63 +118,110 @@
 			</p>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<div class="row">
-				<div class="col-md-9">
-					<div class="row">
-						<div class="col-md-4 toplineNumbers">
-							<h3>
-								Topline Numbers
-							</h3>
+		<div class="row">
+			<div class="col-md-9">
+				<div class="row">
+					<div class="col-md-4 toplineNumbers">
+						<div class="row">
+							<div class="col-md-12">
+								<h2>Statewide Numbers</h2>
+							</div>
 						</div>
-						<div class="col-md-8 mapContainer">
-							<div class="toggleMap toggleMapVisible" id="countyNewCases"></div>
-							<div class="toggleMap" id="countyTotalCases"></div>
-							<div class="toggleMap" id="zipNewCases"></div>
-							<div class="toggleMap" id="zipTotalCases"></div>
-							<div class="toggleMap" id="countyTesting"></div>
-							<div class="instructions"><p>Use the scroll wheel to zoom. Click to snap to county or zip code. Click outside map to reset. </p></div>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyNewCases')"> New cases by county</button>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyTotalCases')"> Total cases by county</button>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('zipNewCases')"> New cases by zip</button>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('zipTotalCases')"> Total cases by zip</button>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyTesting')"> Testing by county</button>
-                        </div>
+						<div class="row">
+							<div class="col-md-6 card">
+								<div class="subhead">Confirmed Cases</div>
+								<div class="descBig">Total</div>
+								<h5>0</h5>
+								<div class="descBig">Daily Change</div>
+								<h5>+0</h5>
+							</div>
+							<div class="col-md-6 card">
+								<div class="subhead">Confirmed Deaths</div>
+								<div class="descBig">Total</div>
+								<h5>0</h5>
+								<div class="descBig">Daily Change</div>
+								<h5>+0</h5>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 card">
+								<div class="subhead">Hospitalizations</div>
+								<div class="descBig">Now Hospitalized</div>
+								<h5>0</h5>
+								<div class="descBig">Daily Change</div>
+								<h5>+0</h5>
+							</div>
+							<div class="col-md-6 card">
+								<div class="subhead">Testing</div>
+								<div class="descBig">Total Tests</div>
+								<h5>0</h5>
+								<div class="descBig">Daily Change</div>
+								<h5>+0</h5>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 card">
+								<div class="subhead">Positivity Rate</div>
+								<div class="descBig">% Positive</div>
+								<h5>0</h5>
+								<div class="descBig">Daily Change</div>
+								<h5>+0</h5>
+							</div>
+							<div class="col-md-6 card">
+								<div class="subhead">Negative Tests</div>
+								<div class="descBig">Total Tests</div>
+								<h5>0</h5>
+								<div class="descBig">Daily Change</div>
+								<h5>+0</h5>
+							</div>
+						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-7 lineChartContainer">
-							<div class="toggleLine toggleLineVisible" id="hospitalizations"></div>
-							<div class="toggleLine" id="newCases"></div>
-							<div class="toggleLine" id="newDeaths"></div>
-							<div class="toggleLine" id="positivityRate"></div>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('hospitalizations')"> Hospitalizations</button>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('newCases')"> New cases</button>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('newDeaths')"> New deaths</button>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('positivityRate')"> Positivity rate</button>
-						</div>
-						<div class="col-md-5 barChartContainer">
-							<div class="toggleBar toggleBarVisible" id="raceBreakdown"></div>
-							<div class="toggleBar" id="ageBreakdown"></div>
-							<div class="toggleBar" id="genderBreakdown"></div>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleBar('raceBreakdown')"> Cases by race</button>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleBar('ageBreakdown')"> Cases by age</button>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleBar('genderBreakdown')"> Cases by sex</button>
-						</div>
-					</div>
+					<div class="col-md-8 mapContainer">
+						<div class="toggleMap toggleMapVisible" id="countyNewCases"></div>
+						<div class="toggleMap" id="countyTotalCases"></div>
+						<div class="toggleMap" id="zipNewCases"></div>
+						<div class="toggleMap" id="zipTotalCases"></div>
+						<div class="toggleMap" id="countyTesting"></div>
+						<div class="instructions"><p>Use the scroll wheel to zoom. Click to snap to county or zip code. Click outside map to reset. </p></div>
+						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyNewCases')"> New cases by county</button>
+						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyTotalCases')"> Total cases by county</button>
+						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('zipNewCases')"> New cases by zip</button>
+						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('zipTotalCases')"> Total cases by zip</button>
+						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyTesting')"> Testing by county</button>
+                       </div>
 				</div>
-				<div class="col-md-3 dataTable">
-					<h3>
-						Data Table
-					</h3>
+				<div class="row">
+					<div class="col-md-7 lineChartContainer">
+						<div class="toggleLine toggleLineVisible" id="hospitalizations"></div>
+						<div class="toggleLine" id="newCases"></div>
+						<div class="toggleLine" id="newDeaths"></div>
+						<div class="toggleLine" id="positivityRate"></div>
+						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('hospitalizations')"> Hospitalizations</button>
+						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('newCases')"> New cases</button>
+						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('newDeaths')"> New deaths</button>
+						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('positivityRate')"> Positivity rate</button>
+					</div>
+					<div class="col-md-5 barChartContainer">
+						<div class="toggleBar toggleBarVisible" id="raceBreakdown"></div>
+						<div class="toggleBar" id="ageBreakdown"></div>
+						<div class="toggleBar" id="genderBreakdown"></div>
+						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleBar('raceBreakdown')"> Cases by race</button>
+						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleBar('ageBreakdown')"> Cases by age</button>
+						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleBar('genderBreakdown')"> Cases by sex</button>
+					</div>
 				</div>
 			</div>
+			<div class="col-md-3 dataTable">
+				<h3>
+					Data Table
+				</h3>
+			</div>
 		</div>
-	</div>
 	<div class="row">
 		<div class="col-md-12 footer">
 			<p>
-				Dashboard created by Prayag Gordy and Adam Chazan
+				Dashboard created by Prayag Gordy and Adam Chazan <br>
+				Data from ____
 			</p>
 		</div>
 	</div>

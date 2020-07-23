@@ -55,6 +55,18 @@
   color: gray;
   padding-top: 2px;
 }
+.descBig{
+  font-size: 17px;
+  font-family: Helvetica, sans-serif, Arial;
+  text-transform: uppercase;
+  color: gray;
+}
+.subhead {
+  font-weight: 700;
+  font-size: 23px;
+  font-family: Helvetica, sans-serif, Arial;
+}
+
 
 
 .toggleMap{
@@ -75,6 +87,7 @@
 .toggleBar.toggleBarVisible{
   display: block;
 }
+
 
 
 .header{
@@ -107,22 +120,31 @@
 }
 .toplineNumbers{
   background-color: #e7e7e7;
+  text-align: left;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.card{
+  background-color: white;
   border: 5px solid #e7e7e7;
-  text-align: center;
-  padding-top: 150px;
-  padding-bottom: 150px;
+  display: flex;
+  justify-content: center;
 }
 .dataTable{
   background-color: white;
   border: 5px solid #e7e7e7;
-  text-align: center;
-  padding-top: 150px;
-  padding-bottom: 150px;
+  display: grid;
+  place-items: center;
 }
 .footer{
-  text-align: center;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 60px;
+  width: 100%;
   font-size: 14px;
   background-color: #e7e7e7;
   color: gray;
-  padding-top: 0.75%;
+  display: grid;
+  place-items: center;
 }
