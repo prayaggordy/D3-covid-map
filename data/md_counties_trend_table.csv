@@ -1,361 +1,337 @@
-County,date,new_cases
-Allegany,2020-07-08,2
-Anne Arundel,2020-07-08,36
-Baltimore County,2020-07-08,62
-Baltimore City,2020-07-08,71
-Calvert,2020-07-08,3
-Caroline,2020-07-08,2
-Carroll,2020-07-08,6
-Cecil,2020-07-08,7
-Charles,2020-07-08,22
-Dorchester,2020-07-08,0
-Frederick,2020-07-08,2
-Garrett,2020-07-08,1
-Harford,2020-07-08,11
-Howard,2020-07-08,38
-Kent,2020-07-08,0
-Montgomery,2020-07-08,68
-Prince George's,2020-07-08,103
-Queen Anne's,2020-07-08,4
-Somerset,2020-07-08,2
-St. Mary's,2020-07-08,4
-Talbot,2020-07-08,6
-Washington,2020-07-08,3
-Wicomico,2020-07-08,7
-Worcester,2020-07-08,5
-Allegany,2020-07-09,0
-Anne Arundel,2020-07-09,50
-Baltimore County,2020-07-09,54
-Baltimore City,2020-07-09,84
-Calvert,2020-07-09,10
-Caroline,2020-07-09,4
-Carroll,2020-07-09,2
-Cecil,2020-07-09,2
-Charles,2020-07-09,10
-Dorchester,2020-07-09,0
-Frederick,2020-07-09,14
-Garrett,2020-07-09,1
-Harford,2020-07-09,16
-Howard,2020-07-09,28
-Kent,2020-07-09,0
-Montgomery,2020-07-09,103
-Prince George's,2020-07-09,171
-Queen Anne's,2020-07-09,8
-Somerset,2020-07-09,1
-St. Mary's,2020-07-09,7
-Talbot,2020-07-09,4
-Washington,2020-07-09,8
-Wicomico,2020-07-09,7
-Worcester,2020-07-09,3
-Allegany,2020-07-10,1
-Anne Arundel,2020-07-10,32
-Baltimore County,2020-07-10,84
-Baltimore City,2020-07-10,94
-Calvert,2020-07-10,3
-Caroline,2020-07-10,3
-Carroll,2020-07-10,10
-Cecil,2020-07-10,4
-Charles,2020-07-10,13
-Dorchester,2020-07-10,4
-Frederick,2020-07-10,10
-Garrett,2020-07-10,2
-Harford,2020-07-10,21
-Howard,2020-07-10,19
-Kent,2020-07-10,1
-Montgomery,2020-07-10,65
-Prince George's,2020-07-10,54
-Queen Anne's,2020-07-10,5
-Somerset,2020-07-10,4
-St. Mary's,2020-07-10,6
-Talbot,2020-07-10,5
-Washington,2020-07-10,8
-Wicomico,2020-07-10,10
-Worcester,2020-07-10,5
-Allegany,2020-07-11,3
-Anne Arundel,2020-07-11,48
-Baltimore County,2020-07-11,94
-Baltimore City,2020-07-11,118
-Calvert,2020-07-11,7
-Caroline,2020-07-11,2
-Carroll,2020-07-11,10
-Cecil,2020-07-11,8
-Charles,2020-07-11,6
-Dorchester,2020-07-11,6
-Frederick,2020-07-11,9
-Garrett,2020-07-11,3
-Harford,2020-07-11,16
-Howard,2020-07-11,23
-Kent,2020-07-11,0
-Montgomery,2020-07-11,55
-Prince George's,2020-07-11,88
-Queen Anne's,2020-07-11,14
-Somerset,2020-07-11,0
-St. Mary's,2020-07-11,10
-Talbot,2020-07-11,14
-Washington,2020-07-11,10
-Wicomico,2020-07-11,11
-Worcester,2020-07-11,2
-Allegany,2020-07-12,0
-Anne Arundel,2020-07-12,43
-Baltimore County,2020-07-12,122
-Baltimore City,2020-07-12,122
-Calvert,2020-07-12,4
-Caroline,2020-07-12,2
-Carroll,2020-07-12,7
-Cecil,2020-07-12,1
-Charles,2020-07-12,15
-Dorchester,2020-07-12,8
-Frederick,2020-07-12,12
-Garrett,2020-07-12,4
-Harford,2020-07-12,17
-Howard,2020-07-12,32
-Kent,2020-07-12,0
-Montgomery,2020-07-12,104
-Prince George's,2020-07-12,115
-Queen Anne's,2020-07-12,3
-Somerset,2020-07-12,1
-St. Mary's,2020-07-12,11
-Talbot,2020-07-12,1
-Washington,2020-07-12,7
-Wicomico,2020-07-12,6
-Worcester,2020-07-12,5
-Allegany,2020-07-13,2
-Anne Arundel,2020-07-13,48
-Baltimore County,2020-07-13,95
-Baltimore City,2020-07-13,77
-Calvert,2020-07-13,4
-Caroline,2020-07-13,0
-Carroll,2020-07-13,4
-Cecil,2020-07-13,2
-Charles,2020-07-13,11
-Dorchester,2020-07-13,0
-Frederick,2020-07-13,7
-Garrett,2020-07-13,1
-Harford,2020-07-13,9
-Howard,2020-07-13,25
-Kent,2020-07-13,1
-Montgomery,2020-07-13,53
-Prince George's,2020-07-13,60
-Queen Anne's,2020-07-13,0
-Somerset,2020-07-13,2
-St. Mary's,2020-07-13,8
-Talbot,2020-07-13,4
-Washington,2020-07-13,1
-Wicomico,2020-07-13,3
-Worcester,2020-07-13,1
-Allegany,2020-07-14,2
-Anne Arundel,2020-07-14,57
-Baltimore County,2020-07-14,98
-Baltimore City,2020-07-14,123
-Calvert,2020-07-14,5
-Caroline,2020-07-14,9
-Carroll,2020-07-14,3
-Cecil,2020-07-14,2
-Charles,2020-07-14,6
-Dorchester,2020-07-14,0
-Frederick,2020-07-14,14
-Garrett,2020-07-14,0
-Harford,2020-07-14,23
-Howard,2020-07-14,41
-Kent,2020-07-14,0
-Montgomery,2020-07-14,103
-Prince George's,2020-07-14,183
-Queen Anne's,2020-07-14,6
-Somerset,2020-07-14,2
-St. Mary's,2020-07-14,13
-Talbot,2020-07-14,8
-Washington,2020-07-14,9
-Wicomico,2020-07-14,17
-Worcester,2020-07-14,9
-Allegany,2020-07-15,2
-Anne Arundel,2020-07-15,64
-Baltimore County,2020-07-15,163
-Baltimore City,2020-07-15,146
-Calvert,2020-07-15,1
-Caroline,2020-07-15,2
-Carroll,2020-07-15,4
-Cecil,2020-07-15,5
-Charles,2020-07-15,18
-Dorchester,2020-07-15,2
-Frederick,2020-07-15,16
-Garrett,2020-07-15,1
-Harford,2020-07-15,14
-Howard,2020-07-15,31
-Kent,2020-07-15,3
-Montgomery,2020-07-15,103
-Prince George's,2020-07-15,143
-Queen Anne's,2020-07-15,3
-Somerset,2020-07-15,2
-St. Mary's,2020-07-15,9
-Talbot,2020-07-15,10
-Washington,2020-07-15,2
-Wicomico,2020-07-15,4
-Worcester,2020-07-15,8
-Allegany,2020-07-16,2
-Anne Arundel,2020-07-16,52
-Baltimore County,2020-07-16,108
-Baltimore City,2020-07-16,163
-Calvert,2020-07-16,8
-Caroline,2020-07-16,3
-Carroll,2020-07-16,7
-Cecil,2020-07-16,2
-Charles,2020-07-16,15
-Dorchester,2020-07-16,12
-Frederick,2020-07-16,20
-Garrett,2020-07-16,1
-Harford,2020-07-16,11
-Howard,2020-07-16,35
-Kent,2020-07-16,3
-Montgomery,2020-07-16,70
-Prince George's,2020-07-16,92
-Queen Anne's,2020-07-16,2
-Somerset,2020-07-16,0
-St. Mary's,2020-07-16,9
-Talbot,2020-07-16,9
-Washington,2020-07-16,4
-Wicomico,2020-07-16,4
-Worcester,2020-07-16,16
-Allegany,2020-07-17,3
-Anne Arundel,2020-07-17,78
-Baltimore County,2020-07-17,115
-Baltimore City,2020-07-17,143
-Calvert,2020-07-17,12
-Caroline,2020-07-17,1
-Carroll,2020-07-17,13
-Cecil,2020-07-17,4
-Charles,2020-07-17,16
-Dorchester,2020-07-17,1
-Frederick,2020-07-17,6
-Garrett,2020-07-17,1
-Harford,2020-07-17,15
-Howard,2020-07-17,26
-Kent,2020-07-17,4
-Montgomery,2020-07-17,97
-Prince George's,2020-07-17,111
-Queen Anne's,2020-07-17,4
-Somerset,2020-07-17,1
-St. Mary's,2020-07-17,14
-Talbot,2020-07-17,14
-Washington,2020-07-17,8
-Wicomico,2020-07-17,9
-Worcester,2020-07-17,11
-Allegany,2020-07-18,5
-Anne Arundel,2020-07-18,89
-Baltimore County,2020-07-18,141
-Baltimore City,2020-07-18,143
-Calvert,2020-07-18,4
-Caroline,2020-07-18,1
-Carroll,2020-07-18,8
-Cecil,2020-07-18,8
-Charles,2020-07-18,10
-Dorchester,2020-07-18,6
-Frederick,2020-07-18,40
-Garrett,2020-07-18,3
-Harford,2020-07-18,29
-Howard,2020-07-18,57
-Kent,2020-07-18,3
-Montgomery,2020-07-18,98
-Prince George's,2020-07-18,123
-Queen Anne's,2020-07-18,5
-Somerset,2020-07-18,1
-St. Mary's,2020-07-18,11
-Talbot,2020-07-18,8
-Washington,2020-07-18,22
-Wicomico,2020-07-18,3
-Worcester,2020-07-18,17
-Allegany,2020-07-19,5
-Anne Arundel,2020-07-19,53
-Baltimore County,2020-07-19,206
-Baltimore City,2020-07-19,144
-Calvert,2020-07-19,7
-Caroline,2020-07-19,8
-Carroll,2020-07-19,13
-Cecil,2020-07-19,3
-Charles,2020-07-19,16
-Dorchester,2020-07-19,7
-Frederick,2020-07-19,21
-Garrett,2020-07-19,1
-Harford,2020-07-19,32
-Howard,2020-07-19,57
-Kent,2020-07-19,3
-Montgomery,2020-07-19,121
-Prince George's,2020-07-19,164
-Queen Anne's,2020-07-19,8
-Somerset,2020-07-19,1
-St. Mary's,2020-07-19,9
-Talbot,2020-07-19,5
-Washington,2020-07-19,11
-Wicomico,2020-07-19,5
-Worcester,2020-07-19,25
-Allegany,2020-07-20,2
-Anne Arundel,2020-07-20,48
-Baltimore County,2020-07-20,105
-Baltimore City,2020-07-20,77
-Calvert,2020-07-20,4
-Caroline,2020-07-20,5
-Carroll,2020-07-20,7
-Cecil,2020-07-20,6
-Charles,2020-07-20,10
-Dorchester,2020-07-20,1
-Frederick,2020-07-20,17
-Garrett,2020-07-20,0
-Harford,2020-07-20,15
-Howard,2020-07-20,31
-Kent,2020-07-20,2
-Montgomery,2020-07-20,61
-Prince George's,2020-07-20,101
-Queen Anne's,2020-07-20,13
-Somerset,2020-07-20,0
-St. Mary's,2020-07-20,6
-Talbot,2020-07-20,14
-Washington,2020-07-20,12
-Wicomico,2020-07-20,8
-Worcester,2020-07-20,9
-Allegany,2020-07-21,1
-Anne Arundel,2020-07-21,59
-Baltimore County,2020-07-21,166
-Baltimore City,2020-07-21,139
-Calvert,2020-07-21,1
-Caroline,2020-07-21,2
-Carroll,2020-07-21,20
-Cecil,2020-07-21,7
-Charles,2020-07-21,23
-Dorchester,2020-07-21,0
-Frederick,2020-07-21,46
-Garrett,2020-07-21,0
-Harford,2020-07-21,25
-Howard,2020-07-21,49
-Kent,2020-07-21,1
-Montgomery,2020-07-21,87
-Prince George's,2020-07-21,177
-Queen Anne's,2020-07-21,4
-Somerset,2020-07-21,2
-St. Mary's,2020-07-21,6
-Talbot,2020-07-21,8
-Washington,2020-07-21,20
-Wicomico,2020-07-21,6
-Worcester,2020-07-21,11
-Allegany,2020-07-22,0
-Anne Arundel,2020-07-22,43
-Baltimore County,2020-07-22,159
-Baltimore City,2020-07-22,94
-Calvert,2020-07-22,8
-Caroline,2020-07-22,1
-Carroll,2020-07-22,15
-Cecil,2020-07-22,4
-Charles,2020-07-22,17
-Dorchester,2020-07-22,42
-Frederick,2020-07-22,12
-Garrett,2020-07-22,3
-Harford,2020-07-22,20
-Howard,2020-07-22,21
-Kent,2020-07-22,0
-Montgomery,2020-07-22,73
-Prince George's,2020-07-22,91
-Queen Anne's,2020-07-22,5
-Somerset,2020-07-22,0
-St. Mary's,2020-07-22,4
-Talbot,2020-07-22,3
-Washington,2020-07-22,2
-Wicomico,2020-07-22,6
-Worcester,2020-07-22,7
+County,date,new_cases,rolling_avg
+Allegany,2020-07-09,0,3
+Anne Arundel,2020-07-09,50,12.4
+Baltimore County,2020-07-09,54,21.8
+Baltimore City,2020-07-09,84,37.6
+Calvert,2020-07-09,10,39.6
+Caroline,2020-07-09,4,40.4
+Carroll,2020-07-09,2,30.8
+Cecil,2020-07-09,2,20.4
+Charles,2020-07-09,10,5.6
+Dorchester,2020-07-09,0,3.6
+Frederick,2020-07-09,14,5.6
+Garrett,2020-07-09,1,5.4
+Harford,2020-07-09,16,8.2
+Howard,2020-07-09,28,11.8
+Kent,2020-07-09,0,11.8
+Montgomery,2020-07-09,103,29.6
+Prince George's,2020-07-09,171,63.6
+Queen Anne's,2020-07-09,8,62
+Somerset,2020-07-09,1,56.6
+St. Mary's,2020-07-09,7,58
+Talbot,2020-07-09,4,38.2
+Washington,2020-07-09,8,5.6
+Wicomico,2020-07-09,7,5.4
+Worcester,2020-07-09,3,5.8
+Allegany,2020-07-10,1,3.8
+Anne Arundel,2020-07-10,32,8.6
+Baltimore County,2020-07-10,84,24
+Baltimore City,2020-07-10,94,42.2
+Calvert,2020-07-10,3,42.8
+Caroline,2020-07-10,3,43.2
+Carroll,2020-07-10,10,38.8
+Cecil,2020-07-10,4,22.8
+Charles,2020-07-10,13,6.6
+Dorchester,2020-07-10,4,6.8
+Frederick,2020-07-10,10,8.2
+Garrett,2020-07-10,2,6.6
+Harford,2020-07-10,21,10
+Howard,2020-07-10,19,11.2
+Kent,2020-07-10,1,10.6
+Montgomery,2020-07-10,65,21.6
+Prince George's,2020-07-10,54,32
+Queen Anne's,2020-07-10,5,28.8
+Somerset,2020-07-10,4,25.8
+St. Mary's,2020-07-10,6,26.8
+Talbot,2020-07-10,5,14.8
+Washington,2020-07-10,8,5.6
+Wicomico,2020-07-10,10,6.6
+Worcester,2020-07-10,5,6.8
+Allegany,2020-07-11,3,5.2
+Anne Arundel,2020-07-11,48,13.2
+Baltimore County,2020-07-11,94,30
+Baltimore City,2020-07-11,118,52.6
+Calvert,2020-07-11,7,54
+Caroline,2020-07-11,2,53.8
+Carroll,2020-07-11,10,46.2
+Cecil,2020-07-11,8,29
+Charles,2020-07-11,6,6.6
+Dorchester,2020-07-11,6,6.4
+Frederick,2020-07-11,9,7.8
+Garrett,2020-07-11,3,6.4
+Harford,2020-07-11,16,8
+Howard,2020-07-11,23,11.4
+Kent,2020-07-11,0,10.2
+Montgomery,2020-07-11,55,19.4
+Prince George's,2020-07-11,88,36.4
+Queen Anne's,2020-07-11,14,36
+Somerset,2020-07-11,0,31.4
+St. Mary's,2020-07-11,10,33.4
+Talbot,2020-07-11,14,25.2
+Washington,2020-07-11,10,9.6
+Wicomico,2020-07-11,11,9
+Worcester,2020-07-11,2,9.4
+Allegany,2020-07-12,0,4.6
+Anne Arundel,2020-07-12,43,11.2
+Baltimore County,2020-07-12,122,33.4
+Baltimore City,2020-07-12,122,57.4
+Calvert,2020-07-12,4,58.2
+Caroline,2020-07-12,2,58.6
+Carroll,2020-07-12,7,51.4
+Cecil,2020-07-12,1,27.2
+Charles,2020-07-12,15,5.8
+Dorchester,2020-07-12,8,6.6
+Frederick,2020-07-12,12,8.6
+Garrett,2020-07-12,4,8
+Harford,2020-07-12,17,11.2
+Howard,2020-07-12,32,14.6
+Kent,2020-07-12,0,13
+Montgomery,2020-07-12,104,31.4
+Prince George's,2020-07-12,115,53.6
+Queen Anne's,2020-07-12,3,50.8
+Somerset,2020-07-12,1,44.6
+St. Mary's,2020-07-12,11,46.8
+Talbot,2020-07-12,1,26.2
+Washington,2020-07-12,7,4.6
+Wicomico,2020-07-12,6,5.2
+Worcester,2020-07-12,5,6
+Allegany,2020-07-13,2,4
+Anne Arundel,2020-07-13,48,12.2
+Baltimore County,2020-07-13,95,30
+Baltimore City,2020-07-13,77,44.4
+Calvert,2020-07-13,4,45.2
+Caroline,2020-07-13,0,44.8
+Carroll,2020-07-13,4,36
+Cecil,2020-07-13,2,17.4
+Charles,2020-07-13,11,4.2
+Dorchester,2020-07-13,0,3.4
+Frederick,2020-07-13,7,4.8
+Garrett,2020-07-13,1,4.2
+Harford,2020-07-13,9,5.6
+Howard,2020-07-13,25,8.4
+Kent,2020-07-13,1,8.6
+Montgomery,2020-07-13,53,17.8
+Prince George's,2020-07-13,60,29.6
+Queen Anne's,2020-07-13,0,27.8
+Somerset,2020-07-13,2,23.2
+St. Mary's,2020-07-13,8,24.6
+Talbot,2020-07-13,4,14.8
+Washington,2020-07-13,1,3
+Wicomico,2020-07-13,3,3.6
+Worcester,2020-07-13,1,3.4
+Allegany,2020-07-14,2,1.4
+Anne Arundel,2020-07-14,57,12.6
+Baltimore County,2020-07-14,98,31.6
+Baltimore City,2020-07-14,123,56
+Calvert,2020-07-14,5,57
+Caroline,2020-07-14,9,58.4
+Carroll,2020-07-14,3,47.6
+Cecil,2020-07-14,2,28.4
+Charles,2020-07-14,6,5
+Dorchester,2020-07-14,0,4
+Frederick,2020-07-14,14,5
+Garrett,2020-07-14,0,4.4
+Harford,2020-07-14,23,8.6
+Howard,2020-07-14,41,15.6
+Kent,2020-07-14,0,15.6
+Montgomery,2020-07-14,103,33.4
+Prince George's,2020-07-14,183,70
+Queen Anne's,2020-07-14,6,66.6
+Somerset,2020-07-14,2,58.8
+St. Mary's,2020-07-14,13,61.4
+Talbot,2020-07-14,8,42.4
+Washington,2020-07-14,9,7.6
+Wicomico,2020-07-14,17,9.8
+Worcester,2020-07-14,9,11.2
+Allegany,2020-07-15,2,7.4
+Anne Arundel,2020-07-15,64,18.4
+Baltimore County,2020-07-15,163,47.6
+Baltimore City,2020-07-15,146,75
+Calvert,2020-07-15,1,75.2
+Caroline,2020-07-15,2,75.2
+Carroll,2020-07-15,4,63.2
+Cecil,2020-07-15,5,31.6
+Charles,2020-07-15,18,6
+Dorchester,2020-07-15,2,6.2
+Frederick,2020-07-15,16,9
+Garrett,2020-07-15,1,8.4
+Harford,2020-07-15,14,10.2
+Howard,2020-07-15,31,12.8
+Kent,2020-07-15,3,13
+Montgomery,2020-07-15,103,30.4
+Prince George's,2020-07-15,143,58.8
+Queen Anne's,2020-07-15,3,56.6
+Somerset,2020-07-15,2,50.8
+St. Mary's,2020-07-15,9,52
+Talbot,2020-07-15,10,33.4
+Washington,2020-07-15,2,5.2
+Wicomico,2020-07-15,4,5.4
+Worcester,2020-07-15,8,6.6
+Allegany,2020-07-16,2,3.2
+Anne Arundel,2020-07-16,52,13.2
+Baltimore County,2020-07-16,108,34
+Baltimore City,2020-07-16,163,65
+Calvert,2020-07-16,8,66.6
+Caroline,2020-07-16,3,66.8
+Carroll,2020-07-16,7,57.8
+Cecil,2020-07-16,2,36.6
+Charles,2020-07-16,15,7
+Dorchester,2020-07-16,12,7.8
+Frederick,2020-07-16,20,11.2
+Garrett,2020-07-16,1,10
+Harford,2020-07-16,11,11.8
+Howard,2020-07-16,35,15.8
+Kent,2020-07-16,3,14
+Montgomery,2020-07-16,70,24
+Prince George's,2020-07-16,92,42.2
+Queen Anne's,2020-07-16,2,40.4
+Somerset,2020-07-16,0,33.4
+St. Mary's,2020-07-16,9,34.6
+Talbot,2020-07-16,9,22.4
+Washington,2020-07-16,4,4.8
+Wicomico,2020-07-16,4,5.2
+Worcester,2020-07-16,16,8.4
+Allegany,2020-07-17,3,5.4
+Anne Arundel,2020-07-17,78,20.2
+Baltimore County,2020-07-17,115,42.4
+Baltimore City,2020-07-17,143,67.8
+Calvert,2020-07-17,12,70.2
+Caroline,2020-07-17,1,69.8
+Carroll,2020-07-17,13,56.8
+Cecil,2020-07-17,4,34.6
+Charles,2020-07-17,16,9.2
+Dorchester,2020-07-17,1,7
+Frederick,2020-07-17,6,8
+Garrett,2020-07-17,1,5.6
+Harford,2020-07-17,15,7.8
+Howard,2020-07-17,26,9.8
+Kent,2020-07-17,4,10.4
+Montgomery,2020-07-17,97,28.6
+Prince George's,2020-07-17,111,50.6
+Queen Anne's,2020-07-17,4,48.4
+Somerset,2020-07-17,1,43.4
+St. Mary's,2020-07-17,14,45.4
+Talbot,2020-07-17,14,28.8
+Washington,2020-07-17,8,8.2
+Wicomico,2020-07-17,9,9.2
+Worcester,2020-07-17,11,11.2
+Allegany,2020-07-18,5,6.6
+Anne Arundel,2020-07-18,89,22.8
+Baltimore County,2020-07-18,141,49.2
+Baltimore City,2020-07-18,143,75.6
+Calvert,2020-07-18,4,76.4
+Caroline,2020-07-18,1,75.6
+Carroll,2020-07-18,8,59.4
+Cecil,2020-07-18,8,32.8
+Charles,2020-07-18,10,6.2
+Dorchester,2020-07-18,6,6.6
+Frederick,2020-07-18,40,14.4
+Garrett,2020-07-18,3,13.4
+Harford,2020-07-18,29,17.6
+Howard,2020-07-18,57,27
+Kent,2020-07-18,3,26.4
+Montgomery,2020-07-18,98,38
+Prince George's,2020-07-18,123,62
+Queen Anne's,2020-07-18,5,57.2
+Somerset,2020-07-18,1,46
+St. Mary's,2020-07-18,11,47.6
+Talbot,2020-07-18,8,29.6
+Washington,2020-07-18,22,9.4
+Wicomico,2020-07-18,3,9
+Worcester,2020-07-18,17,12.2
+Allegany,2020-07-19,5,9.4
+Anne Arundel,2020-07-19,53,15.6
+Baltimore County,2020-07-19,206,56.2
+Baltimore City,2020-07-19,144,81.6
+Calvert,2020-07-19,7,83
+Caroline,2020-07-19,8,83.6
+Carroll,2020-07-19,13,75.6
+Cecil,2020-07-19,3,35
+Charles,2020-07-19,16,9.4
+Dorchester,2020-07-19,7,9.4
+Frederick,2020-07-19,21,12
+Garrett,2020-07-19,1,9.6
+Harford,2020-07-19,32,15.4
+Howard,2020-07-19,57,23.6
+Kent,2020-07-19,3,22.8
+Montgomery,2020-07-19,121,42.8
+Prince George's,2020-07-19,164,75.4
+Queen Anne's,2020-07-19,8,70.6
+Somerset,2020-07-19,1,59.4
+St. Mary's,2020-07-19,9,60.6
+Talbot,2020-07-19,5,37.4
+Washington,2020-07-19,11,6.8
+Wicomico,2020-07-19,5,6.2
+Worcester,2020-07-19,25,11
+Allegany,2020-07-20,2,8.6
+Anne Arundel,2020-07-20,48,16
+Baltimore County,2020-07-20,105,36
+Baltimore City,2020-07-20,77,46.4
+Calvert,2020-07-20,4,47.2
+Caroline,2020-07-20,5,47.8
+Carroll,2020-07-20,7,39.6
+Cecil,2020-07-20,6,19.8
+Charles,2020-07-20,10,6.4
+Dorchester,2020-07-20,1,5.8
+Frederick,2020-07-20,17,8.2
+Garrett,2020-07-20,0,6.8
+Harford,2020-07-20,15,8.6
+Howard,2020-07-20,31,12.8
+Kent,2020-07-20,2,13
+Montgomery,2020-07-20,61,21.8
+Prince George's,2020-07-20,101,42
+Queen Anne's,2020-07-20,13,41.6
+Somerset,2020-07-20,0,35.4
+St. Mary's,2020-07-20,6,36.2
+Talbot,2020-07-20,14,26.8
+Washington,2020-07-20,12,9
+Wicomico,2020-07-20,8,8
+Worcester,2020-07-20,9,9.8
+Allegany,2020-07-21,1,6
+Anne Arundel,2020-07-21,59,15.4
+Baltimore County,2020-07-21,166,47
+Baltimore City,2020-07-21,139,73
+Calvert,2020-07-21,1,73.2
+Caroline,2020-07-21,2,73.4
+Carroll,2020-07-21,20,65.6
+Cecil,2020-07-21,7,33.8
+Charles,2020-07-21,23,10.6
+Dorchester,2020-07-21,0,10.4
+Frederick,2020-07-21,46,19.2
+Garrett,2020-07-21,0,15.2
+Harford,2020-07-21,25,18.8
+Howard,2020-07-21,49,24
+Kent,2020-07-21,1,24.2
+Montgomery,2020-07-21,87,32.4
+Prince George's,2020-07-21,177,67.8
+Queen Anne's,2020-07-21,4,63.6
+Somerset,2020-07-21,2,54.2
+St. Mary's,2020-07-21,6,55.2
+Talbot,2020-07-21,8,39.4
+Washington,2020-07-21,20,8
+Wicomico,2020-07-21,6,8.4
+Worcester,2020-07-21,11,10.2
+Allegany,2020-07-22,0,7.4
+Anne Arundel,2020-07-22,43,12
+Baltimore County,2020-07-22,159,42.6
+Baltimore City,2020-07-22,94,59.2
+Calvert,2020-07-22,8,60.8
+Caroline,2020-07-22,1,61
+Carroll,2020-07-22,15,55.4
+Cecil,2020-07-22,4,24.4
+Charles,2020-07-22,17,9
+Dorchester,2020-07-22,42,15.8
+Frederick,2020-07-22,12,18
+Garrett,2020-07-22,3,15.6
+Harford,2020-07-22,20,18.8
+Howard,2020-07-22,21,19.6
+Kent,2020-07-22,0,11.2
+Montgomery,2020-07-22,73,23.4
+Prince George's,2020-07-22,91,41
+Queen Anne's,2020-07-22,5,38
+Somerset,2020-07-22,0,33.8
+St. Mary's,2020-07-22,4,34.6
+Talbot,2020-07-22,3,20.6
+Washington,2020-07-22,2,2.8
+Wicomico,2020-07-22,6,3
+Worcester,2020-07-22,7,4.4
