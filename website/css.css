@@ -3,7 +3,7 @@
 }
 .cooltip {
   background: white;
-  border: 1px solid lightgrey;
+  border: 1px solid lightgray;
   padding: 10px;
   position: absolute;
   font-family: Helvetica, Arial, sans-serif;
@@ -22,7 +22,7 @@
 .desc {
   font-size: 11px;
   text-transform: uppercase;
-  color: grey;
+  color: gray;
   margin-top: 3px;
 }
 .cases {
@@ -37,7 +37,7 @@
   float: left;
   width:125px; 
   height:50px; 
-  color: grey;
+  color: gray;
 }
 .county {
   font-weight: 700;
@@ -50,6 +50,12 @@
 .num {
   font-size: 14px;
 }
+.instructions{
+  font-size: 11px;
+  color: grey;
+}
+
+
 .toggleMap{
   display: none;
 }
@@ -62,32 +68,36 @@
 .toggleLine.toggleLineVisible{
   display: block;
 }
+
+
 .header{
   height: 80px;
 }
 .mapContainer{
-  border: 2px solid lightgrey;
+  border: 5px solid #f2f2f2;
   padding-bottom: 10px;
 }
 .lineChartContainer{
-  border: 2px solid lightgrey;
+  border: 5px solid #f2f2f2;
   padding-bottom: 10px;
 }
 .barChartContainer{
-  border: 2px solid lightgrey;
+  border: 5px solid #f2f2f2;
 }
 .toplineNumbers{
-  background-color: #f2f2f2;
+  background-color: #dbd6d6;
+  border: 5px solid #f2f2f2;
   text-align: center;
   padding-top: 150px;
   padding-bottom: 150px;
 }
 .dataTable{
-  background-color: #f2f2f2;
+  background-color: #dbd6d6;
+  border: 5px solid #f2f2f2;
   text-align: center;
   padding-top: 150px;
   padding-bottom: 150px;
 }
 .footer{
-  height: 60px;
+  height: 30px;
 }

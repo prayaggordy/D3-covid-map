@@ -4,18 +4,32 @@
     <link rel="stylesheet" href="css.css">
     <script src = "javascript.js"></script> 
     <script type="module">
-		// zip code new cases map
-        import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-        import define from "https://api.observablehq.com/@adamchzn/md-zip-new-cases-map.js?v=3";
-        const inspect = Inspector.into("#zipNewCases");
-        (new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
-    </script>
-    <script type="module">
 		// county new cases map
         import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
         import define from "https://api.observablehq.com/@adamchzn/md-counties-new-cases-map.js?v=3";
         const inspect = Inspector.into("#countyNewCases");
     	(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
+	<script type="module">
+		// county total cases map
+		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+		import define from "https://api.observablehq.com/@adamchzn/coronavirus-dashboard.js?v=3";
+		const inspect = Inspector.into("#countyTotalCases");
+		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
+	<script type="module">
+		// zip code new cases map
+        import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+        import define from "https://api.observablehq.com/@adamchzn/md-zip-new-cases-map.js?v=3";
+        const inspect = Inspector.into("#zipNewCases");
+        (new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
+	<script type="module">
+		// zip code total cases map
+		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+		import define from "https://api.observablehq.com/@adamchzn/coronavirus-dashboard/2.js?v=3";
+		const inspect = Inspector.into("#zipTotalCases");
+		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
 	</script>
 	<script type="module">
 		// hospitalizations
@@ -95,9 +109,14 @@
 						</div>
 						<div class="col-md-8 mapContainer">
 							<div class="toggleMap toggleMapVisible" id="countyNewCases"> </div>
-                            <div class="toggleMap" id="zipNewCases"> </div>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyNewCases')"> New cases by county</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('zipNewCases')"> New cases by zip</button>
+							<div class="toggleMap" id="countyTotalCases"></div>
+							<div class="toggleMap" id="zipNewCases"> </div>
+							<div class="toggleMap" id="zipTotalCases"></div>
+							<div class="instructions"><p>Use the scroll wheel to zoom. Snap to a county or zip code by clicking. Click outside map to reset. </p></div>
+							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyNewCases')"> New cases by county</button>
+							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyTotalCases')"> Total cases by county</button>
+							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('zipNewCases')"> New cases by zip</button>
+							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('zipTotalCases')"> Total cases by zip</button>
                         </div>
 					</div>
 					<div class="row">
