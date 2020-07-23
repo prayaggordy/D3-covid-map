@@ -9,5 +9,9 @@ md_population_county <- get_acs(geography = "county", variables = c(population =
 	inner_join(md_fips, by = "fips") %>%
 	select(fips, county = county.y, population)
 
+write_csv(md_population_county, "population/county.csv")
+
 md_population_zip <- get_acs(geography = "zcta", variables = c(population = "B01001_001"), year = 2018) %>%
 	select(zip = GEOID, population = estimate)
+
+write_csv(md_population_zip, "population/zip.csv")
