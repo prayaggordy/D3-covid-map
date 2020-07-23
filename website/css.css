@@ -1,0 +1,64 @@
+.root {
+  position: relative;
+}
+.cooltip {
+  background: white;
+  border: 1px solid lightgrey;
+  padding: 10px;
+  position: absolute;
+  font-family: Helvetica, Arial, sans-serif;
+}
+.container {
+  padding: 0px
+}
+.zipName {
+  font-weight: 700;
+  font-size: 16px;
+}
+.zip {
+  font-weight: 500;
+  font-size: 16px;
+}
+.desc {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: grey;
+  margin-top: 3px;
+}
+.cases {
+  margin-top: 2px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.twoWeeks {
+  font-size: 14px;
+}
+.lineChart {
+  float: left;
+  width:125px; 
+  height:50px; 
+  color: grey;
+}
+.county {
+  font-weight: 700;
+  font-size: 16px;
+}
+.date {
+  font-weight: 700;
+  font-size: 14px;
+}
+.posRate {
+  font-size: 14px;
+}
+.toggleMap{
+  display: none;
+}
+.toggleMap.toggleMapVisible{
+  display: block;
+}
+.mapContainer{
+  border: 2px solid lightgrey
+}
+.lineChartContainer{
+  border: 2px solid lightgrey
+}
