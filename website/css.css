@@ -90,31 +90,31 @@
 .subheader{
   height: 80px;
   font-size: 16px;
-  background-color: #7894ba;
+  background-color: #456087;
   color: white;
   padding-top: 0.5%;
 }
 .mapContainer{
-  border: 5px solid #f2f2f2;
+  border: 5px solid #e7e7e7;
   padding-bottom: 10px;
 }
 .lineChartContainer{
-  border: 5px solid #f2f2f2;
+  border: 5px solid #e7e7e7;
   padding-bottom: 10px;
 }
 .barChartContainer{
-  border: 5px solid #f2f2f2;
+  border: 5px solid #e7e7e7;
 }
 .toplineNumbers{
-  background-color: #e7e7e7;
-  border: 5px solid #f2f2f2;
+  background-color: white;
+  border: 5px solid #e7e7e7;
   text-align: center;
   padding-top: 150px;
   padding-bottom: 150px;
 }
 .dataTable{
-  background-color: #e7e7e7;
-  border: 5px solid #f2f2f2;
+  background-color: white;
+  border: 5px solid #e7e7e7;
   text-align: center;
   padding-top: 150px;
   padding-bottom: 150px;
