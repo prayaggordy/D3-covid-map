@@ -72,11 +72,11 @@
 
 .header{
   height: 80px;
-  font-size: 48px;
+  font-size: 47px;
   font-weight: 550;
   background-color: #456087;
   color: white;
-  text-indent: 1.5%;
+  text-indent: 1%;
 }
 .subheader{
   height: 80px;
