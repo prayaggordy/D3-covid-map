@@ -154,4 +154,5 @@
   color: gray;
   display: grid;
   place-items: center;
+  padding-top: 8px;
 }
