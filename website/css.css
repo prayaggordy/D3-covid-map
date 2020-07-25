@@ -157,6 +157,13 @@
   width: 100%;
   font-size: 14px;
   background-color: #e7e7e7;
+  border: 5px solid #e7e7e7;
   color: gray;
   text-align: center;
+}
+
+.btn:hover{
+  color: white;
+  border: #456087 solid 1px;
+  background:#456087;
 }
