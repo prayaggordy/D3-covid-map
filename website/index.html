@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="css.css">
+	<link rel="stylesheet" href="css.css">
+	<script src="https://d3js.org/d3.v5.min.js"></script>
     <script src = "javascript.js"></script> 
     <script type="module">
 		// county new cases map
@@ -90,19 +91,6 @@
 </head>
 
 <body>
-<script type="module">
-
-// // Load the Observable runtime and inspector.
-// import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-
-// // Your notebook, compiled as an ES module.
-// import notebook from "https://api.observablehq.com/@adamchzn/md-zip-new-cases-map.js?v=3";
-
-// // Load the notebook, observing its cells with a default Inspector
-// // that simply renders the value of each cell into the provided DOM node.
-// new Runtime().module(notebook, Inspector.into(document.body));
-
-</script>
 <div class="container-fluid parent">
 	<div class="row">
 		<div class="col-md-4 header">
@@ -151,7 +139,7 @@
 								<h5>+0</h5>
 							</div>
 							<div class="col-md-6 card">
-								<div class="subhead">Testing</div>
+								<div class="subhead">Testing Volume</div>
 								<div class="descBig">Total Tests</div>
 								<h5>0</h5>
 								<div class="descBig">Daily Change</div>
@@ -176,11 +164,11 @@
 						</div>
 					</div>
 					<div class="col-md-8 mapContainer">
-						<div class="toggleMap toggleMapVisible" id="countyNewCases">Title</div>
-						<div class="toggleMap" id="countyTotalCases">Title</div>
-						<div class="toggleMap" id="zipNewCases">Title</div>
-						<div class="toggleMap" id="zipTotalCases">Title</div>
-						<div class="toggleMap" id="countyTesting">Title</div>
+						<div class="toggleMap toggleMapVisible" id="countyNewCases"></div>
+						<div class="toggleMap" id="countyTotalCases"></div>
+						<div class="toggleMap" id="zipNewCases"></div>
+						<div class="toggleMap" id="zipTotalCases"></div>
+						<div class="toggleMap" id="countyTesting"></div>
 						<div class="instructions"><p>Use the scroll wheel to zoom. Click to snap to county or zip code. Click outside map to reset. </p></div>
 						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyNewCases')"> New cases by county</button>
 						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyTotalCases')"> Total cases by county</button>
@@ -195,6 +183,7 @@
 						<div class="toggleLine" id="newCases"></div>
 						<div class="toggleLine" id="newDeaths"></div>
 						<div class="toggleLine" id="positivityRate"></div>
+						<div class="instructions"><p>Use the scroll wheel to zoom. Click to snap to county or zip code. Click outside map to reset. </p></div>
 						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('hospitalizations')"> Hospitalizations</button>
 						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('newCases')"> New cases</button>
 						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('newDeaths')"> New deaths</button>
@@ -204,6 +193,7 @@
 						<div class="toggleBar toggleBarVisible" id="raceBreakdown"></div>
 						<div class="toggleBar" id="ageBreakdown"></div>
 						<div class="toggleBar" id="genderBreakdown"></div>
+						<div class="instructions"><p>Hover over bars to display values. </p></div>
 						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleBar('raceBreakdown')"> Cases by race</button>
 						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleBar('ageBreakdown')"> Cases by age</button>
 						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleBar('genderBreakdown')"> Cases by sex</button>
@@ -216,13 +206,13 @@
 				</h3>
 			</div>
 		</div>
-	<div class="row">
+	<!--<div class="row">
 		<div class="col-md-12 footer">
 			<p>
 				Dashboard created by Prayag Gordy and Adam Chazan <br>
 				Data from ____
 			</p>
 		</div>
-	</div>
+	</div>-->
 </div>
 </body>

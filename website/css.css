@@ -79,6 +79,7 @@
 
 .toggleMap{
   display: none;
+  width: 100%;
 }
 .toggleMap.toggleMapVisible{
   display: block;
@@ -117,15 +118,18 @@
 }
 .mapContainer{
   border: 5px solid #e7e7e7;
+  padding-top: 20px;
   padding-bottom: 10px;
 }
 .lineChartContainer{
   border: 5px solid #e7e7e7;
-  padding-bottom: 25px;
+  padding-top: 35px;
+  padding-bottom: 20px;
 }
 .barChartContainer{
   border: 5px solid #e7e7e7;
-  padding-bottom: 25px;
+  padding-top: 10px;
+  padding-bottom: 20px;
 }
 .toplineNumbers{
   background-color: #f1f1f1;
