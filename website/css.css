@@ -136,10 +136,11 @@
 }
 .card{
   border: 5px solid #e7e7e7;
-  display: flex;
-  justify-content: center;
   padding-top: 25px;
   padding-bottom: 25px;
+  position: relative;
+  width: auto;
+  min-width: 235px;
 }
 .dataTable{
   background-color: white;
