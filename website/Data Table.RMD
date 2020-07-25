@@ -1,0 +1,38 @@
+---
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = F,
+	message = FALSE,
+	warning = FALSE
+)
+library(plotly)
+library(tidyverse)
+library(DT)
+library(janitor)
+```
+
+```{r Read CSV, message=FALSE, warning=FALSE}
+datatable <- read.csv("https://raw.githubusercontent.com/prayaggordy/D3-covid-map/master/data/md_counties_today_table.csv")
+```
+
+```{r Setup, message=FALSE, warning=FALSE}
+colnames(datatable) <- c("County", "Cases", "Deaths", "Tests", "14-Day Trend")
+data <- select(datatable, "County", "Cases", "Deaths", "Tests")
+```
+
+```{r Data Table, message=FALSE, warning=FALSE}
+
+datatable(data, rownames = FALSE, options = list(
+  dom = 't',
+  pageLength = 25,
+  style = 'bootstrap',
+  initComplete = JS(
+    "function(settings, json) {",
+    "$('body').css({'font-family': 'Helvetica'});",
+    "}"
+)))
+```
+
