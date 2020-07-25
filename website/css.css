@@ -148,15 +148,10 @@
   place-items: center;
 }
 .footer{
-  position: fixed;
-  left: 0;
-  bottom: 0;
   height: 60px;
   width: 100%;
   font-size: 14px;
   background-color: #e7e7e7;
   color: gray;
-  display: grid;
-  place-items: center;
-  padding-top: 8px;
+  text-align: center;
 }
