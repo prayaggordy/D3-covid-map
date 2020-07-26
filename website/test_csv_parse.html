@@ -1,0 +1,23 @@
+<html>
+<head>
+  <script src="PapaParse-5.0.2/papaparse.min.js"></script>
+  <script>
+function getCSV(func) {
+  Papa.parse("https://raw.githubusercontent.com/prayaggordy/D3-covid-map/master/data/card_values.csv", {
+download: true,
+header: false,
+complete: function(results) {
+  ar = results.data[1][0];
+console.log(ar);
+}
+});
+
+
+}
+</script>
+</head>
+<body>
+<button onclick="getCSV()">Click me</button>
+</body>
+
+</html>
