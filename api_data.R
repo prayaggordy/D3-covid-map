@@ -2,6 +2,7 @@ library(tidyverse)
 library(jsonify)
 library(janitor)
 library(zoo)
+library(scales)
 
 pop_county <- read_csv("population/county.csv")
 pop_zip <- read_csv("population/zip.csv")
@@ -191,9 +192,22 @@ md_counties_trend_table <- inner_join(md_counties_cases, md_counties_deaths, by 
 	inner_join(counties_proper_names, by = "county") %>%
 	select(County, date, new_cases, rolling_avg)
 
+card_values <- data.frame(
+	cases = c(slice(md_statewide_cases, n()) %>% pull(cases) %>% comma(), slice(md_statewide_cases, n()) %>% pull(new_cases) %>% comma() %>% paste0("+", .)),
+	deaths = c(slice(md_statewide_deaths, n()) %>% pull(deaths) %>% comma(), slice(md_statewide_deaths, n()) %>% pull(new_deaths) %>% comma() %>% paste0("+", .)),
+	hospit = c(filter(md_hospit, date == max(date), name == "Total") %>% pull(value) %>% comma(), filter(md_hospit, name == "Total") %>% mutate(new_hospit = value - lag(value)) %>% slice(n()) %>% pull(new_hospit)),
+	volume = c(slice(md_volume, n()) %>% pull(number_of_tests) %>% comma(), mutate(md_volume, new_tests = number_of_tests - lag(number_of_tests)) %>% slice(n()) %>% pull(new_tests) %>% comma() %>% paste0("+", .)),
+	positivity = c(slice(md_volume, n()) %>% pull(percent_positive) %>% paste0(., "%"), mutate(md_volume, delta_pos = percent_positive - lag(percent_positive)) %>% slice(n()) %>% pull(delta_pos) %>% paste0(., "%")),
+	negative = c(slice(md_negatives, n()) %>% pull(negatives) %>% comma(), mutate(md_negatives, new_neg = negatives - lag(negatives)) %>% slice(n()) %>% pull(new_neg) %>% comma() %>% paste0("+", .)),
+	stringsAsFactors = F
+)
+
+card_values$hospit[2] <- ifelse(card_values$hospit[2] < 0, card_values$hospit[2], paste0("+", card_values$hospit[2]))
+card_values$positivity[2] <- ifelse(card_values$positivity[2] < 0, card_values$positivity[2], paste0("+", card_values$positivity[2]))
+
 save_dfs <- function(df)
 	write_csv(get(df), paste0("data/", df, ".csv"))
 
-dfs <- c("md_counties_cases", "md_counties_deaths", "md_counties_prob_deaths", "md_counties_today", "md_zips", "md_zips_today", "age_data", "sex_data", "race_data", "hospit_data", "md_negatives", "md_isolation", "md_volume", "md_ever_hospit", "md_statewide", "md_population_tested_county", "md_population_tested_county_today", "md_counties_today_table", "md_counties_trend_table")
+dfs <- c("md_counties_cases", "md_counties_deaths", "md_counties_prob_deaths", "md_counties_today", "md_zips", "md_zips_today", "age_data", "sex_data", "race_data", "hospit_data", "md_negatives", "md_isolation", "md_volume", "md_ever_hospit", "md_statewide", "md_population_tested_county", "md_population_tested_county_today", "md_counties_today_table", "md_counties_trend_table", "card_values")
 
 lapply(dfs, save_dfs)
