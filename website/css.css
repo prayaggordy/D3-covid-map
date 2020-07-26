@@ -67,20 +67,20 @@
 }
 .subhead{
   font-weight: 500;
-  font-size: 0.7em;
+  font-size: 0.6em;
   font-family: Helvetica, sans-serif, Arial;
 }
 .cardNum{
-  font-size: 1.4em;
+  font-size: 1.2em;
   font-family: Helvetica, sans-serif, Arial;
 }
 .changeNum{
-  font-size: 1em;
+  font-size: 0.9em;
   font-family: Helvetica, sans-serif, Arial;
 }
 .header{
   height: 50px;
-  font-size: 1.8em;
+  font-size: 1.6em;
   font-weight: 550;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #456087;
@@ -94,6 +94,11 @@
   background-color: #456087;
   color: white;
   padding-top: 0.5%;
+}
+.card{
+  border: 5px solid #e7e7e7;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 @media (min-width: 576px) { 
   .instructions{
@@ -119,6 +124,10 @@
     height: 60px;
     font-size: 0.8em;
   }
+  .card{
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
 }
 @media (min-width: 992px) {
   .instructions{
@@ -143,6 +152,10 @@
   .subheader{
     height: 80px;
     font-size: 1em;
+  }
+  .card{
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 }
 
@@ -193,11 +206,6 @@
 }
 .toplineNumbers{
   background-color: #f1f1f1;
-}
-.card{
-  border: 5px solid #e7e7e7;
-  padding-top: 20px;
-  padding-bottom: 20px;
 }
 .dataTable{
   background-color: white;
