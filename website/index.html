@@ -3,7 +3,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<link rel="stylesheet" href="css.css">
 	<script src="https://d3js.org/d3.v5.min.js"></script>
+<<<<<<< HEAD
     <script src = "javascript.js"></script>
+=======
+	<script src = "javascript.js"></script> 
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+>>>>>>> b932c67bc224fae77a1d0c4e49d27173604557d4
     <script type="module">
 		// county new cases map
         import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
@@ -111,17 +116,13 @@
 				<div class="row">
 					<div class="col-md-4 toplineNumbers">
 						<div class="row">
-							<div class="col-md-12">
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6 card">
+							<div class="col-md-6 col-xs-6 card">
 								<div class="subhead">Confirmed Cases</div>
 								<div class="cardNum">83,054</div>
 								<div class="descBig">Daily Change</div>
 								<div class="changeNum">+1,288</div>
 							</div>
-							<div class="col-md-6 card">
+							<div class="col-md-6 col-xs-6 card">
 								<div class="subhead">Confirmed Deaths</div>
 								<div class="cardNum">3,304</div>
 								<div class="descBig">Daily Change</div>
@@ -129,13 +130,13 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-6 card">
+							<div class="col-md-6 col-xs-6 card">
 								<div class="subhead">Hospitalized</div>
 								<div class="cardNum">545</div>
 								<div class="descBig">Daily Change</div>
 								<div class="changeNum">+12</div>
 							</div>
-							<div class="col-md-6 card">
+							<div class="col-md-6 col-xs-6 card">
 								<div class="subhead">Testing Volume</div>
 								<div class="cardNum">1,075,316</div>
 								<div class="descBig">Daily Change</div>
@@ -143,13 +144,13 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-6 card">
+							<div class="col-md-6 col-xs-6 card">
 								<div class="subhead">Positivity Rate</div>
 								<div class="cardNum">4.48%</div>
 								<div class="descBig">Daily Change</div>
 								<div class="changeNum">-0.21</div>
 							</div>
-							<div class="col-md-6 card">
+							<div class="col-md-6 col-xs-6 card">
 								<div class="subhead">Negative Tests</div>
 								<div class="cardNum">742,272</div>
 								<div class="descBig">Daily Change</div>
@@ -157,7 +158,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-8 mapContainer">
+					<div class="col-md-8 col-xs-12 mapContainer">
 						<div class="toggleMap toggleMapVisible" id="countyNewCases"></div>
 						<div class="toggleMap" id="countyTotalCases"></div>
 						<div class="toggleMap" id="zipNewCases"></div>
@@ -172,7 +173,7 @@
                        </div>
 				</div>
 				<div class="row">
-					<div class="col-md-7 lineChartContainer">
+					<div class="col-md-7 col-xs-12 lineChartContainer">
 						<div class="toggleLine toggleLineVisible" id="hospitalizations"></div>
 						<div class="toggleLine" id="newCases"></div>
 						<div class="toggleLine" id="newDeaths"></div>
@@ -183,7 +184,7 @@
 						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('newDeaths')"> New deaths</button>
 						<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('positivityRate')"> Positivity rate</button>
 					</div>
-					<div class="col-md-5 barChartContainer">
+					<div class="col-md-5 col-xs-12 barChartContainer">
 						<div class="toggleBar toggleBarVisible" id="raceBreakdown"></div>
 						<div class="toggleBar" id="ageBreakdown"></div>
 						<div class="toggleBar" id="genderBreakdown"></div>
@@ -194,7 +195,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 dataTable">
+			<div class="col-md-3 col-xs-12 dataTable">
 				<iframe class="tableEmbed" src="Data-Table.html" width="100%" height="97%" style="border: none; margin: none; padding: none;"></iframe>
 				<div class="instructions"><p>Some Blurb can go here. Maybe this is where the attribution of the data source is or some methodology.</p></div>
 			</div>

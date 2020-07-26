@@ -140,15 +140,13 @@
   padding-bottom: 15px;
 }
 .toplineNumbers{
-  background-color: #f1f1f1;
+  background-color: white;
+  border: 5px solid #e7e7e7;
 }
 .card{
-  border: 5px solid #e7e7e7;
   padding-top: 25px;
   padding-bottom: 25px;
-  position: relative;
-  width: auto;
-  min-width: 235px;
+  border: 1px solid white;
 }
 .dataTable{
   background-color: white;
