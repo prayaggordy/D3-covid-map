@@ -50,38 +50,106 @@
 .num{
   font-size: 14px;
 }
+
+
+
+
 .instructions{
-  font-size: 0.8em;
+  font-size: 0.5em;
   color: gray;
   padding-top: 2px;
 }
 .descBig{
   color: gray;
-  font-size: 1em;
+  font-size: 0.5em;
   font-family: Helvetica, sans-serif, Arial;
   text-transform: uppercase;
 }
 .subhead{
   font-weight: 500;
-  font-size: 1.5em;
+  font-size: 0.7em;
   font-family: Helvetica, sans-serif, Arial;
 }
 .cardNum{
-  font-size: 2.5em;
+  font-size: 1.4em;
   font-family: Helvetica, sans-serif, Arial;
 }
 .changeNum{
-  font-size: 1.6em;
+  font-size: 1em;
   font-family: Helvetica, sans-serif, Arial;
 }
-.title{
-  font-size: 45px;
+.header{
+  height: 50px;
+  font-size: 1.8em;
   font-weight: 550;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-family: Helvetica, sans-serif, Arial;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  background-color: #456087;
+  color: white;
+  text-indent: 1%;
+  padding-top: 8px;
 }
+.subheader{
+  height: 50px;
+  font-size: 0.6em;
+  background-color: #456087;
+  color: white;
+  padding-top: 0.5%;
+}
+@media (min-width: 576px) { 
+  .instructions{
+    font-size: 0.6em;
+  }
+  .descBig{
+    font-size: 0.8em;
+  }
+  .subhead{
+    font-size: 1.1em;
+  }
+  .cardNum{
+    font-size: 2em;
+  }
+  .changeNum{
+    font-size: 1.4em;
+  }
+  .header{
+    height: 60px;
+    font-size: 2em;
+  }
+  .subheader{
+    height: 60px;
+    font-size: 0.8em;
+  }
+}
+@media (min-width: 992px) {
+  .instructions{
+    font-size: 0.8em;
+  }
+  .descBig{
+    font-size: 1em;
+  }
+  .subhead{
+    font-size: 1.5em;
+  }
+  .cardNum{
+    font-size: 2.4em;
+  }
+  .changeNum{
+    font-size: 1.6em;
+  }
+  .header{
+    height: 80px;
+    font-size: 2.4em;
+  }
+  .subheader{
+    height: 80px;
+    font-size: 1em;
+  }
+}
+
+
+
+
+
 
 
 
@@ -107,23 +175,7 @@
 
 
 
-.header{
-  height: 80px;
-  font-size: 2.4em;
-  font-weight: 550;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #456087;
-  color: white;
-  text-indent: 1%;
-  padding-top: 8px;
-}
-.subheader{
-  height: 80px;
-  font-size: 1em;
-  background-color: #456087;
-  color: white;
-  padding-top: 0.5%;
-}
+
 .mapContainer{
   border: 5px solid #e7e7e7;
   padding-top: 20px;
