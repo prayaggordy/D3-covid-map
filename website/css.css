@@ -129,7 +129,6 @@
   .subheader{
     height: 60px;
     font-size: 0.8em;
-    padding-left: 5px;
   }
   .card{
     padding-top: 15px;
@@ -163,6 +162,7 @@
   .subheader{
     height: 80px;
     font-size: 1em;
+    padding-left: 5px;
   }
   .card{
     padding-top: 20px;
