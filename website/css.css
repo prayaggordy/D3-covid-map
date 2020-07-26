@@ -51,27 +51,27 @@
   font-size: 14px;
 }
 .instructions{
-  font-size: 11px;
+  font-size: 0.8em;
   color: gray;
   padding-top: 2px;
 }
 .descBig{
   color: #456087;
-  font-size: 16px;
+  font-size: 1em;
   font-family: Helvetica, sans-serif, Arial;
   text-transform: uppercase;
 }
 .subhead{
   font-weight: 500;
-  font-size: 22px;
+  font-size: 1.5em;
   font-family: Helvetica, sans-serif, Arial;
 }
 .cardNum{
-  font-size: 40px;
+  font-size: 2.5em;
   font-family: Helvetica, sans-serif, Arial;
 }
 .changeNum{
-  font-size: 24px;
+  font-size: 1.8em;
   font-family: Helvetica, sans-serif, Arial;
 }
 .title{
@@ -109,7 +109,7 @@
 
 .header{
   height: 80px;
-  font-size: 29pt;
+  font-size: 2.4em;
   font-weight: 550;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #456087;
@@ -119,7 +119,7 @@
 }
 .subheader{
   height: 80px;
-  font-size: 16px;
+  font-size: 1em;
   background-color: #456087;
   color: white;
   padding-top: 0.5%;
@@ -144,8 +144,8 @@
 }
 .card{
   border: 5px solid #e7e7e7;
-  padding-top: 25px;
-  padding-bottom: 25px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 .dataTable{
   background-color: white;
@@ -160,7 +160,7 @@
 .footer{
   height: 60px;
   width: 100%;
-  font-size: 14px;
+  font-size: 0.9em;
   background-color: #e7e7e7;
   color: gray;
   text-align: center;
