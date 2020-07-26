@@ -2,6 +2,31 @@
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<link rel="stylesheet" href="css.css">
+  <script src="PapaParse-5.0.2/papaparse.min.js"></script>
+  <script src="jquery-3.5.1.min.js"></script>
+  <script>
+  function fillData() {
+    Papa.parse("https://raw.githubusercontent.com/prayaggordy/D3-covid-map/master/data/card_values.csv", {
+      download: true,
+      header: false,
+      complete: function(results) {
+        results = results.data;
+        $("#total_cases").text(results[1][0]);
+        $("#total_death").text(results[1][1]);
+        $("#total_hospi").text(results[1][2]);
+        $("#total_tests").text(results[1][3]);
+        $("#total_posit").text(results[1][4]);
+        $("#total_negat").text(results[1][5]);
+        $("#new_cases").text(results[2][0]);
+        $("#new_death").text(results[2][1]);
+        $("#new_hospi").text(results[2][2]);
+        $("#new_tests").text(results[2][3]);
+        $("#new_posit").text(results[2][4]);
+        $("#new_negat").text(results[2][5]);
+      }
+    });
+  }
+</script>
 	<script src="https://d3js.org/d3.v5.min.js"></script>
 	<script src = "javascript.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +116,7 @@
 	</script>
 </head>
 
-<body>
+<body onload="fillData();">
 <div class="container-fluid parent">
 	<div class="row">
 		<div class="col-md-4 col-xs-12 header">
@@ -111,46 +136,46 @@
 			<div class="col-md-9">
 				<div class="row">
 					<div class="col-md-4 toplineNumbers">
-						<div class="row">
-							<div class="col-md-6 col-xs-6 card">
+            <div class="row">
+							<div class="col-md-6 card">
 								<div class="subhead">Confirmed Cases</div>
-								<div class="cardNum">83,054</div>
+								<div class="cardNum" id="total_cases"></div>
 								<div class="descBig">Daily Change</div>
-								<div class="changeNum">+1,288</div>
+								<div class="changeNum" id="new_cases"></div>
 							</div>
-							<div class="col-md-6 col-xs-6 card">
+							<div class="col-md-6 card">
 								<div class="subhead">Confirmed Deaths</div>
-								<div class="cardNum">3,304</div>
+								<div class="cardNum" id="total_death"></div>
 								<div class="descBig">Daily Change</div>
-								<div class="changeNum">+11</div>
+								<div class="changeNum" id="new_death"></div>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-6 col-xs-6 card">
+							<div class="col-md-6 card">
 								<div class="subhead">Hospitalized</div>
-								<div class="cardNum">545</div>
+								<div class="cardNum" id="total_hospi"></div>
 								<div class="descBig">Daily Change</div>
-								<div class="changeNum">+12</div>
+								<div class="changeNum" id="new_hospi"></div>
 							</div>
-							<div class="col-md-6 col-xs-6 card">
+							<div class="col-md-6 card">
 								<div class="subhead">Testing Volume</div>
-								<div class="cardNum">1,075,316</div>
+								<div class="cardNum" id="total_tests"></div>
 								<div class="descBig">Daily Change</div>
-								<div class="changeNum">+34,874</div>
+								<div class="changeNum" id="new_tests"></div>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-6 col-xs-6 card">
+							<div class="col-md-6 card">
 								<div class="subhead">Positivity Rate</div>
-								<div class="cardNum">4.48%</div>
+								<div class="cardNum" id="total_posit"></div>
 								<div class="descBig">Daily Change</div>
-								<div class="changeNum">-0.21</div>
+								<div class="changeNum" id="new_posit"></div>
 							</div>
-							<div class="col-md-6 col-xs-6 card">
+							<div class="col-md-6 card">
 								<div class="subhead">Negative Tests</div>
-								<div class="cardNum">742,272</div>
+								<div class="cardNum" id="total_negat"></div>
 								<div class="descBig">Daily Change</div>
-								<div class="changeNum">+19,688</div>
+								<div class="changeNum" id="new_negat"></div>
 							</div>
 						</div>
 					</div>
