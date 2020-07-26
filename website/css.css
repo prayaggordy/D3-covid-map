@@ -85,7 +85,7 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #456087;
   color: white;
-  text-indent: 1%;
+  padding-left: 15px;
   padding-top: 8px;
 }
 .subheader{
@@ -94,6 +94,7 @@
   background-color: #456087;
   color: white;
   padding-top: 0.5%;
+  padding-left: 15px;
 }
 .card{
   border: 5px solid #e7e7e7;
@@ -119,6 +120,7 @@
   .header{
     height: 60px;
     font-size: 2em;
+    padding-left: 20px;
   }
   .subheader{
     height: 60px;
@@ -127,6 +129,7 @@
   .card{
     padding-top: 15px;
     padding-bottom: 15px;
+    padding-left: 0px;
   }
 }
 @media (min-width: 992px) {
