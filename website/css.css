@@ -105,6 +105,12 @@
   background-color: #e7e7e7;
   border: 1px solid #e7e7e7;
 }
+.dataTable{
+  background-color: white;
+  border: 5px solid #e7e7e7;
+  padding-top: 10px;
+  height: 500px;
+}
 @media (min-width: 576px) { 
   .instructions{
     font-size: 0.6em;
@@ -137,6 +143,12 @@
   }
   .toplineNumbers{
     border: 0px solid #e7e7e7;
+  }
+  .dataTable{
+    background-color: white;
+    border: 5px solid #e7e7e7;
+    padding-top: 10px;
+    height: auto;
   }
 }
 @media (min-width: 992px) {
@@ -211,12 +223,6 @@
   border: 5px solid #e7e7e7;
   padding-top: 12px;
   padding-bottom: 15px;
-}
-.dataTable{
-  background-color: white;
-  border: 5px solid #e7e7e7;
-  padding-top: 10px;
-  padding-bottom: 20px;
 }
 .tableEmbed{
   display: block;
