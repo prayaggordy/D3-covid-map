@@ -107,12 +107,11 @@
   background-color: #e7e7e7;
   border: 2px solid #e7e7e7;
 }
-.tableContainer{
+.dataTable{
   background-color: white;
   border: 5px solid #e7e7e7;
   padding-top: 10px;
   height: 500px;
-  font-family: Arial, Helvetica, sans-serif;
 }
 .btn{
   background-color: #f5f5f5;
@@ -162,7 +161,7 @@
   .toplineNumbers{
     border: 0px solid #e7e7e7;
   }
-  .tableContainer{
+  .dataTable{
     background-color: white;
     border: 5px solid #e7e7e7;
     padding-top: 10px;
