@@ -58,24 +58,26 @@ md_counties_prob_deaths <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/
 	mutate(new_prob_deaths = pmax(prob_deaths - lag(prob_deaths), 0)) %>%
 	ungroup()
 
-md_counties_today <- inner_join(filter(md_counties_cases, date == max(date)), filter(md_counties_deaths, date == max(date)), by = c("county", "date", "fips")) %>%
-	inner_join(filter(md_counties_prob_deaths, date == max(date)), by = c("county", "date", "fips")) %>%
-	select(county, fips, cases, deaths, prob_deaths, new_cases, new_deaths, new_prob_deaths) %>%
+md_counties <- inner_join(md_counties_cases, md_counties_deaths, by = c("county", "date", "fips")) %>%
+	inner_join(md_counties_prob_deaths, by = c("county", "date", "fips")) %>%
+	select(county, fips, date, cases, deaths, prob_deaths, new_cases, new_deaths, new_prob_deaths) %>%
 	inner_join(pop_county) %>%
 	mutate(cases_per_100k = cases/population*100000,
 				 deaths_per_100k = deaths/population*100000,
 				 prob_deaths_per_100k = prob_deaths/population*100000)
+
+md_counties_today <- filter(md_counties, date == max(date))
 
 md_zips <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_MASTER_ZIP_CODE_CASES/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("2020-04-11"), "zip_code") %>%
 	select(date, zip = zip_code, cases = value) %>%
 	group_by(zip) %>%
 	mutate(new_cases = pmax(cases - lag(cases), 0)) %>%
-	ungroup()
-
-md_zips_today <- filter(md_zips, date == max(date)) %>%
+	ungroup() %>%
 	inner_join(pop_zip) %>%
 	mutate(cases_per_100k = cases/population*100000)
+
+md_zips_today <- filter(md_zips, date == max(date))
 
 md_age_cases <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_CasesByAgeDistribution/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("3/29/2020", "%m/%d/%y")) %>%
@@ -242,6 +244,6 @@ save_html(dt_html, here("website", "Data-Table.html"))
 save_dfs <- function(df)
 	write_csv(get(df), paste0("data/", df, ".csv"))
 
-dfs <- c("md_counties_cases", "md_counties_deaths", "md_counties_prob_deaths", "md_counties_today", "md_zips", "md_zips_today", "age_data", "sex_data", "race_data", "hospit_data", "md_negatives", "md_isolation", "md_volume", "md_ever_hospit", "md_statewide", "md_population_tested_county", "md_population_tested_county_today", "md_counties_today_table", "md_counties_trend_table", "card_values")
+dfs <- c("md_counties_cases", "md_counties_deaths", "md_counties_prob_deaths", "md_counties", "md_counties_today", "md_zips", "md_zips_today", "age_data", "sex_data", "race_data", "hospit_data", "md_negatives", "md_isolation", "md_volume", "md_ever_hospit", "md_statewide", "md_population_tested_county", "md_population_tested_county_today", "md_counties_today_table", "md_counties_trend_table", "card_values")
 
 lapply(dfs, save_dfs)
