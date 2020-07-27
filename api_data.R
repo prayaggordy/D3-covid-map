@@ -220,7 +220,7 @@ dt_html <- datatable(
 	rownames = FALSE,
 	options = list(
 		dom = 't',
-		pageLength = 25,
+		pageLength = 12,
 		initComplete = JS(
 			"function(settings, json) {",
 			"$('body').css({'font-family': 'Helvetica'});",
