@@ -6,6 +6,7 @@
   border: 1px solid lightgray;
   padding: 10px;
   position: absolute;
+  display: none;
   font-family: Helvetica, Arial, sans-serif;
 }
 .container{

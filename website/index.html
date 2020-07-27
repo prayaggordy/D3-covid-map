@@ -115,6 +115,13 @@
 		const inspect = Inspector.into("#genderBreakdown");
 		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
 	</script>
+	<script type="module">
+		// data table
+		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+		import define from "https://api.observablehq.com/@prayaggordy/data-table.js?v=3";
+		const inspect = Inspector.into("#dataTable");
+		(new Runtime).module(define, name => name === "t" ? inspect() : undefined);
+	</script>
 </head>
 
 <body onload="fillData();">
@@ -220,8 +227,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 col-xs-12 dataTable">
-				<iframe class="tableEmbed" src="Data-Table.html" width="100%" height="97%" style="border: none; margin: none; padding: none;"></iframe>
+			<div class="col-md-3 col-xs-12">
+				<div id="dataTable"></div>
 			</div>
 		</div>
 	<div class="row">
