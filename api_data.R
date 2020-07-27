@@ -92,8 +92,7 @@ md_age_prob_deaths <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgi
 age_data <- md_indicator_combine(md_age_cases, md_age_deaths, md_age_prob_deaths, "age_range") %>%
 	mutate(age = str_replace_all(str_sub(age_range, 5), c("_to_" = "-", "plus" = "+"))) %>%
 	select(age, variable, value) %>%
-	pivot_wider(names_from = variable, values_from = value) %>%
-	select(-`Probable deaths`)
+	pivot_wider(names_from = variable, values_from = value)
 
 md_sex_cases <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_CasesByGenderDistribution/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("3/12/2020", "%m/%d/%y")) %>%
