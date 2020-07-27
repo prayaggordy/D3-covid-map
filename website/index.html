@@ -127,14 +127,14 @@
 <body onload="fillData();">
 <div class="container-fluid parent">
 	<div class="row">
-		<div class="col-md-4 col-xs-12 header">
+		<div class="col-md-4 col-12 header">
 			<div class="page-header">
 				<p>
 					Maryland Coronavirus Dashboard
 				</p>
 			</div>
 		</div>
-		<div class="col-md-8 col-xs-12 subheader">
+		<div class="col-md-8 col-12 subheader">
 			<p>
 				This is where instructions will go. Hopefully these instructions will allow the user to understand why we decided to include what we did.
 			</p>
@@ -143,7 +143,7 @@
 		<div class="row">
 			<div class="col-md-9">
 				<div class="row">
-					<div class="col-md-4 order-2 order-lg-1 toplineNumbers">
+					<div class="col-md-4 order-1 order-md-2 order-lg-1 toplineNumbers">
 						<div class="row">
 							<div class="col-lg-6 col-4 card">
 								<div class="subhead">Confirmed Cases</div>
@@ -184,7 +184,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-8 col-xs-12 order-1 order-lg-2 mapContainer">
+					<div class="col-lg-8 col-12 order-2 order-md-1 order-lg-2 mapContainer">
 						<div class="toggleMap toggleMapVisible" id="countyNewCases"></div>
 						<div class="toggleMap" id="countyTotalCases"></div>
 						<div class="toggleMap" id="zipNewCases"></div>
@@ -201,7 +201,7 @@
                        </div>
 				</div>
 				<div class="row">
-					<div class="col-md-7 col-xs-12 lineChartContainer">
+					<div class="col-md-7 col-12 lineChartContainer">
 						<div class="toggleLine toggleLineVisible" id="hospitalizations"></div>
 						<div class="toggleLine" id="newCases"></div>
 						<div class="toggleLine" id="newDeaths"></div>
@@ -214,7 +214,7 @@
 							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('positivityRate')"> Positivity rate</button>
 						</div>
 					</div>
-					<div class="col-md-5 col-xs-12 barChartContainer">
+					<div class="col-md-5 col-12 barChartContainer">
 						<div class="toggleBar toggleBarVisible" id="raceBreakdown"></div>
 						<div class="toggleBar" id="ageBreakdown"></div>
 						<div class="toggleBar" id="genderBreakdown"></div>
@@ -227,7 +227,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 col-xs-12 tableContainer">
+			<div class="col-md-3 col-12 tableContainer">
 				<div id="dataTable"></div>
 			</div>
 		</div>
