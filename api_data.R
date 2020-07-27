@@ -189,11 +189,14 @@ md_counties_trend_table <- inner_join(md_counties_cases, md_counties_deaths, by 
 	inner_join(counties_proper_names, by = "county") %>%
 	select(County, date, new_cases, rolling_avg)
 
+md_tested_statewide <- group_by(md_population_tested_county, date) %>%
+	summarize(tested = sum(value))
+
 card_values <- data.frame(
 	cases = c(slice(md_statewide_cases, n()) %>% pull(cases) %>% comma(), slice(md_statewide_cases, n()) %>% pull(new_cases) %>% comma() %>% paste0("+", .)),
 	deaths = c(slice(md_statewide_deaths, n()) %>% pull(deaths) %>% comma(), slice(md_statewide_deaths, n()) %>% pull(new_deaths) %>% comma() %>% paste0("+", .)),
 	hospit = c(filter(md_hospit, date == max(date), name == "Total") %>% pull(value) %>% comma(), filter(md_hospit, name == "Total") %>% mutate(new_hospit = value - lag(value)) %>% slice(n()) %>% pull(new_hospit)),
-	volume = c(slice(md_volume, n()) %>% pull(number_of_tests) %>% comma(), mutate(md_volume, new_tests = number_of_tests - lag(number_of_tests)) %>% slice(n()) %>% pull(new_tests) %>% comma() %>% paste0("+", .)),
+	volume = c(slice(md_tested_statewide, n()) %>% pull(tested) %>% comma(), mutate(md_tested_statewide, new_tests = tested - lag(tested)) %>% slice(n()) %>% pull(new_tests) %>% comma() %>% paste0("+", .)),
 	positivity = c(slice(md_volume, n()) %>% pull(percent_positive) %>% paste0(., "%"), mutate(md_volume, delta_pos = percent_positive - lag(percent_positive)) %>% slice(n()) %>% pull(delta_pos) %>% paste0(., "%")),
 	negative = c(slice(md_negatives, n()) %>% pull(negatives) %>% comma(), mutate(md_negatives, new_neg = negatives - lag(negatives)) %>% slice(n()) %>% pull(new_neg) %>% comma() %>% paste0("+", .)),
 	stringsAsFactors = F
