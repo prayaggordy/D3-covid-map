@@ -143,7 +143,48 @@
 		<div class="row">
 			<div class="col-md-9">
 				<div class="row">
-					<!-- <div class="col-lg-8 col-xs-12 order-1 order-lg-2 mapContainer"> -->
+					<div class="col-md-4 order-2 order-lg-1 toplineNumbers">
+						<div class="row">
+							<div class="col-lg-6 col-4 card">
+								<div class="subhead">Confirmed Cases</div>
+								<div class="cardNum" id="total_cases"></div>
+								<div class="descBig">Daily Change</div>
+								<div class="changeNum" id="new_cases"></div>
+							</div>
+							<div class="col-lg-6 col-4 card">
+								<div class="subhead">Confirmed Deaths</div>
+								<div class="cardNum" id="total_death"></div>
+								<div class="descBig">Daily Change</div>
+								<div class="changeNum" id="new_death"></div>
+							</div>
+
+							<div class="col-lg-6 col-4 card">
+								<div class="subhead">Hospitalized</div>
+								<div class="cardNum" id="total_hospi"></div>
+								<div class="descBig">Daily Change</div>
+								<div class="changeNum" id="new_hospi"></div>
+							</div>
+							<div class="col-lg-6 col-4 card">
+								<div class="subhead">Testing Volume</div>
+								<div class="cardNum" id="total_tests"></div>
+								<div class="descBig">Daily Change</div>
+								<div class="changeNum" id="new_tests"></div>
+							</div>
+							<div class="col-lg-6 col-4 card">
+								<div class="subhead">Positivity Rate</div>
+								<div class="cardNum" id="total_posit"></div>
+								<div class="descBig">Daily Change</div>
+								<div class="changeNum" id="new_posit"></div>
+							</div>
+							<div class="col-lg-6 col-4 card">
+								<div class="subhead">Negative Tests</div>
+								<div class="cardNum" id="total_negat"></div>
+								<div class="descBig">Daily Change</div>
+								<div class="changeNum" id="new_negat"></div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-8 col-xs-12 order-1 order-lg-2 mapContainer">
 						<div class="toggleMap toggleMapVisible" id="countyNewCases"></div>
 						<div class="toggleMap" id="countyTotalCases"></div>
 						<div class="toggleMap" id="zipNewCases"></div>
@@ -157,49 +198,8 @@
 							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('zipTotalCases')"> Total cases by zip</button>
 							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyTesting')"> Testing by county</button>
 						</div>
-                       <!-- </div> -->
+                       </div>
 				</div>
-        <div class="row">
-          <div class="row">
-            <div class="col-lg-2 col-4 card">
-              <div class="subhead">Confirmed Cases</div>
-              <div class="cardNum" id="total_cases"></div>
-              <div class="descBig">Daily Change</div>
-              <div class="changeNum" id="new_cases"></div>
-            </div>
-            <div class="col-lg-2 col-4 card">
-              <div class="subhead">Confirmed Deaths</div>
-              <div class="cardNum" id="total_death"></div>
-              <div class="descBig">Daily Change</div>
-              <div class="changeNum" id="new_death"></div>
-            </div>
-
-            <div class="col-lg-2 col-4 card">
-              <div class="subhead">Hospitalized</div>
-              <div class="cardNum" id="total_hospi"></div>
-              <div class="descBig">Daily Change</div>
-              <div class="changeNum" id="new_hospi"></div>
-            </div>
-            <div class="col-lg-2 col-4 card">
-              <div class="subhead">Testing Volume</div>
-              <div class="cardNum" id="total_tests"></div>
-              <div class="descBig">Daily Change</div>
-              <div class="changeNum" id="new_tests"></div>
-            </div>
-            <div class="col-lg-2 col-4 card">
-              <div class="subhead">Positivity Rate</div>
-              <div class="cardNum" id="total_posit"></div>
-              <div class="descBig">Daily Change</div>
-              <div class="changeNum" id="new_posit"></div>
-            </div>
-            <div class="col-lg-2 col-4 card">
-              <div class="subhead">Negative Tests</div>
-              <div class="cardNum" id="total_negat"></div>
-              <div class="descBig">Daily Change</div>
-              <div class="changeNum" id="new_negat"></div>
-            </div>
-          </div>
-        </div>
 				<div class="row">
 					<div class="col-md-7 col-xs-12 lineChartContainer">
 						<div class="toggleLine toggleLineVisible" id="hospitalizations"></div>
@@ -227,15 +227,15 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 col-xs-12">
+			<div class="col-md-3 col-xs-12 tableContainer">
 				<div id="dataTable"></div>
 			</div>
 		</div>
 	<div class="row">
 		<footer class="col-md-12 footer">
 			<p>
-				Designed by Adam Chazan and Prayag Gordy<br>
-				adam.e.chazan@gmail.com, prayaggordy@gmail.com
+				Designed by Prayag Gordy and Adam Chazan <br>
+				prayaggordy@gmail.com, adam.e.chazan@gmail.com
 			</p>
 		</footer>
 	</div>
