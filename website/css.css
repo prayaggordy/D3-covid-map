@@ -131,6 +131,10 @@
   padding-top: 20px;
   padding-bottom: 15px;
 }
+.toggleMap{
+  display: none;
+  width: 100%;
+}
 @media (min-width: 576px) { 
   .instructions{
     font-size: 0.6em;
@@ -278,16 +282,17 @@
     padding-top: 25px;
     padding-bottom: 25px;
   }
+  .toggleMap{
+    display: none;
+    width: 100%;
+    padding-left: 20%;
+  }
 }
 
 
 
 
 
-.toggleMap{
-  display: none;
-  width: 100%;
-}
 .toggleMap.toggleMapVisible{
   display: block;
 }
