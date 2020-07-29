@@ -44,7 +44,7 @@ line <- trend %>%
 ```
 
 ```{r}
-datatable(line, escape = F, style = 'bootstrap', class = 'table-hover', rownames = FALSE,
+datatable(line, escape = F, style = 'bootstrap', class = 'table', rownames = FALSE,
             options = list(
             dom = 't',
             pageLength = 25,
