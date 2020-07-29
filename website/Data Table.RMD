@@ -61,7 +61,6 @@ data <- select(datatable, "County", "Cases", "Deaths", "Tests")
 ```
 
 ```{r Data Table, message=FALSE, warning=FALSE}
-
 datatable(data, style = 'bootstrap', class = 'table-hover', rownames = FALSE, options = list(
   dom = 't',
   pageLength = 25
