@@ -16,7 +16,7 @@ library(janitor)
 ```
 
 ```{r Read CSV, message=FALSE, warning=FALSE}
-datatable <- read.csv("https://raw.githubusercontent.com/prayaggordy/D3-covid-map/master/data/md_counties_today_table.csv")
+totalData <- read.csv("https://raw.githubusercontent.com/prayaggordy/D3-covid-map/master/data/md_counties_today_table.csv")
 trendData <- read.csv("https://raw.githubusercontent.com/prayaggordy/D3-covid-map/master/data/md_counties_trend_table.csv")
 ```
 
@@ -25,7 +25,7 @@ trend <- select(trendData, "County", "date", "rolling_avg")
 ```
 
 ```{r}
-line <- trend %>% 
+df <- trend %>% 
     group_by(County) %>% 
     summarize(`14-Day Trend` = spk_chr(rolling_avg,
                            lineColor = '#456087', 
@@ -44,7 +44,12 @@ line <- trend %>%
 ```
 
 ```{r}
-datatable(line, escape = F, style = 'bootstrap', class = 'table', rownames = FALSE,
+data <- select(totalData, "County", "Cases")
+data <- data %>% inner_join(df)
+```
+
+```{r}
+datatable(data, escape = F, style = 'bootstrap', class = 'table', rownames = FALSE,
             options = list(
             dom = 't',
             pageLength = 25,
@@ -53,17 +58,5 @@ datatable(line, escape = F, style = 'bootstrap', class = 'table', rownames = FAL
                                               }'))
   ) %>%
 spk_add_deps()
-```
-
-```{r Setup, message=FALSE, warning=FALSE}
-colnames(datatable) <- c("County", "Cases", "Deaths", "Tests", "14-Day Trend")
-data <- select(datatable, "County", "Cases", "Deaths", "Tests")
-```
-
-```{r Data Table, message=FALSE, warning=FALSE}
-datatable(data, style = 'bootstrap', class = 'table-hover', rownames = FALSE, options = list(
-  dom = 't',
-  pageLength = 25
-))
 ```
 
