@@ -11,11 +11,48 @@ knitr::opts_chunk$set(
 library(plotly)
 library(tidyverse)
 library(DT)
+library(sparkline)
 library(janitor)
 ```
 
 ```{r Read CSV, message=FALSE, warning=FALSE}
 datatable <- read.csv("https://raw.githubusercontent.com/prayaggordy/D3-covid-map/master/data/md_counties_today_table.csv")
+trendData <- read.csv("https://raw.githubusercontent.com/prayaggordy/D3-covid-map/master/data/md_counties_trend_table.csv")
+```
+
+```{r Trend lines}
+trend <- select(trendData, "County", "date", "rolling_avg")
+```
+
+```{r}
+line <- trend %>% 
+    group_by(County) %>% 
+    summarize(`14-Day Trend` = spk_chr(rolling_avg,
+                           lineColor = '#456087', 
+                           fillColor = FALSE,
+                           lineWidth = 3,
+                           chartRangeMin = 0,
+                           chartRangeMax = 10,
+                           width = 100,
+                           height = 60,
+                           highlightLineColor = '', 
+                           highlightSpotColor = '',
+                           spotColor = '',
+                           minSpotColor = '',
+                           maxSpotColor = '',
+                           disableInteraction = TRUE))
+```
+
+```{r}
+datatable(line, escape = F, style = 'bootstrap', class = 'table-hover', rownames = FALSE,
+            options = list(
+            dom = 't',
+            pageLength = 25,
+            fnDrawCallback = htmlwidgets::JS('function(){
+                                              HTMLWidgets.staticRender();
+                                              }'))
+  ) %>%
+spk_add_deps()
 ```
 
 ```{r Setup, message=FALSE, warning=FALSE}
@@ -27,11 +64,7 @@ data <- select(datatable, "County", "Cases", "Deaths", "Tests")
 
 datatable(data, style = 'bootstrap', class = 'table-hover', rownames = FALSE, options = list(
   dom = 't',
-  pageLength = 25,
-  initComplete = JS(
-    "function(settings, json) {",
-    "$('body').css({'font-family': 'Helvetica'});",
-    "}"
-)))
+  pageLength = 25
+))
 ```
 
