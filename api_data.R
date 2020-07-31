@@ -241,7 +241,7 @@ function(){
 ) %>%
 	spk_add_deps()
 
-save_html(dt_html, here("website", "Data-Table.html"))
+# save_html(dt_html, here("website", "Data-Table.html"))
 
 save_dfs <- function(df)
 	write_csv(get(df), paste0("data/", df, ".csv"))
