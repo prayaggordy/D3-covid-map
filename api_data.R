@@ -1,5 +1,5 @@
 library(easypackages)
-libraries("tidyverse", "jsonify", "janitor", "zoo", "scales", "htmltools", "DT", "here", "sparkline")
+libraries("tidyverse", "jsonify", "janitor", "zoo", "scales", "htmltools", "DT", "here", "sparkline", "rmarkdown")
 
 pop_county <- read_csv("population/county.csv")
 pop_zip <- read_csv("population/zip.csv")
@@ -211,37 +211,39 @@ card_values$positivity[2] <- ifelse(card_values$positivity[2] < 0, card_values$p
 
 sparkline <- md_counties_trend_table %>%
 	group_by(County) %>%
-	summarize(sl = spk_chr(rolling_avg, type = "line", fillColor = F, spotColor = F, minSpotColor = F, maxSpotColor = F)) %>%
+	summarize(sl = spk_chr(rolling_avg,
+												 lineColor = '#456087',
+												 fillColor = FALSE,
+												 lineWidth = 3,
+												 chartRangeMin = 0,
+												 chartRangeMax = 10,
+												 width = 100,
+												 height = 60,
+												 highlightLineColor = '',
+												 highlightSpotColor = '',
+												 spotColor = '',
+												 minSpotColor = '',
+												 maxSpotColor = '',
+												 disableInteraction = TRUE)) %>%
 	ungroup()
 
-data_table <- inner_join(select(md_counties_today_table, -deltas), sparkline, by = "County")
+data_table <- inner_join(select(md_counties_today_table, -deltas), sparkline, by = "County") %>%
+	select(County, Cases, `14-Day Trend` = sl)
 
-dt_html <- datatable(
-	data_table,
-	style = 'bootstrap',
-	class = 'table-hover',
-	escape = FALSE,
-	rownames = FALSE,
-	options = list(
-		dom = 't',
-		pageLength = 25,
-		initComplete = JS(
-			"function(settings, json) {",
-			"$('body').css({'font-family': 'Helvetica'});",
-			"}"
-		),
-		fnDrawCallback = htmlwidgets::JS(
-			'
-function(){
-  HTMLWidgets.staticRender();
-}
-'
-		)
-	)
+dt_html <- datatable(data_table, escape = F, style = 'bootstrap', class = 'table', rownames = FALSE,
+										 options = list(dom = 't',
+										 							 pageLength = 25,
+										 							 fnDrawCallback = htmlwidgets::JS('function(){
+                                              HTMLWidgets.staticRender();
+                                              }'))
 ) %>%
 	spk_add_deps()
 
 # save_html(dt_html, here("website", "Data-Table.html"))
+
+render(here("website", "Data Table.RMD"), params = list(indic = "Cases"), output_file = here("website", "cases_table.html"))
+render(here("website", "Data Table.RMD"), params = list(indic = "Deaths"), output_file = here("website", "deaths_table.html"))
+render(here("website", "Data Table.RMD"), params = list(indic = "Tests"), output_file = here("website", "tests_table.html"))
 
 save_dfs <- function(df)
 	write_csv(get(df), paste0("data/", df, ".csv"))

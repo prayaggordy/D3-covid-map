@@ -1,23 +1,39 @@
 ---
 output: html_document
+params:
+  indic: "Cases"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(
-	echo = F,
-	message = FALSE,
-	warning = FALSE
-)
-library(plotly)
-library(tidyverse)
-library(DT)
-library(sparkline)
-library(janitor)
+knitr::opts_chunk$set(echo = F, message = FALSE, warning = FALSE)
+easypackages::libraries("tidyverse", "DT", "sparkline", "here", "zoo")
 ```
 
 ```{r Read CSV, message=FALSE, warning=FALSE}
-totalData <- read.csv("https://raw.githubusercontent.com/prayaggordy/D3-covid-map/master/data/md_counties_today_table.csv")
-trendData <- read.csv("https://raw.githubusercontent.com/prayaggordy/D3-covid-map/master/data/md_counties_trend_table.csv")
+new_col <- paste("new", tolower(params$indic), sep = "_") %>% 
+	ifelse(. == "new_tests", "positivity", .)
+
+cases <- read_csv(here("data", "md_counties_cases.csv"))
+deaths <- read_csv(here("data", "md_counties_deaths.csv"))
+tests <- read_csv(here("data", "md_population_tested_county.csv")) %>% 
+	rename(tests = value) %>% 
+	inner_join(cases, by = c("date", "county", "fips")) %>% 
+	mutate(new_tests = tests - lag(tests),
+				 positivity = new_cases/new_tests*100) %>% 
+	select(county, date, fips, tests, positivity)
+totalData <- read_csv(here("data", "md_counties_today_table.csv"))
+
+counties_proper_names <- data.frame(County = c("Allegany", "Anne Arundel", "Baltimore County", "Baltimore City", "Calvert", "Caroline", "Carroll", "Cecil", "Charles", "Dorchester", "Frederick", "Garrett", "Harford", "Howard", "Kent", "Montgomery", "Prince George's", "Queen Anne's", "Somerset", "St. Mary's", "Talbot", "Washington", "Wicomico", "Worcester"), county = cases %>% filter(county != "unknown") %>% pull(county) %>% unique())
+
+trendData <- inner_join(cases, deaths, by = c("county", "date", "fips")) %>%
+	inner_join(tests, by = c("county", "date", "fips")) %>%
+	select(county, date, new_col) %>%
+  group_by(county) %>%
+	mutate(rolling_avg = rollmeanr(get(new_col), 7, fill = NA)) %>%  # `get()` lets us refer to the column by the string we defined above
+	filter(date > max(date) - 14) %>%
+  ungroup() %>%
+	inner_join(counties_proper_names, by = "county") %>%
+	select(County, date, new_col, rolling_avg)
 ```
 
 ```{r Trend lines}
@@ -44,16 +60,15 @@ df <- trend %>%
 ```
 
 ```{r}
-data <- select(totalData, "County", "Cases")
+data <- select(totalData, County, params$indic)
 data <- data %>% inner_join(df)
 ```
 
 ```{r}
 datatable(data, escape = F, style = 'bootstrap', class = 'table', rownames = FALSE,
-            options = list(
-            dom = 't',
-            pageLength = 25,
-            fnDrawCallback = htmlwidgets::JS('function(){
+					options = list(dom = 't',
+												 pageLength = 25,
+												 fnDrawCallback = htmlwidgets::JS('function(){
                                               HTMLWidgets.staticRender();
                                               }'))
   ) %>%
