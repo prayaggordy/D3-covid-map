@@ -67,7 +67,7 @@
 }
 .subhead{
   font-weight: 500;
-  font-size: 0.65em;
+  font-size: 0.6em;
   font-family: Helvetica, sans-serif, Arial;
 }
 .cardNum{
@@ -137,7 +137,7 @@
 }
 @media (min-width: 576px) { 
   .instructions{
-    font-size: 0.6em;
+    font-size: 0.8em;
   }
   .descBig{
     font-size: 0.8em;
@@ -260,7 +260,7 @@
     font-size: 0.8em;
   }
   .subhead{
-    font-size: 1.1em;
+    font-size: 1em;
   }
   .cardNum{
     font-size: 1.5em;
@@ -285,7 +285,6 @@
   .toggleMap{
     display: none;
     width: 100%;
-    padding-left: 15%;
   }
 }
 
