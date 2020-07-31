@@ -115,13 +115,6 @@
 		const inspect = Inspector.into("#genderBreakdown");
 		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
 	</script>
-	<script type="module">
-		// data table
-		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-		import define from "https://api.observablehq.com/@prayaggordy/data-table.js?v=3";
-		const inspect = Inspector.into("#dataTable");
-		(new Runtime).module(define, name => name === "t" ? inspect() : undefined);
-	</script>
 </head>
 
 <body onload="fillData();">
@@ -241,7 +234,7 @@
 			</div>
 		</div>
 	<div class="row">
-		<footer class="col-md-12 footer">
+		<footer class="col-12 footer">
 			<p>
 				Designed by Adam Chazan and Prayag Gordy<br>
 				adam.e.chazan@gmail.com, prayaggordy@gmail.com
