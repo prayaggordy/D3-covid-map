@@ -17,3 +17,6 @@ function toggleLine(id) {
 function toggleBar(id) {
     toggle(id, "toggleBar", "toggleBarVisible")
 }
+function toggleTable(id) {
+    toggle(id, "toggleTable", "toggleTableVisible")
+}

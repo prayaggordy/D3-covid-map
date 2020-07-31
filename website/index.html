@@ -228,7 +228,16 @@
 				</div>
 			</div>
 			<div class="col-lg-3 col-xl-4 col-12 tableContainer">
-				<div id="dataTable"></div>
+        <!-- <div class="toggleTable toggleTableVisible" id="cases_table"></div> -->
+        <embed type="text/html" src="new_cases.html" width="90%" height="90%">
+        <div class="toggleTable" id="deaths_table"></div>
+        <div class="toggleTable" id="tests_table"></div>
+        <div class="instructions"><p>Testing trend line is approximated.</p></div>
+        <div class="btn-group flex-wrap" role="group">
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleTable('cases_table')"> Cases</button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleTable('deaths_table')"> Deaths</button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleTable('tests_table')"> Tests</button>
+        </div>
 			</div>
 		</div>
 	<div class="row">
