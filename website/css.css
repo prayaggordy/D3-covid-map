@@ -34,6 +34,9 @@
 .twoWeeks{
   font-size: 14px;
 }
+.caseTotal{
+  font-size: 14px;
+}
 .lineChart{
   float: left;
   width:125px;
