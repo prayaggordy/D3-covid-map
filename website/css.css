@@ -266,10 +266,10 @@
     font-size: 1em;
   }
   .cardNum{
-    font-size: 1.5em;
+    font-size: 1.35em;
   }
   .changeNum{
-    font-size: 1.4em;
+    font-size: 1.3em;
   }
   .header{
     height: unset;
@@ -326,7 +326,12 @@
 }
 .barChartContainer{
   border: 5px solid #e7e7e7;
-  padding-top: 12px;
+  padding-top: 12px
+  padding-bottom: 15px;
+}
+.tableContainer{
+  border: 5px solid #e7e7e7;
+  padding-top: 12px
   padding-bottom: 15px;
 }
 .tableEmbed{
