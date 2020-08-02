@@ -65,7 +65,7 @@ data <- select(totalData, County, params$indic) %>%
 	inner_join(df) %>% 
 	inner_join(counties_proper_names, by = "County") %>% 
 	inner_join(pop, by = "county") %>% 
-	mutate(`Per 100k` = .[[2]]/population) %>% 
+	mutate(`Per 100k` = round(.[[2]]/population*100000)) %>% 
 	select(County, 2, `Per 100k`, `14-Day Trend`)
 ```
 
