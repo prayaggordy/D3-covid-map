@@ -13,6 +13,7 @@ easypackages::libraries("tidyverse", "DT", "sparkline", "here", "zoo")
 new_col <- paste("new", tolower(params$indic), sep = "_") %>% 
 	ifelse(. == "new_tests", "positivity", .)
 
+pop <- read_csv(here("population", "county.csv"))
 cases <- read_csv(here("data", "md_counties_cases.csv"))
 deaths <- read_csv(here("data", "md_counties_deaths.csv"))
 tests <- read_csv(here("data", "md_population_tested_county.csv")) %>% 
@@ -60,8 +61,12 @@ df <- trend %>%
 ```
 
 ```{r}
-data <- select(totalData, County, params$indic)
-data <- data %>% inner_join(df)
+data <- select(totalData, County, params$indic) %>%
+	inner_join(df) %>% 
+	inner_join(counties_proper_names, by = "County") %>% 
+	inner_join(pop, by = "county") %>% 
+	mutate(`Per 100k` = .[[2]]/population) %>% 
+	select(County, 2, `Per 100k`, `14-Day Trend`)
 ```
 
 ```{r}
