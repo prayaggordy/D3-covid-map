@@ -59,30 +59,30 @@
 
 
 .instructions{
-  font-size: 0.5em;
+  font-size: 0.7em;
   color: gray;
   padding-top: 2px;
 }
 .descBig{
-  font-size: 0.5em;
+  font-size: 0.8em;
   font-family: Helvetica, sans-serif, Arial;
   text-transform: uppercase;
 }
 .subhead{
   font-weight: 500;
-  font-size: 0.6em;
-  font-family: Helvetica, sans-serif, Arial;
-}
-.cardNum{
-  font-size: 1.2em;
-  font-family: Helvetica, sans-serif, Arial;
-}
-.changeNum{
   font-size: 0.9em;
   font-family: Helvetica, sans-serif, Arial;
 }
+.cardNum{
+  font-size: 1.6em;
+  font-family: Helvetica, sans-serif, Arial;
+}
+.changeNum{
+  font-size: 1.3em;
+  font-family: Helvetica, sans-serif, Arial;
+}
 .header{
-  font-size: 1.9em;
+  font-size: 2em;
   font-family: 'Lato', sans-serif;
   font-weight: 700;
   background-color: #456087;
@@ -140,19 +140,19 @@
 }
 @media (min-width: 576px) {
   .instructions{
-    font-size: 0.8em;
+    font-size: 1em;
   }
   .descBig{
-    font-size: 0.8em;
+    font-size: 1.1em;
   }
   .subhead{
-    font-size: 0.9em;
+    font-size: 1.3em;
   }
   .cardNum{
-    font-size: 2em;
+    font-size: 2.3em;
   }
   .changeNum{
-    font-size: 1.4em;
+    font-size: 1.7em;
   }
   .header{
     height: 60px;
