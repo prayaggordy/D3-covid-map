@@ -109,12 +109,6 @@
   background-color: #e7e7e7;
   border: 2px solid #e7e7e7;
 }
-.dataTable{
-  background-color: white;
-  border: 5px solid #e7e7e7;
-  padding-top: 10px;
-  height: 500px;
-}
 .btn{
   background-color: #f5f5f5;
   border: #e4e4e4 solid 1px;
@@ -172,12 +166,6 @@
   }
   .toplineNumbers{
     border: 0px solid #e7e7e7;
-  }
-  .dataTable{
-    background-color: white;
-    border: 5px solid #e7e7e7;
-    padding-top: 10px;
-    height: auto;
   }
   .btn{
     background-color: #f5f5f5;
@@ -334,15 +322,24 @@
   padding-top: 20px;
   padding-bottom: 15px;
 }
-.tableEmbed{
-  display: block;
-  margin: none;
-}
-
 
 
 .btn:hover{
   color: white;
   border: #456087 solid 1px;
   background:#456087;
+}
+
+
+a:link {
+  color: grey;
+}
+a:visited {
+  color: #456087;
+}
+a:hover {
+  color: #456087;
+}
+a:active {
+  color: #456087;
 }
