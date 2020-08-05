@@ -1,25 +1,25 @@
 County,Cases,Deaths,Tests,deltas
-Allegany,276,18,15739,NA
-Anne Arundel,7071,218,108310,NA
-Baltimore County,12525,553,193177,NA
-Baltimore City,11844,417,162910,NA
-Calvert,649,28,12508,NA
-Caroline,439,3,7035,NA
-Carroll,1503,117,32051,NA
-Cecil,662,30,14312,NA
-Charles,1932,91,27771,NA
-Dorchester,352,5,9318,NA
-Frederick,3016,121,57304,NA
-Garrett,44,0,5444,NA
-Harford,1863,68,41576,NA
-Howard,3690,106,67625,NA
-Kent,235,23,5935,NA
-Montgomery,17910,794,217805,NA
-Prince George's,23082,744,185999,NA
-Queen Anne's,399,25,9133,NA
-Somerset,129,3,7354,NA
-St. Mary's,931,52,22279,NA
-Talbot,368,4,10171,NA
-Washington,986,30,39755,NA
-Wicomico,1309,44,24409,NA
-Worcester,639,19,11444,NA
+Allegany,276,18,16250,NA
+Anne Arundel,7114,220,109999,NA
+Baltimore County,12666,555,196740,NA
+Baltimore City,11953,421,166302,NA
+Calvert,660,28,12677,NA
+Caroline,441,3,7167,NA
+Carroll,1511,117,33040,NA
+Cecil,672,30,14654,NA
+Charles,1947,91,28360,NA
+Dorchester,353,5,9384,NA
+Frederick,3020,121,58594,NA
+Garrett,45,0,5601,NA
+Harford,1878,69,42169,NA
+Howard,3717,106,68531,NA
+Kent,235,23,5967,NA
+Montgomery,17976,794,221008,NA
+Prince George's,23156,746,188209,NA
+Queen Anne's,402,25,9190,NA
+Somerset,129,3,7618,NA
+St. Mary's,945,52,22658,NA
+Talbot,369,4,10211,NA
+Washington,989,31,40345,NA
+Wicomico,1316,44,24642,NA
+Worcester,656,20,11623,NA
