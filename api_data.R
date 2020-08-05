@@ -40,7 +40,9 @@ md_counties_cases <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis
 	inner_join(md_fips, by = "county") %>%
 	group_by(county) %>%
 	mutate(new_cases = pmax(cases - lag(cases), 0)) %>%
-	ungroup()
+	ungroup() %>%
+	inner_join(pop_county, by = c("county", "fips")) %>%
+	mutate(per_100k = cases/population)
 
 md_counties_deaths <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_ConfirmedDeathsByCounty/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("4/3/2020", "%m/%d/%y")) %>%
@@ -241,13 +243,14 @@ dt_html <- datatable(data_table, escape = F, style = 'bootstrap', class = 'table
 
 # save_html(dt_html, here("website", "Data-Table.html"))
 
-render(here("website", "Data Table.RMD"), params = list(indic = "Cases"), output_file = here("website", "cases_table.html"))
-render(here("website", "Data Table.RMD"), params = list(indic = "Deaths"), output_file = here("website", "deaths_table.html"))
-render(here("website", "Data Table.RMD"), params = list(indic = "Tests"), output_file = here("website", "tests_table.html"))
-
 save_dfs <- function(df)
 	write_csv(get(df), paste0("data/", df, ".csv"))
 
 dfs <- c("md_counties_cases", "md_counties_deaths", "md_counties_prob_deaths", "md_counties", "md_counties_today", "md_zips", "md_zips_today", "age_data", "sex_data", "race_data", "hospit_data", "md_negatives", "md_isolation", "md_volume", "md_ever_hospit", "md_statewide", "md_population_tested_county", "md_population_tested_county_today", "md_counties_today_table", "md_counties_trend_table", "card_values")
 
 lapply(dfs, save_dfs)
+
+render(here("website", "Data Table.RMD"), params = list(indic = "Cases"), output_file = here("website", "cases_table.html"))
+render(here("website", "Data Table.RMD"), params = list(indic = "Deaths"), output_file = here("website", "deaths_table.html"))
+render(here("website", "Data Table.RMD"), params = list(indic = "Tests"), output_file = here("website", "tests_table.html"))
+
