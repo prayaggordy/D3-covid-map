@@ -132,6 +132,28 @@
   display: none;
   width: 100%;
 }
+text {
+  font-size: 9px;
+}
+.mapContainer{
+  border: 5px solid #e7e7e7;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.barChartContainer{
+  border: 5px solid #e7e7e7;
+  padding-top: 12px;
+  padding-bottom: 15px;
+}
+.tableContainer{
+  border: 5px solid #e7e7e7;
+  padding-top: 20px;
+  padding-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  min-height: 450px;
+}
 @media (min-width: 576px) {
   .instructions{
     font-size: 1em;
@@ -176,9 +198,11 @@
     height: 60px;
   }
   .lineChartContainer{
-    border: 5px solid #e7e7e7;
     padding-top: 34px;
     padding-bottom: 15px;
+  }
+  .tableContainer{
+    min-height: unset;
   }
 }
 @media (min-width: 768px) {
@@ -210,6 +234,9 @@
   .card{
     padding-top: 20px;
     padding-bottom: 20px;
+  }
+  text {
+    font-size: 10px;
   }
 }
 @media (min-width: 992px) {
@@ -277,6 +304,9 @@
     display: none;
     width: 100%;
   }
+  text {
+    font-size: 11px;
+  }
 }
 
 
@@ -307,21 +337,7 @@
 
 
 
-.mapContainer{
-  border: 5px solid #e7e7e7;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-.barChartContainer{
-  border: 5px solid #e7e7e7;
-  padding-top: 12px;
-  padding-bottom: 15px;
-}
-.tableContainer{
-  border: 5px solid #e7e7e7;
-  padding-top: 20px;
-  padding-bottom: 15px;
-}
+
 
 
 .btn:hover{
@@ -342,4 +358,12 @@ a:hover {
 }
 a:active {
   color: #456087;
+}
+
+iframe {
+  margin-left: -15px;
+  margin-right: -15px;
+  width:  calc(100% + 30px);
+  border: none;
+  flex-grow: 1;
 }
