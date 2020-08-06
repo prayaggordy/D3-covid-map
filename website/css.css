@@ -139,6 +139,7 @@ text {
   border: 5px solid #e7e7e7;
   padding-top: 10px;
   padding-bottom: 10px;
+  font-weight: 500;
 }
 .barChartContainer{
   border: 5px solid #e7e7e7;
@@ -154,13 +155,13 @@ text {
   align-items: start;
   min-height: 450px;
 }
+.map{
+  font-weight: 500;
+}
 .mapTitle{
   font-family: 'Lato', sans-serif;
   font-size: 20px;
-  font-weight: 500;
-}
-.map{
-  font-weight: unset;
+  font-weight: 700;
 }
 @media (min-width: 576px) {
   .instructions{
@@ -361,7 +362,7 @@ text {
 .btn.engaged{
   font-weight: 600;
   color: black;
-  border: #e4e4e4 solid 2px;
+  border: #e4e4e4 solid 1px;
   background:#ffffff;
 }
 .btn:hover{
