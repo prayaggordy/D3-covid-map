@@ -161,7 +161,7 @@ text {
 }
 .mapTitle{
   font-family: 'Lato', sans-serif;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 700;
 }
 @media (min-width: 576px) {
@@ -214,7 +214,7 @@ text {
     min-height: unset;
   }
   .mapTitle{
-    font-size: 22px;
+    font-size: 20px;
   }
 }
 @media (min-width: 768px) {
@@ -288,7 +288,7 @@ text {
     font-size: 12px;
   }
   .mapTitle{
-    font-size: 26px;
+    font-size: 24px;
   }
 }
 @media (min-width: 1200px) {
