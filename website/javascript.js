@@ -3,8 +3,11 @@ function toggle(id, className, visibleClassName) {
     Array.from(elements).forEach(element => {
         if (element.id !== id) {
             element.classList.remove(visibleClassName);
+            document.getElementById(element.id + "Button").classList.remove("engaged");
         } else {
             element.classList.add(visibleClassName);
+            console.log(element.id + "Button");
+            document.getElementById(element.id + "Button").classList.add("engaged");
         }
     });
 }
