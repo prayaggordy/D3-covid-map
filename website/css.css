@@ -309,10 +309,6 @@ text {
   }
 }
 
-
-
-
-
 .toggleMap.toggleMapVisible{
   display: block;
 }
@@ -341,6 +337,12 @@ text {
 
 
 .btn:hover{
+  color: white;
+  border: #456087 solid 1px;
+  background:#456087;
+}
+
+.btn.engaged{
   color: white;
   border: #456087 solid 1px;
   background:#456087;

@@ -185,11 +185,11 @@
 						<div class="toggleMap" id="countyTesting"></div>
 						<div class="instructions"><p>Click to snap to county or zip code. Click outside map to reset.</p></div>
 						<div class="btn-group flex-wrap" role="group">
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyNewCases')"> Change in cases by county</button>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyTotalCases')"> Total cases by county</button>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('zipNewCases')"> Change in cases by zip</button>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('zipTotalCases')"> Total cases by zip</button>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyTesting')"> Tests per 100,000 by county</button>
+							<button id="countyNewCasesButton" type="button" class="btn btn-outline-secondary btn-sm engaged" onclick="toggleMap('countyNewCases')"> Change in cases by county</button>
+							<button id="countyTotalCasesButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyTotalCases')"> Total cases by county</button>
+							<button id="zipNewCasesButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('zipNewCases')"> Change in cases by zip</button>
+							<button id="zipTotalCasesButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('zipTotalCases')"> Total cases by zip</button>
+							<button id="countyTestingButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyTesting')"> Tests per 100,000 by county</button>
 						</div>
           </div>
 				</div>
@@ -201,10 +201,10 @@
 						<div class="toggleLine" id="positivityRate"></div>
 						<div class="instructions"><p>Hover over lines to display values.</p></div>
 						<div class="btn-group flex-wrap" role="group" aria-label="...">
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('hospitalizations')"> Hospitalizations</button>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('newCases')"> New cases</button>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('newDeaths')"> New deaths</button>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('positivityRate')"> Positivity rate</button>
+							<button id="hospitalizationsButton" type="button" class="btn btn-outline-secondary btn-sm engaged" onclick="toggleLine('hospitalizations')"> Hospitalizations</button>
+							<button id="newCasesButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('newCases')"> New cases</button>
+							<button id="newDeathsButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('newDeaths')"> New deaths</button>
+							<button id="positivityRateButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('positivityRate')"> Positivity rate</button>
 						</div>
 					</div>
 					<div class="col-md-5 col-12 barChartContainer"> <!-- lineChartContainer looks better on the Mac?  -->
@@ -213,18 +213,18 @@
 						<div class="toggleBar" id="genderBreakdown"></div>
 						<div class="instructions"><p>Hover over bars to display values.</p></div>
 						<div class="btn-group flex-wrap" role="group">
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleBar('raceBreakdown')"> Cases by race</button>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleBar('ageBreakdown')"> Cases by age</button>
-							<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleBar('genderBreakdown')"> Cases by sex</button>
+							<button id="raceBreakdownButton" type="button" class="btn btn-outline-secondary btn-sm engaged" onclick="toggleBar('raceBreakdown')"> Cases by race</button>
+							<button id="ageBreakdownButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleBar('ageBreakdown')"> Cases by age</button>
+							<button id="genderBreakdownButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleBar('genderBreakdown')"> Cases by sex</button>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="col-lg-3 col-xl-4 col-12 tableContainer">
 				<div class="btn-group flex-wrap" role="group">
-					<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleTable('casesTable')">Cases</button>
-					<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleTable('deathsTable')">Deaths</button>
-					<button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleTable('testsTable')">Testing</button>
+					<button id="casesTableButton" type="button" class="btn btn-outline-secondary btn-sm engaged" onclick="toggleTable('casesTable')">Cases</button>
+					<button id="deathsTableButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleTable('deathsTable')">Deaths</button>
+					<button id="testsTableButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleTable('testsTable')">Testing</button>
 				</div>
 				<div class="instructions"><br><p>Testing trend line is approximated.</p></div>
 				<iframe src="cases_table.html" class="toggleTable toggleTableVisible" id="casesTable"></iframe>
