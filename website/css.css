@@ -154,6 +154,14 @@ text {
   align-items: start;
   min-height: 450px;
 }
+.mapTitle{
+  font-family: 'Lato', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+}
+.map{
+  font-weight: unset;
+}
 @media (min-width: 576px) {
   .instructions{
     font-size: 1em;
@@ -204,6 +212,9 @@ text {
   .tableContainer{
     min-height: unset;
   }
+  .mapTitle{
+    font-size: 22px;
+  }
 }
 @media (min-width: 768px) {
   .instructions{
@@ -238,6 +249,9 @@ text {
   text {
     font-size: 10px;
   }
+  .mapTitle{
+    font-size: 24px;
+  }
 }
 @media (min-width: 992px) {
   .instructions{
@@ -268,6 +282,12 @@ text {
   .card{
     padding-top: 20px;
     padding-bottom: 20px;
+  }
+  text {
+    font-size: 12px;
+  }
+  .mapTitle{
+    font-size: 26px;
   }
 }
 @media (min-width: 1200px) {
@@ -305,7 +325,10 @@ text {
     width: 100%;
   }
   text {
-    font-size: 11px;
+    font-size: 14px;
+  }
+  .mapTitle{
+    font-size: 28px;
   }
 }
 
