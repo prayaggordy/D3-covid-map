@@ -358,18 +358,18 @@ text {
 
 
 
-
+.btn.engaged{
+  font-weight: 600;
+  color: black;
+  border: #e4e4e4 solid 2px;
+  background:#ffffff;
+}
 .btn:hover{
   color: white;
   border: #456087 solid 1px;
   background:#456087;
 }
 
-.btn.engaged{
-  color: white;
-  border: #456087 solid 1px;
-  background:#456087;
-}
 
 
 a:link {
