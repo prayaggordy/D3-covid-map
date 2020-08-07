@@ -1,7 +1,7 @@
 ---
 output: html_document
 params:
-  indic: "Cases"
+  indic: "Deaths"
 ---
 
 ```{r setup, include=FALSE}
@@ -42,10 +42,15 @@ trend <- select(trendData, "County", "date", "rolling_avg")
 ```
 
 ```{r}
+slColor <- switch(params$indic,
+									"Cases" = "#456087",
+									"Deaths" = "#4d4d4d",
+									"Tests" = "#4b0082")
+
 df <- trend %>% 
     group_by(County) %>% 
     summarize(`14-Day Trend` = spk_chr(rolling_avg,
-                           lineColor = '#456087', 
+                           lineColor = slColor, 
                            fillColor = FALSE,
                            lineWidth = 3,
                            chartRangeMin = 0,
@@ -77,6 +82,7 @@ datatable(data, escape = F, style = 'bootstrap', class = 'table', rownames = FAL
                                               HTMLWidgets.staticRender();
                                               }'))
   ) %>%
-spk_add_deps()
+	spk_add_deps() %>%
+	formatCurrency(c(2, 3), currency = "", interval = 3, mark = ",", digits = 0)
 ```
 

@@ -1,5 +1,4 @@
-library(easypackages)
-libraries("tidyverse", "jsonify", "janitor", "zoo", "scales", "htmltools", "DT", "here", "sparkline", "rmarkdown")
+easypackages::libraries("tidyverse", "jsonify", "janitor", "zoo", "scales", "htmltools", "DT", "here", "sparkline", "rmarkdown")
 
 pop_county <- read_csv("population/county.csv")
 pop_zip <- read_csv("population/zip.csv")
