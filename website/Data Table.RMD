@@ -49,10 +49,10 @@ slColor <- switch(params$indic,
 
 df <- trend %>% 
     group_by(County) %>% 
-    summarize(`14-Day Trend` = spk_chr(rolling_avg,
+    summarize(`14-day trend` = spk_chr(rolling_avg,
                            lineColor = slColor, 
                            fillColor = FALSE,
-                           lineWidth = 3,
+                           lineWidth = 6,
                            chartRangeMin = 0,
                            chartRangeMax = 10,
                            width = 125,
@@ -70,8 +70,11 @@ data <- select(totalData, County, params$indic) %>%
 	inner_join(df) %>% 
 	inner_join(counties_proper_names, by = "County") %>% 
 	inner_join(pop, by = "county") %>% 
-	mutate(`Per 100k` = round(.[[2]]/population*100000)) %>% 
-	select(County, 2, `Per 100k`, `14-Day Trend`)
+	mutate(`Per 100,000 residents` = round(.[[2]]/population*100000)) %>% 
+	select(County, 2, `Per 100,000 residents`, `14-day trend`)
+
+if (params$indic == "Tests")
+	data <- rename(data, `14-day positivity rate trend` = `14-day trend`)
 ```
 
 ```{r}
