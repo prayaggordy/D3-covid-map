@@ -1,14 +1,12 @@
 ---
 title: "About this blog"
 description: |
-  Some additional details about the blog
+  Dashboard and blog created by Adam Chazan and Prayag Gordy
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
-
-Dashboard and blog created by Adam Chazan and Prayag Gordy.
 
 Adam Chazan (BIO).
 
