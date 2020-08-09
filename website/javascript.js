@@ -4,12 +4,16 @@ function toggle(id, className, visibleClassName) {
         if (element.id !== id) {
             element.classList.remove(visibleClassName);
             document.getElementById(element.id + "Button").classList.remove("engaged");
-            document.getElementById(element.id + "Title").classList.remove("toggleMapVisible");
+            if (className == "toggleMap map") {
+              document.getElementById(element.id + "Title").classList.remove("toggleMapVisible");
+            }
         } else {
             element.classList.add(visibleClassName);
             console.log(element.id + "Button");
             document.getElementById(element.id + "Button").classList.add("engaged");
-            document.getElementById(element.id + "Title").classList.add("toggleMapVisible");
+            if (className == "toggleMap map") {
+              document.getElementById(element.id + "Title").classList.add("toggleMapVisible");
+            }
         }
     });
 }
