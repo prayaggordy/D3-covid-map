@@ -1,1 +1,25 @@
 County,Cases,Deaths,Tests,deltas
+Allegany,291,18,17735,NA
+Anne Arundel,7361,225,119080,NA
+Baltimore County,13257,563,214015,NA
+Baltimore City,12547,428,181627,NA
+Calvert,697,28,13826,NA
+Caroline,451,3,7631,NA
+Carroll,1546,117,36232,NA
+Cecil,702,30,15601,NA
+Charles,2024,91,30632,NA
+Dorchester,371,5,10263,NA
+Frederick,3067,121,62435,NA
+Garrett,49,0,6010,NA
+Harford,1968,69,45742,NA
+Howard,3846,110,73440,NA
+Kent,243,23,6352,NA
+Montgomery,18392,803,239920,NA
+Prince George's,23697,753,201207,NA
+Queen Anne's,431,25,9761,NA
+Somerset,136,3,8025,NA
+St. Mary's,983,52,24414,NA
+Talbot,400,4,11022,NA
+Washington,1012,31,42959,NA
+Wicomico,1338,45,26225,NA
+Worcester,694,20,12440,NA

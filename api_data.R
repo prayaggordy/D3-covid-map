@@ -95,7 +95,8 @@ md_age_prob_deaths <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgi
 age_data <- md_indicator_combine(md_age_cases, md_age_deaths, md_age_prob_deaths, "age_range") %>%
 	mutate(age = str_replace_all(str_sub(age_range, 5), c("_to_" = "-", "plus" = "+"))) %>%
 	select(age, variable, value) %>%
-	pivot_wider(names_from = variable, values_from = value)
+	pivot_wider(names_from = variable, values_from = value) %>%
+	select(-`Probable deaths`)
 
 md_sex_cases <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_CasesByGenderDistribution/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("3/12/2020", "%m/%d/%y")) %>%
@@ -112,7 +113,8 @@ md_sex_prob_deaths <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgi
 sex_data <- md_indicator_combine(md_sex_cases, md_sex_deaths, md_sex_prob_deaths, "sex") %>%
 	mutate(sex = tools::toTitleCase(sex)) %>%
 	select(sex, variable, value) %>%
-	pivot_wider(names_from = variable, values_from = value)
+	pivot_wider(names_from = variable, values_from = value) %>%
+	select(-`Probable deaths`)
 
 md_race_cases <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_CasesByRaceAndEthnicityDistribution/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("4/6/2020", "%m/%d/%y"), na_to_zero = F) %>%
@@ -128,7 +130,8 @@ md_race_prob_deaths <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcg
 
 race_data <- md_indicator_combine(md_race_cases, md_race_deaths, md_race_prob_deaths, "race", uk_text = "not_available") %>%
 	mutate(race = recode(race, "african_american" = "Black", "asian" = "Asian", "white" = "White", "hispanic" = "Hispanic", "other" = "Other")) %>%
-	pivot_wider(names_from = variable, values_from = value)
+	pivot_wider(names_from = variable, values_from = value) %>%
+	select(-`Probable deaths`)
 
 md_hospit <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_TotalCurrentlyHospitalizedAcuteAndICU/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	setNames(c("date", "Acute", "ICU", "Total")) %>%
