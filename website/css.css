@@ -151,14 +151,14 @@ text {
   font-size: 16px;
   font-weight: 700;
 }
-@media (min-width: 340px) {
+@media (min-width: 350px) {
   .navbar {
     font-size: 0.8em;
   }
 }
 @media (min-width: 380px) {
   .navbar {
-    font-size: 0.95em;
+    font-size: 0.9em;
   }
 }
 @media (min-width: 576px) {
