@@ -215,7 +215,7 @@ text {
     font-size: 10px;
   }
   .mapTitle{
-    font-size: 24px;
+    font-size: 22px;
   }
 }
 @media (min-width: 992px) {
@@ -236,9 +236,6 @@ text {
   }
   text {
     font-size: 12px;
-  }
-  .mapTitle{
-    font-size: 24px;
   }
 }
 @media (min-width: 1200px) {
