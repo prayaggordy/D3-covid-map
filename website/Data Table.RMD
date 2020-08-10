@@ -52,7 +52,7 @@ df <- trend %>%
     summarize(`14-day trend` = spk_chr(rolling_avg,
                            lineColor = slColor, 
                            fillColor = FALSE,
-                           lineWidth = 6,
+                           lineWidth = 4,
                            chartRangeMin = 0,
                            chartRangeMax = 10,
                            width = 125,
