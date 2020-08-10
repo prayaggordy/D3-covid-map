@@ -43,16 +43,16 @@ trend <- select(trendData, "County", "date", "rolling_avg")
 
 ```{r}
 slColor <- switch(params$indic,
-									"Cases" = "#456087",
-									"Deaths" = "#4d4d4d",
-									"Tests" = "#4b0082")
+									"Cases" = "#BB4F11",
+									"Deaths" = "#9C3044",
+									"Tests" = "#3D524C")
 
 df <- trend %>% 
     group_by(County) %>% 
     summarize(`14-day trend` = spk_chr(rolling_avg,
                            lineColor = slColor, 
                            fillColor = FALSE,
-                           lineWidth = 6,
+                           lineWidth = 4,
                            chartRangeMin = 0,
                            chartRangeMax = 10,
                            width = 125,
