@@ -62,6 +62,12 @@
   font-weight: 400;
   background-color: #456087;
 }
+.navbar-brand {
+  font-size: 1.5em;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  background-color: #456087;
+}
 .instructions{
   font-size: 0.8em;
   color: gray;
@@ -194,6 +200,15 @@ text {
   }
   .mapTitle{
     font-size: 20px;
+  }
+  .navbar {
+    font-size: 1em;
+  }
+  .navbar-brand {
+    font-size: 1.3em;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    background-color: #456087;
   }
 }
 @media (min-width: 768px) {
@@ -331,12 +346,7 @@ iframe {
 
 
 
-.navbar-brand {
-  font-size: 1.5em;
-  font-family: 'Lato', sans-serif;
-  font-weight: 700;
-  background-color: #456087;
-}
+
 .navbar-brand:hover{
   color: white;
   text-decoration: none;
