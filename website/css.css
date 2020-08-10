@@ -127,7 +127,6 @@ text {
   border: 5px solid #e7e7e7;
   padding-top: 10px;
   padding-bottom: 10px;
-  font-weight: 500;
 }
 .barChartContainer{
   border: 5px solid #e7e7e7;
@@ -147,9 +146,8 @@ text {
   font-weight: 500;
 }
 .mapTitle{
-  font-family: 'Lato', sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
-  font-weight: 700;
 }
 @media (min-width: 350px) {
   .navbar {
