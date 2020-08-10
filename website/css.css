@@ -56,10 +56,14 @@
 }
 
 
-
-
+.navbar {
+  font-size: 0.95em;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  background-color: #456087;
+}
 .instructions{
-  font-size: 0.7em;
+  font-size: 0.8em;
   color: gray;
   padding-top: 2px;
 }
@@ -80,25 +84,6 @@
 .changeNum{
   font-size: 1.3em;
   font-family: Helvetica, sans-serif, Arial;
-}
-.header{
-  font-size: 2em;
-  font-family: 'Lato', sans-serif;
-  font-weight: 700;
-  background-color: #456087;
-  color: white;
-  padding-left: 15px;
-  padding-top: 5px;
-}
-.subheader{
-  height: 50px;
-  font-size: 0.6em;
-  font-family: 'Lato', sans-serif;
-  font-weight: 500;
-  background-color: #456087;
-  color: white;
-  padding-top: 0.5%;
-  padding-left: 15px;
 }
 .card{
   border: 3px solid #e7e7e7;
@@ -180,17 +165,6 @@ text {
   .changeNum{
     font-size: 1.7em;
   }
-  .header{
-    height: 60px;
-    font-size: 1.8em;
-    padding-left: 20px;
-    padding-top: 8px;
-  }
-  .subheader{
-    height: 60px;
-    font-size: 0.8em;
-    padding-left: 20px;
-  }
   .card{
     padding-top: 15px;
     padding-bottom: 15px;
@@ -210,11 +184,11 @@ text {
     padding-top: 34px;
     padding-bottom: 15px;
   }
-  .tableContainer{
-    min-height: unset;
-  }
   .mapTitle{
     font-size: 20px;
+  }
+  .navbar{
+    font-size: 1.2em;
   }
 }
 @media (min-width: 768px) {
@@ -232,16 +206,6 @@ text {
   }
   .changeNum{
     font-size: 1.4em;
-  }
-  .header{
-    height: 60px;
-    font-size: 2.4em;
-    padding-top: 10px;
-  }
-  .subheader{
-    height: 60px;
-    font-size: 0.8em;
-    padding-top: 15px;
   }
   .card{
     padding-top: 20px;
@@ -270,16 +234,6 @@ text {
   .changeNum{
     font-size: 1.4em;
   }
-  .header{
-    height: 70px;
-    font-size: 2.4em;
-    padding-top: 10px;
-  }
-  .subheader{
-    height: 60px;
-    font-size: 0.9em;
-    padding-top: 15px;
-  }
   .card{
     padding-top: 20px;
     padding-bottom: 20px;
@@ -307,16 +261,6 @@ text {
   .changeNum{
     font-size: 1.3em;
   }
-  .header{
-    height: unset;
-    font-size: 2.2em;
-    padding-top: 10px;
-  }
-  .subheader{
-    height: unset;
-    font-size: 1em;
-    padding-left: 5px;
-  }
   .card{
     padding-top: 25px;
     padding-bottom: 25px;
@@ -330,6 +274,9 @@ text {
   }
   .mapTitle{
     font-size: 28px;
+  }
+  .navbar{
+    font-size: 1.5em;
   }
 }
 
@@ -392,4 +339,32 @@ iframe {
   width:  calc(100% + 30px);
   border: none;
   flex-grow: 1;
+}
+
+
+
+.navbar-brand {
+  font-size: 1.5em;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  background-color: #456087;
+}
+.navbar-brand:hover{
+  color: white;
+  text-decoration: none;
+}
+
+.navbar a {
+  color: white;
+}
+.nav-item a:hover {
+  color: #e7e7e7;
+  text-decoration: underline;
+}
+
+.navbar-toggler{
+  border-color: none;
+}
+.navbar-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='3' stroke-linecap='none' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
