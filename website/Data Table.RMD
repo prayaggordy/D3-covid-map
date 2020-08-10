@@ -43,9 +43,9 @@ trend <- select(trendData, "County", "date", "rolling_avg")
 
 ```{r}
 slColor <- switch(params$indic,
-									"Cases" = "#456087",
-									"Deaths" = "#4d4d4d",
-									"Tests" = "#4b0082")
+									"Cases" = "#BB4F11",
+									"Deaths" = "#9C3044",
+									"Tests" = "#3D524C")
 
 df <- trend %>% 
     group_by(County) %>% 
