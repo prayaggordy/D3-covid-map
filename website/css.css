@@ -89,6 +89,8 @@
   border: 3px solid #e7e7e7;
   display: flex;
   justify-content: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 .toplineNumbers{
   background-color: #e7e7e7;
@@ -166,8 +168,6 @@ text {
     font-size: 1.7em;
   }
   .card{
-    padding-top: 15px;
-    padding-bottom: 15px;
     border: 5px solid #e7e7e7;
   }
   .toplineNumbers{
@@ -215,7 +215,7 @@ text {
     font-size: 10px;
   }
   .mapTitle{
-    font-size: 24px;
+    font-size: 22px;
   }
 }
 @media (min-width: 992px) {
@@ -234,15 +234,8 @@ text {
   .changeNum{
     font-size: 1.4em;
   }
-  .card{
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
   text {
     font-size: 12px;
-  }
-  .mapTitle{
-    font-size: 24px;
   }
 }
 @media (min-width: 1200px) {
@@ -261,22 +254,12 @@ text {
   .changeNum{
     font-size: 1.3em;
   }
-  .card{
-    padding-top: 25px;
-    padding-bottom: 25px;
-  }
   .toggleMap{
     display: none;
     width: 100%;
   }
   text {
     font-size: 14px;
-  }
-  .mapTitle{
-    font-size: 28px;
-  }
-  .navbar{
-    font-size: 1.5em;
   }
 }
 
