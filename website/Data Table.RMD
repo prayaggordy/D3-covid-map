@@ -14,7 +14,7 @@ new_col <- paste("new", tolower(params$indic), sep = "_") %>%
 	ifelse(. == "new_tests", "positivity", .)
 
 pop <- read_csv(here("population", "county.csv"))
-cases <- read_csv(here("data", "md_counties_cases.csv"))
+cases <- read_csv(here("data", "md_counties_cases.csv")) 
 deaths <- read_csv(here("data", "md_counties_deaths.csv"))
 tests <- read_csv(here("data", "md_population_tested_county.csv")) %>% 
 	rename(tests = value) %>% 
