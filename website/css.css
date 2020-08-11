@@ -75,22 +75,18 @@
 }
 .descBig{
   font-size: 0.8em;
-  font-family: Helvetica, sans-serif, Arial;
   text-transform: uppercase;
 }
 .subhead{
   font-weight: 500;
   font-size: 0.9em;
-  font-family: Helvetica, sans-serif, Arial;
   font-weight: 700;
 }
 .cardNum{
   font-size: 1.6em;
-  font-family: Helvetica, sans-serif, Arial;
 }
 .changeNum{
   font-size: 1.3em;
-  font-family: Helvetica, sans-serif, Arial;
 }
 .card{
   border: 3px solid #e7e7e7;
@@ -98,6 +94,7 @@
   justify-content: center;
   padding-top: 15px;
   padding-bottom: 15px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 .toplineNumbers{
   background-color: #e7e7e7;
@@ -128,7 +125,7 @@
   width: 100%;
 }
 text {
-  font-size: 9px;
+  font-size: 10px;
 }
 .mapContainer{
   border: 5px solid #e7e7e7;
@@ -195,10 +192,6 @@ text {
     font-size: 0.9em;
     height: 60px;
   }
-  .lineChartContainer{
-    padding-top: 34px;
-    padding-bottom: 15px;
-  }
   .mapTitle{
     font-size: 20px;
   }
@@ -210,6 +203,9 @@ text {
     font-family: 'Lato', sans-serif;
     font-weight: 700;
     background-color: #456087;
+  }
+  text {
+    font-size: 10px;
   }
 }
 @media (min-width: 768px) {
@@ -233,7 +229,7 @@ text {
     padding-bottom: 20px;
   }
   text {
-    font-size: 10px;
+    font-size: 10.5px;
   }
   .mapTitle{
     font-size: 22px;
