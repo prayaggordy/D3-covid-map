@@ -56,7 +56,7 @@ df <- trend %>%
                            chartRangeMin = 0,
                            chartRangeMax = 10,
                            width = 125,
-                           height = 25,
+                           height = 35,
                            highlightLineColor = '', 
                            highlightSpotColor = '',
                            spotColor = '',
