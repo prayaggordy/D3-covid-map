@@ -285,7 +285,7 @@ text {
     font-size: 1.2em;
   }
   .changeToday{
-    font-size: 0.9em;
+    font-size: 0.85em;
   }
   .toggleMap{
     display: none;
@@ -297,7 +297,7 @@ text {
 }
 @media (min-width: 1250px) {
   .subhead{
-    font-size: 1em;
+    font-size: 1.1em;
   }
   .cardNum{
     font-size: 1.3em;
@@ -306,28 +306,73 @@ text {
     font-size: 0.95em;
   }
 }
+@media (min-width: 1350px) {
+  .subhead{
+    font-size: 1.2em;
+  }
+  .cardNum{
+    font-size: 1.4em;
+  }
+  .changeToday{
+    font-size: 1em;
+  }
+}
 @media (min-width: 1400px) {
   .subhead{
-    font-size: 1em;
+    font-size: 1.25em;
   }
   .cardNum{
     font-size: 1.6em;
   }
   .changeToday{
-    font-size: 0.95em;
+    font-size: 1.1em;
+  }
+}
+@media (min-width: 1500px) {
+  .subhead{
+    font-size: 1.35em;
+  }
+  .cardNum{
+    font-size: 1.6em;
+  }
+  .changeToday{
+    font-size: 1.2em;
   }
 }
 @media (min-width: 1600px) {
   text {
     font-size: 12px;
   }
+  .subhead{
+    font-size: 0.85em;
+  }
+  .cardNum{
+    font-size: 1.7em;
+  }
+  .changeToday{
+    font-size: 0.8em;
+  }
+}
+@media (min-width: 1750px) {
+  text {
+    font-size: 12px;
+  }
+  .subhead{
+    font-size: 0.95em;
+  }
   .cardNum{
     font-size: 1.9em;
+  }
+  .changeToday{
+    font-size: 0.9em;
   }
 }
 @media (min-width: 1800px) {
   text {
     font-size: 14px;
+  }
+  .subhead{
+    font-size: 1.05em;
   }
 }
 
