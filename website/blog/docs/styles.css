@@ -15,6 +15,11 @@
   text-decoration: none;
 }
 
+.distill-site-nav a.title:hover {
+    color: white;
+    text-decoration: none;
+}
+
 .distill-site-nav a:hover {
   color: white;
   text-decoration: underline;
