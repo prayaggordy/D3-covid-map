@@ -76,7 +76,7 @@ data <- select(totalData, County, params$indic) %>%
 if (params$indic == "Tests") {
 	data <- inner_join(data, filter(trendData, date == max(date)), by = "County") %>% 
 		mutate(rolling_avg = percent(rolling_avg/100, accuracy = 0.01)) %>% 
-		select(County, Tests, `Per 100,000 residents`, `Average positivity rate` = rolling_avg)
+		select(County, Tests, `Per 100,000 residents`, `7-day average positivity rate` = rolling_avg)
 }
 ```
 
