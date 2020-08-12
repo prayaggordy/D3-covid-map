@@ -56,7 +56,7 @@ df <- trend %>%
                            chartRangeMin = 0,
                            chartRangeMax = 10,
                            width = 125,
-                           height = 50,
+                           height = 25,
                            highlightLineColor = '', 
                            highlightSpotColor = '',
                            spotColor = '',
@@ -78,7 +78,7 @@ if (params$indic == "Tests")
 ```
 
 ```{r}
-datatable(data, escape = F, style = 'bootstrap', class = 'table', rownames = FALSE,
+datatable(data, escape = F, style = 'bootstrap', class = 'table-sm', rownames = FALSE,
 					options = list(dom = 't',
 												 pageLength = 25,
 												 fnDrawCallback = htmlwidgets::JS('function(){
