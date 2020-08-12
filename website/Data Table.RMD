@@ -1,12 +1,12 @@
 ---
 output: html_document
 params:
-  indic: "Deaths"
+  indic: "Tests"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F, message = FALSE, warning = FALSE)
-easypackages::libraries("tidyverse", "DT", "sparkline", "here", "zoo")
+easypackages::libraries("tidyverse", "DT", "sparkline", "here", "zoo", "scales")
 ```
 
 ```{r Read CSV, message=FALSE, warning=FALSE}
@@ -73,12 +73,15 @@ data <- select(totalData, County, params$indic) %>%
 	mutate(`Per 100,000 residents` = round(.[[2]]/population*100000)) %>% 
 	select(County, 2, `Per 100,000 residents`, `14-day trend`)
 
-if (params$indic == "Tests")
-	data <- rename(data, `14-day positivity rate trend` = `14-day trend`)
+if (params$indic == "Tests") {
+	data <- inner_join(data, filter(trendData, date == max(date)), by = "County") %>% 
+		mutate(rolling_avg = percent(rolling_avg/100, accuracy = 0.01)) %>% 
+		select(County, Tests, `Per 100,000 residents`, `Average positivity rate` = rolling_avg)
+}
 ```
 
 ```{r}
-datatable(data, escape = F, style = 'bootstrap', class = 'table-sm', rownames = FALSE,
+datatable(data, escape = F, style = 'bootstrap', class = 'table-sm-responsive', rownames = FALSE,
 					options = list(dom = 't',
 												 pageLength = 25,
 												 fnDrawCallback = htmlwidgets::JS('function(){
