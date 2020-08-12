@@ -1285,12 +1285,12 @@
   .distill-site-nav {
     color: rgb(240, 240, 240);
     background-color: #456087;
-    font-size: 1em;
+    font-size: 0.9em;
     font-weight: 400;
   }
   
   .distill-site-nav .title {
-      font-size: 1.2em;
+      font-size: 1em;
       font-weight: 500;
     }
   
@@ -1315,6 +1315,14 @@
       display: none;
     }
   }
+  @media (min-width: 340px) {
+      .distill-site-nav {
+        font-size: 1em;
+      }
+      .distill-site-nav .title {
+        font-size: 1.2em;
+      }
+    }
   </style>
   <!--/radix_placeholder_site_in_header-->
 
