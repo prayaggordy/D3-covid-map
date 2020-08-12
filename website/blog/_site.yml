@@ -21,4 +21,6 @@ navbar:
       href: about.html
     - text: "Dashboard"
       href: ../../index.html
-output: distill::distill_article
+output: 
+  distill::distill_article:
+    css: styles.css

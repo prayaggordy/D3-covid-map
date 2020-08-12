@@ -360,10 +360,10 @@ iframe {
 }
 
 .navbar a {
-  color: white;
+  color: rgb(240, 240, 240);
 }
 .nav-item a:hover {
-  color: #e7e7e7;
+  color: white;
   text-decoration: underline;
 }
 
