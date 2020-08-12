@@ -235,7 +235,7 @@ text {
     font-size: 1.3em;
   }
   .cardNum{
-    font-size: 2em;
+    font-size: 1.9em;
   }
   .changeToday{
     font-size: 1.2em;
@@ -300,7 +300,18 @@ text {
     font-size: 1em;
   }
   .cardNum{
-    font-size: 1.35em;
+    font-size: 1.3em;
+  }
+  .changeToday{
+    font-size: 0.95em;
+  }
+}
+@media (min-width: 1400px) {
+  .subhead{
+    font-size: 1em;
+  }
+  .cardNum{
+    font-size: 1.6em;
   }
   .changeToday{
     font-size: 0.95em;
@@ -309,6 +320,9 @@ text {
 @media (min-width: 1600px) {
   text {
     font-size: 12px;
+  }
+  .cardNum{
+    font-size: 1.9em;
   }
 }
 @media (min-width: 1800px) {
