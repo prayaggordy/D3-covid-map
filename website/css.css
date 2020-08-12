@@ -63,7 +63,7 @@
   background-color: #456087;
 }
 .navbar-brand {
-  font-size: 1.5em;
+  font-size: 1.3em;
   font-family: 'Lato', sans-serif;
   font-weight: 700;
   background-color: #456087;
@@ -198,10 +198,7 @@ text {
     font-size: 1em;
   }
   .navbar-brand {
-    font-size: 1.3em;
-    font-family: 'Lato', sans-serif;
-    font-weight: 700;
-    background-color: #456087;
+    font-size: 1.2em;
   }
   text {
     font-size: 10px;
