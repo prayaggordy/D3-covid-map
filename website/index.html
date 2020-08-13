@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html prefix="og: https://ogp.me/ns#">
+<head>
+  <title>Maryland COVID-19 Tracker</title>
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@PrayagGordy">
+  <meta name="twitter:creator" content="@adamcheezin">
+  <meta name="twitter:title" content="Maryland COVID-19 Tracker">
+  <meta name="twitter:description" content="This is just an example page.">
+  <meta name="twitter:image" content="https://mdcovidtracker.com/website/blog/_posts/2020-08-12-welcome-to-our-dashboard/dashboard.png">
+  <meta property="og:title" content="Maryland COVID-19 Tracker" />
+  <meta property="og:description" content="This is just an example page.">
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://mdcovidtracker.com/" />
+  <meta property="og:image" content="https://mdcovidtracker.com/website/blog/_posts/2020-08-12-welcome-to-our-dashboard/dashboard.png" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="css.css">
+  <script src="PapaParse-5.0.2/papaparse.min.js"></script>
+  <script src="jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  <script>
+    function fillData() {
+      Papa.parse("https://raw.githubusercontent.com/prayaggordy/D3-covid-map/master/data/card_values.csv", {
+        download: true,
+        header: false,
+        complete: function(results) {
+          results = results.data;
+          $("#total_cases").text(results[1][0]);
+          $("#total_death").text(results[1][1]);
+          $("#total_hospi").text(results[1][2]);
+          $("#total_tests").text(results[1][3]);
+          $("#total_posit").text(results[1][4]);
+          $("#total_negat").text(results[1][5]);
+          $("#new_cases").text(results[2][0]);
+          $("#new_death").text(results[2][1]);
+          $("#new_hospi").text(results[2][2]);
+          $("#new_tests").text(results[2][3]);
+          $("#new_posit").text(results[2][4]);
+          $("#new_negat").text(results[2][5]);
+        }
+      });
+    }
+  </script>
+	<script src="https://d3js.org/d3.v5.min.js"></script>
+	<script src = "javascript.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="module">
+		// county new cases map
+        import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+        import define from "https://api.observablehq.com/@adamchzn/md-counties-new-cases-map.js?v=3";
+        const inspect = Inspector.into("#countyNewCases");
+    	(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
+	<script type="module">
+		// county total cases map
+		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+		import define from "https://api.observablehq.com/@adamchzn/coronavirus-dashboard.js?v=3";
+		const inspect = Inspector.into("#countyTotalCases");
+		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
+	<script type="module">
+		// zip code new cases map
+        import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+        import define from "https://api.observablehq.com/@adamchzn/md-zip-new-cases-map.js?v=3";
+        const inspect = Inspector.into("#zipNewCases");
+        (new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
+	<script type="module">
+		// zip code total cases map
+		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+		import define from "https://api.observablehq.com/@adamchzn/coronavirus-dashboard/2.js?v=3";
+		const inspect = Inspector.into("#zipTotalCases");
+		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
+	<script type="module">
+		// county testing map
+		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+		import define from "https://api.observablehq.com/@adamchzn/md-counties-testing-map.js?v=3";
+		const inspect = Inspector.into("#countyTesting");
+		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
+	<script type="module">
+		// hospitalizations
+		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+		import define from "https://api.observablehq.com/@adamchzn/hospitalizations.js?v=3";
+		const inspect = Inspector.into("#hospitalizations");
+		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
+	<script type="module">
+		// new cases line chart
+		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+		import define from "https://api.observablehq.com/@adamchzn/new-cases.js?v=3";
+		const inspect = Inspector.into("#newCases");
+		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
+	<script type="module">
+		// new deaths line chart
+		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+		import define from "https://api.observablehq.com/@adamchzn/new-deaths.js?v=3";
+		const inspect = Inspector.into("#newDeaths");
+		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
+    <script type="module">
+		// positivity rate line chart
+        import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+        import define from "https://api.observablehq.com/@adamchzn/positivity-rate.js?v=3";
+        const inspect = Inspector.into("#positivityRate");
+        (new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
+	<script type="module">
+		// breakdown by race
+		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+		import define from "https://api.observablehq.com/@adamchzn/grouped-bar-chart.js?v=3";
+		const inspect = Inspector.into("#raceBreakdown");
+		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
+	<script type="module">
+		// breakdown by age
+		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+		import define from "https://api.observablehq.com/@adamchzn/by-age.js?v=3";
+		const inspect = Inspector.into("#ageBreakdown");
+		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
+	<script type="module">
+		// breakdown by gender
+		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+		import define from "https://api.observablehq.com/@adamchzn/by-gender.js?v=3";
+		const inspect = Inspector.into("#genderBreakdown");
+		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
+	</script>
+</head>
+
+<body onload="fillData();">
+	<nav class="navbar navbar-expand-lg sticky-top">
+		<a class="navbar-brand" href="#">Maryland COVID-19 Tracker</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></i></span>
+		</button>
+		<div class="collapse navbar-collapse justify-content-stretch" id="navbarNav">
+			<ul class="navbar-nav ml-auto">
+			<li class="nav-item">
+				<a class="nav-link" href="blog/docs/index.html">Blog</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="blog/docs/about.html">About</a>
+			</li>
+			</ul>
+		</div>
+	</nav>
+	<div class="container-fluid parent">
+		<div class="row">
+			<div class="col-lg-9 col-xl-8">
+				<div class="row">
+					<div class="col-12 order-1 order-md-2 toplineNumbers">
+						<div class="row">
+							<div class="col-xl-2 col-md-4 col-6 card">
+								<div class="subhead">Confirmed Cases</div>
+								<div class="cardNum" id="total_cases"></div>
+								<div class="changeToday">Daily change: <span id="new_cases" style="font-weight: 700;"></span></div>
+							</div>
+							<div class="col-xl-2 col-md-4 col-6 card">
+								<div class="subhead">Confirmed Deaths</div>
+								<div class="cardNum" id="total_death"></div>
+								<div class="changeToday">Daily change: <span id="new_death" style="font-weight: 700;"></span></div>
+							</div>
+
+							<div class="col-xl-2 col-md-4 col-6 card">
+								<div class="subhead">Currently Hospitalized</div>
+								<div class="cardNum" id="total_hospi"></div>
+								<div class="changeToday">Daily change: <span id="new_hospi" style="font-weight: 700;"></span></div>
+							</div>
+							<div class="col-xl-2 col-md-4 col-6 card">
+								<div class="subhead">Testing Volume</div>
+								<div class="cardNum" id="total_tests"></div>
+								<div class="changeToday">Daily change: <span id="new_tests" style="font-weight: 700;"></span></div>
+							</div>
+							<div class="col-xl-2 col-md-4 col-6 card">
+								<div class="subhead">Positivity Rate</div>
+								<div class="cardNum" id="total_posit"></div>
+								<div class="changeToday">Daily change: <span id="new_posit" style="font-weight: 700;"></span></div>
+							</div>
+							<div class="col-xl-2 col-md-4 col-6 card">
+								<div class="subhead">Negative Tests</div>
+								<div class="cardNum" id="total_negat"></div>
+								<div class="changeToday">Daily change: <span id="new_negat" style="font-weight: 700;"></span></div>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 order-2 order-md-1 mapContainer">
+						<div class="toggleMap toggleMapVisible mapTitle" id="countyNewCasesTitle">Change in confirmed cases over the last two weeks (by county)</div>
+						<div class="toggleMap toggleMapVisible map" id="countyNewCases"></div>
+						<div class="toggleMap mapTitle" id="countyTotalCasesTitle">Total confirmed cases by county</div>
+						<div class="toggleMap map" id="countyTotalCases"></div>
+						<div class="toggleMap mapTitle" id="zipNewCasesTitle">Change in confirmed cases over the last two weeks (by zip code)</div>
+						<div class="toggleMap map" id="zipNewCases"></div>
+						<div class="toggleMap mapTitle" id="zipTotalCasesTitle">Total confirmed cases by zip code</div>
+						<div class="toggleMap map" id="zipTotalCases"></div>
+						<div class="toggleMap mapTitle" id="countyTestingTitle">Total tests per 100,000 by county</div>
+						<div class="toggleMap map" id="countyTesting"></div>
+						<div class="instructions"><p>Click to snap to county or zip code. Click outside map to reset.</p></div>
+						<div class="btn-group flex-wrap" role="group">
+							<button id="countyNewCasesButton" type="button" class="btn btn-outline-secondary btn-sm engaged" onclick="toggleMap('countyNewCases')"> Change in cases by county</button>
+							<button id="countyTotalCasesButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyTotalCases')"> Total cases by county</button>
+							<button id="zipNewCasesButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('zipNewCases')"> Change in cases by zip</button>
+							<button id="zipTotalCasesButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('zipTotalCases')"> Total cases by zip</button>
+							<button id="countyTestingButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleMap('countyTesting')"> Tests per 100,000 by county</button>
+						</div>
+		</div>
+				</div>
+				<div class="row">
+					<div class="col-md-7 col-12 lineChartContainer">
+						<div class="toggleLine toggleLineVisible" id="hospitalizations"></div>
+						<div class="toggleLine" id="newCases"></div>
+						<div class="toggleLine" id="newDeaths"></div>
+						<div class="toggleLine" id="positivityRate"></div>
+						<div class="instructions"><p>Hover over lines to display values.</p></div>
+						<div class="btn-group flex-wrap" role="group" aria-label="...">
+							<button id="hospitalizationsButton" type="button" class="btn btn-outline-secondary btn-sm engaged" onclick="toggleLine('hospitalizations')"> Hospitalizations</button>
+							<button id="newCasesButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('newCases')"> New cases</button>
+							<button id="newDeathsButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('newDeaths')"> New deaths</button>
+							<button id="positivityRateButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleLine('positivityRate')"> Positivity rate</button>
+						</div>
+					</div>
+					<div class="col-md-5 col-12 barChartContainer"> <!-- lineChartContainer looks better on the Mac?  -->
+						<div class="toggleBar toggleBarVisible" id="raceBreakdown"></div>
+						<div class="toggleBar" id="ageBreakdown"></div>
+						<div class="toggleBar" id="genderBreakdown"></div>
+						<div class="instructions"><p>Hover over bars to display values.</p></div>
+						<div class="btn-group flex-wrap" role="group">
+							<button id="raceBreakdownButton" type="button" class="btn btn-outline-secondary btn-sm engaged" onclick="toggleBar('raceBreakdown')"> Cases by race</button>
+							<button id="ageBreakdownButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleBar('ageBreakdown')"> Cases by age</button>
+							<button id="genderBreakdownButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleBar('genderBreakdown')"> Cases by sex</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3 col-xl-4 col-12 tableContainer">
+				<div class="btn-group flex-wrap" role="group">
+					<button id="casesTableButton" type="button" class="btn btn-outline-secondary btn-sm engaged" onclick="toggleTable('casesTable')">Cases</button>
+					<button id="deathsTableButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleTable('deathsTable')">Deaths</button>
+					<button id="testsTableButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleTable('testsTable')">Testing</button>
+				</div>
+				<div class="instructions"><br><p>Testing trend line is approximated and shows positivity rate.</p></div>
+				<iframe src="cases_table.html" class="toggleTable toggleTableVisible" id="casesTable"></iframe>
+				<iframe src="deaths_table.html" class="toggleTable" id="deathsTable"></iframe>
+				<iframe src="tests_table.html" class="toggleTable" id="testsTable"></iframe>
+			</div>
+		</div>
+		<div class="row">
+			<footer class="col-12 footer">
+				<p>
+					Designed by Adam Chazan and Prayag Gordy<br>
+					<a href="mailto:adam.e.chazan@gmail.com">adam.e.chazan@gmail.com</a>, <a href="mailto:prayaggordy@gmail.com">prayaggordy@gmail.com</a>
+				</p>
+			</footer>
+		</div>
+	</div>
+</body>
