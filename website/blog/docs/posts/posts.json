@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "path": "posts/2020-08-12-welcome-to-our-dashboard/",
+    "title": "Welcome to our dashboard!",
+    "description": "A short description of the post.",
+    "author": [
+      {
+        "name": "Adam Chazan, Prayag Gordy",
+        "url": {}
+      }
+    ],
+    "date": "2020-08-12",
+    "categories": [],
+    "preview": {},
+    "last_modified": "2020-08-12T21:21:54-04:00",
+    "input_file": "welcome-to-our-dashboard.utf8.md"
+  }
+]

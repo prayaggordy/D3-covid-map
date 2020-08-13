@@ -19,371 +19,39 @@
  <!--/radix_placeholder_import_source-->
 
   <!--radix_placeholder_meta_tags-->
-  <title>Maryland COVID-19 Tracker: About this blog</title>
+  <title>Welcome to our dashboard!</title>
   
-  <meta property="description" itemprop="description" content="Dashboard and blog created by Adam Chazan and Prayag Gordy"/>
+  <meta property="description" itemprop="description" content="A short description of the post."/>
   
   
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2020-08-12"/>
+  <meta property="article:created" itemprop="dateCreated" content="2020-08-12"/>
+  <meta name="article:author" content="Adam Chazan, Prayag Gordy"/>
   
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Maryland COVID-19 Tracker: About this blog"/>
+  <meta property="og:title" content="Welcome to our dashboard!"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Dashboard and blog created by Adam Chazan and Prayag Gordy"/>
+  <meta property="og:description" content="A short description of the post."/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:site_name" content="Maryland COVID-19 Tracker"/>
   
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Maryland COVID-19 Tracker: About this blog"/>
-  <meta property="twitter:description" content="Dashboard and blog created by Adam Chazan and Prayag Gordy"/>
-  <meta property="twitter:site" content="@prayaggordy"/>
-  <meta property="twitter:creator" content="@prayaggordy"/>
+  <meta property="twitter:title" content="Welcome to our dashboard!"/>
+  <meta property="twitter:description" content="A short description of the post."/>
   
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description"]}},"value":[{"type":"character","attributes":{},"value":["About this blog"]},{"type":"character","attributes":{},"value":["Dashboard and blog created by Adam Chazan and Prayag Gordy"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output","draft"]}},"value":[{"type":"character","attributes":{},"value":["Welcome to our dashboard!"]},{"type":"character","attributes":{},"value":["A short description of the post.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Adam Chazan, Prayag Gordy"]}]}]},{"type":"character","attributes":{},"value":["08-12-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"logical","attributes":{},"value":[false]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
-  <!--radix_placeholder_navigation_in_header-->
   
-  <script type="application/javascript">
-  
-    window.headroom_prevent_pin = false;
-  
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-  
-      // initialize headroom for banner
-      var header = $('header').get(0);
-      var headerHeight = header.offsetHeight;
-      var headroom = new Headroom(header, {
-        onPin : function() {
-          if (window.headroom_prevent_pin) {
-            window.headroom_prevent_pin = false;
-            headroom.unpin();
-          }
-        }
-      });
-      headroom.init();
-      if(window.location.hash)
-        headroom.unpin();
-      $(header).addClass('headroom--transition');
-  
-      // offset scroll location for banner on hash change
-      // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
-      window.addEventListener("hashchange", function(event) {
-        window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
-      });
-  
-      // responsive menu
-      $('.distill-site-header').each(function(i, val) {
-        var topnav = $(this);
-        var toggle = topnav.find('.nav-toggle');
-        toggle.on('click', function() {
-          topnav.toggleClass('responsive');
-        });
-      });
-  
-      // nav dropdowns
-      $('.nav-dropbtn').click(function(e) {
-        $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
-        $(this).parent().siblings('.nav-dropdown')
-           .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
-      });
-      $("body").click(function(e){
-        $('.nav-dropdown-content').removeClass('nav-dropdown-active');
-      });
-      $(".nav-dropdown").click(function(e){
-        e.stopPropagation();
-      });
-    });
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["welcome-to-our-dashboard_files/bowser-1.9.3/bowser.min.js","welcome-to-our-dashboard_files/distill-2.2.21/template.v2.js","welcome-to-our-dashboard_files/jquery-1.11.3/jquery.min.js","welcome-to-our-dashboard_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
-  
-  <style type="text/css">
-  
-  /* Theme (user-documented overrideables for nav appearance) */
-  
-  .distill-site-nav {
-    color: rgba(255, 255, 255, 0.8);
-    background-color: #455a64;
-    font-size: 15px;
-    font-weight: 300;
-  }
-  
-  .distill-site-nav a {
-    color: inherit;
-    text-decoration: none;
-  }
-  
-  .distill-site-nav a:hover {
-    color: white;
-  }
-  
-  @media print {
-    .distill-site-nav {
-      display: none;
-    }
-  }
-  
-  .distill-site-header {
-  
-  }
-  
-  .distill-site-footer {
-  
-  }
-  
-  
-  /* Site Header */
-  
-  .distill-site-header {
-    width: 100%;
-    box-sizing: border-box;
-    z-index: 3;
-  }
-  
-  .distill-site-header .nav-left {
-    display: inline-block;
-    margin-left: 8px;
-  }
-  
-  @media screen and (max-width: 768px) {
-    .distill-site-header .nav-left {
-      margin-left: 0;
-    }
-  }
-  
-  
-  .distill-site-header .nav-right {
-    float: right;
-    margin-right: 8px;
-  }
-  
-  .distill-site-header a,
-  .distill-site-header .title {
-    display: inline-block;
-    text-align: center;
-    padding: 14px 10px 14px 10px;
-  }
-  
-  .distill-site-header .title {
-    font-size: 18px;
-  }
-  
-  .distill-site-header .logo {
-    padding: 0;
-  }
-  
-  .distill-site-header .logo img {
-    display: none;
-    max-height: 20px;
-    width: auto;
-    margin-bottom: -4px;
-  }
-  
-  .distill-site-header .nav-image img {
-    max-height: 18px;
-    width: auto;
-    display: inline-block;
-    margin-bottom: -3px;
-  }
-  
-  
-  
-  @media screen and (min-width: 1000px) {
-    .distill-site-header .logo img {
-      display: inline-block;
-    }
-    .distill-site-header .nav-left {
-      margin-left: 20px;
-    }
-    .distill-site-header .nav-right {
-      margin-right: 20px;
-    }
-    .distill-site-header .title {
-      padding-left: 12px;
-    }
-  }
-  
-  
-  .distill-site-header .nav-toggle {
-    display: none;
-  }
-  
-  .nav-dropdown {
-    display: inline-block;
-    position: relative;
-  }
-  
-  .nav-dropdown .nav-dropbtn {
-    border: none;
-    outline: none;
-    color: rgba(255, 255, 255, 0.8);
-    padding: 16px 10px;
-    background-color: transparent;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    margin: 0;
-    margin-top: 1px;
-    z-index: 2;
-  }
-  
-  .nav-dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    min-width: 200px;
-    border: 1px solid rgba(0,0,0,0.15);
-    border-radius: 4px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
-    z-index: 1;
-    margin-top: 2px;
-    white-space: nowrap;
-    padding-top: 4px;
-    padding-bottom: 4px;
-  }
-  
-  .nav-dropdown-content hr {
-    margin-top: 4px;
-    margin-bottom: 4px;
-    border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  }
-  
-  .nav-dropdown-active {
-    display: block;
-  }
-  
-  .nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
-    color: black;
-    padding: 6px 24px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-  }
-  
-  .nav-dropdown-content .nav-dropdown-header {
-    display: block;
-    padding: 5px 24px;
-    padding-bottom: 0;
-    text-transform: uppercase;
-    font-size: 14px;
-    color: #999999;
-    white-space: nowrap;
-  }
-  
-  .nav-dropdown:hover .nav-dropbtn {
-    color: white;
-  }
-  
-  .nav-dropdown-content a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-  
-  .nav-right .nav-dropdown-content {
-    margin-left: -45%;
-    right: 0;
-  }
-  
-  @media screen and (max-width: 768px) {
-    .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
-    .distill-site-header a.nav-toggle {
-      float: right;
-      display: block;
-    }
-    .distill-site-header .title {
-      margin-left: 0;
-    }
-    .distill-site-header .nav-right {
-      margin-right: 0;
-    }
-    .distill-site-header {
-      overflow: hidden;
-    }
-    .nav-right .nav-dropdown-content {
-      margin-left: 0;
-    }
-  }
-  
-  
-  @media screen and (max-width: 768px) {
-    .distill-site-header.responsive {position: relative;}
-    .distill-site-header.responsive a.nav-toggle {
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
-    .distill-site-header.responsive a,
-    .distill-site-header.responsive .nav-dropdown {
-      display: block;
-      text-align: left;
-    }
-    .distill-site-header.responsive .nav-left,
-    .distill-site-header.responsive .nav-right {
-      width: 100%;
-    }
-    .distill-site-header.responsive .nav-dropdown {float: none;}
-    .distill-site-header.responsive .nav-dropdown-content {position: relative;}
-    .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
-      display: block;
-      width: 100%;
-      text-align: left;
-    }
-  }
-  
-  /* Site Footer */
-  
-  .distill-site-footer {
-    width: 100%;
-    overflow: hidden;
-    box-sizing: border-box;
-    z-index: 3;
-    margin-top: 30px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    text-align: center;
-  }
-  
-  /* Headroom */
-  
-  d-title {
-    padding-top: 6rem;
-  }
-  
-  @media print {
-    d-title {
-      padding-top: 4rem;
-    }
-  }
-  
-  .headroom {
-    z-index: 1000;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-  
-  .headroom--transition {
-    transition: all .4s ease-in-out;
-  }
-  
-  .headroom--unpinned {
-    top: -100px;
-  }
-  
-  .headroom--pinned {
-    top: 0;
-  }
-  
-  </style>
-  
-  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
-  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
-  <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
+  <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
   <!--radix_placeholder_distill-->
   
@@ -1269,69 +937,13 @@
   </script>
   
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
-  <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
-  <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
-  <script src="site_libs/distill-2.2.21/template.v2.js"></script>
+  <script src="welcome-to-our-dashboard_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="welcome-to-our-dashboard_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="welcome-to-our-dashboard_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="welcome-to-our-dashboard_files/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-167555707-1"></script>
-  <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-167555707-1');
-  </script>
-  <style type="text/css">
-  .distill-site-nav {
-    color: rgb(240, 240, 240);
-    background-color: #456087;
-    font-size: 0.9em;
-    font-weight: 400;
-  }
-  
-  .distill-site-nav .title {
-      font-size: 1em;
-      font-weight: 500;
-    }
-  
-  .distill-site-nav a {
-    color: inherit;
-    text-decoration: none;
-  }
-  
-  .distill-site-nav a.title:hover {
-      color: white;
-      text-decoration: none;
-  }
-  
-  .distill-site-nav a:hover {
-    color: white;
-    text-decoration: underline;
-  }
-  
-  .distill-site-header {
-  }
-  
-  .distill-site-footer {
-  }
-  
-  @media print {
-    .distill-site-nav {
-      display: none;
-    }
-  }
-  @media (min-width: 340px) {
-      .distill-site-nav {
-        font-size: 1em;
-      }
-      .distill-site-nav .title {
-        font-size: 1.2em;
-      }
-    }
-  </style>
   <!--/radix_placeholder_site_in_header-->
 
-  <link rel="stylesheet" href="styles.css" type="text/css"/>
 
 </head>
 
@@ -1340,37 +952,76 @@
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"About this blog","description":"Dashboard and blog created by Adam Chazan and Prayag Gordy","authors":[]}
+{"title":"Welcome to our dashboard!","description":"A short description of the post.","authors":[{"author":"Adam Chazan, Prayag Gordy","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#"}],"publishedDate":"2020-08-12T00:00:00.000-04:00","citationText":"Gordy, 2020"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
 <!--radix_placeholder_navigation_before_body-->
-<header class="header header--fixed" role="banner">
-<nav class="distill-site-nav distill-site-header">
-<div class="nav-left">
-<a href="index.html" class="title">Maryland COVID-19 Tracker</a>
-</div>
-<div class="nav-right">
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="../../index.html">Dashboard</a>
-<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
-</div>
-</nav>
-</header>
 <!--/radix_placeholder_navigation_before_body-->
 <!--radix_placeholder_site_before_body-->
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>About this blog</h1>
-<p><p>Dashboard and blog created by Adam Chazan and Prayag Gordy</p></p>
+<h1>Welcome to our dashboard!</h1>
+<p><p>A short description of the post.</p></p>
 </div>
 
+<div class="d-byline">
+  Adam Chazan, Prayag Gordy  
+  
+<br/>08-12-2020
+</div>
 
 <div class="d-article">
-<p>Adam Chazan is a senior at Montgomery Blair High School in Silver Spring, Maryland. Adam applies his knowledge of statistics and data science to his interests in journalism and politics. Contact Adam at <a href="adam.e.chazan@gmail.com">adam.e.chazan@gmail.com</a>.</p>
-<p>Prayag Gordy is a freshman at Rice University in Houston, Texas. Prayag combines his interests in journalism and politics with his skills in data science and statistics to tell engaging visual stories. Visit Prayag’s <a href="https://prayaggordy.github.io">website</a> to learn more.</p>
+<h1 id="table-of-contents">Table of contents</h1>
+<ol type="1">
+<li>Intro</li>
+<li>Elements
+<ul>
+<li>Maps</li>
+<li>Change maps</li>
+<li>Total cases</li>
+<li>Testing</li>
+</ul></li>
+<li>Topline indicators</li>
+<li>Line charts
+<ul>
+<li>Hospitalizations</li>
+<li>Cases, deaths, positivity</li>
+</ul></li>
+<li>Bar charts</li>
+<li>Tables
+<ul>
+<li>Cases and deaths</li>
+<li>Testing</li>
+</ul></li>
+</ol>
+<h1 id="intro">Intro</h1>
+<p>Our goal in this endeavor was to build a refined, statistically sound, and easy-to-use dashboard for the Maryland public.</p>
+<p>We consider the Maryland Department of Health (MDH) official dashboard difficult to use and focused on the wrong indicators. It is far more important, for example, to examine the change in new cases than the number of cumulative cases; additionally, MDH doesn’t adjust any of its data for population, which is crucial in a state as diverse as Maryland.</p>
+<p>Our dashboard focuses on the correct indicators, standardized where necessary, to accurately relay the current landscape.</p>
+<h1 id="construction">Construction</h1>
+<p>The dashboard was composed using the JavaScript library D3.js. This offered us the flexibility that we needed in order to design a tool that would effectively adapt to changing data. We made use of the live code website Observable to create the elements for the dashboard. Using Observable notebooks, we were easily able to embed the maps and charts that we created into our HTML.</p>
+<p>The data was gathered from ____ and manipulated using R.</p>
+<h1 id="elements">Elements</h1>
+<h2 id="maps">Maps</h2>
+<h3 id="change-in-cases-maps">Change in cases maps</h3>
+<p>The most notable difference between our dashboard and the MDH official dashboard is the inclusion of a change in cases map. We are now months into the pandemic and little information can be gathered from total case counts. Notable outbreaks have occurred in recent weeks such as an outbreak at a crab packaging plant in Dorchester county and a steep increase in cases in the Baltimore area. Our map would clearly show outbreaks of this nature, while a total cases map does not offer sufficient information.</p>
+<p>Communicating this information well is especially important in combating the spread of the virus, as it is absolutely critical that residents are aware of the locations of outbreaks so that they are able to avoid them.</p>
+<p>To account for variation in daily case counts, our map compares the 7-day average in cases from today’s date with the average from 14 days prior. We then display a color based on the magnitude of the difference.</p>
+<p>The map’s scale is divergent, meaning that it displays two colors. Red represents an increase in cases and blue represents a decrease. The darker the color, the larger the difference.</p>
+<h3 id="total-cases-maps">Total cases maps</h3>
+<p>We have also included the total cases maps present in the MDH dashboard as well. While they do not offer a useful picture of the pandemic right now, they still provide useful context about the areas disproportionately affected over the course of the pandemic.</p>
+<h3 id="testing-map">Testing map</h3>
+<p>Similar to the MDH dashboard, we have included a map of tests administered. However, we have adjusted this map by population.</p>
+<p>Topline Numbers</p>
+<h1 id="line-charts">Line Charts</h1>
+<h1 id="bar-charts">Bar Charts</h1>
+<h1 id="tables">Tables</h1>
+<p>We felt that it was important to allow the user to easily view the data for themselves.</p>
+<h1 id="resources">Resources</h1>
+<p><a href="https://observablehq.com/collection/@adamchzn/coronavirus-dashboard">Observable Collection</a><br />
+<a href="https://github.com/prayaggordy/D3-covid-map">Github</a></p>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
