@@ -44,21 +44,28 @@ We have also included the total cases maps present in the MDH dashboard as well.
 Similar to the MDH dashboard, we have included a map of tests administered. However, we have adjusted this map by population. We believe this metric is much more effective at quantifying the state's testing response.
 
 ## Topline numbers
+Our main focus for the topline numbers was on displaying the most important figures at a glance. These categories are the same as the official Maryland dashboard, we just cleaned up some of the formatting.
 
 ## Line charts
-
 ### Hospitalizations
+This chart is also present on the official Maryland dashboard, however using D3 we were able to add interactivity.
 
 ### Cases, deaths, positivity rate
+Graphs like these have been everywhere since the start of the pandemic. They are especially good at communicating trends of the data with variation such as the reported case counts. The 7-day rolling average is displayed alongside the unadjusted data.
+
+We find these charts far more intuitive and easy to understand than the corresponding graphs on the official dashboard which display daily increases in cases on the same graphs as case totals.
 
 ## Bar charts
+The only significant change we made to the bar graphs is that we have combined probable deaths with confirmed deaths. We felt that this change made the graphs simpler and more appealing.
 
 ## Tables
-We felt that it was important to allow the user to easily view the data for themselves.
+We felt that it was important to allow the user to easily view the data for themselves. The tables display a more in-depth view of each county that the graphs do not offer and allow for easy comparison of the counties.
 
 ### Cases and deaths
+For the cases and deaths tables, we included a 14-day trendline. These trend lines were also included on the maps, but we thought it was important to include them once again to underscore their importance.
 
 ### Testing
+For the testing table, we decided instead to include the 7-day average positivity rate. This figure allows for comparison across county 
 
 # Resources
 [Observable Collection](https://observablehq.com/collection/@adamchzn/coronavirus-dashboard)  

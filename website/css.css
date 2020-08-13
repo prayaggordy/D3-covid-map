@@ -350,7 +350,7 @@ text {
     font-size: 1.7em;
   }
   .changeToday{
-    font-size: 0.8em;
+    font-size: 0.9em;
   }
 }
 @media (min-width: 1750px) {
@@ -364,7 +364,7 @@ text {
     font-size: 1.9em;
   }
   .changeToday{
-    font-size: 0.9em;
+    font-size: 1em;
   }
 }
 @media (min-width: 1800px) {

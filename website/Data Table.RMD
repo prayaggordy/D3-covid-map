@@ -81,7 +81,7 @@ if (params$indic == "Tests") {
 ```
 
 ```{r}
-datatable(data, escape = F, style = 'bootstrap', class = 'table-sm-responsive', rownames = FALSE,
+datatable(data, escape = F, style = 'bootstrap', class = 'table', rownames = FALSE,
 					options = list(dom = 't',
 												 pageLength = 25,
 												 fnDrawCallback = htmlwidgets::JS('function(){

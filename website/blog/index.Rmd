@@ -1,5 +1,5 @@
 ---
-title: "Maryland COVID-19 Tracker — blog"
+title: "Maryland COVID-19 tracker — blog"
 site: distill::distill_website
 listing: posts
 ---
