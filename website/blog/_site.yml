@@ -2,7 +2,7 @@ name: "blog"
 title: "Maryland COVID-19 Tracker"
 description: |
   Blog — Maryland COVID-19 Tracker
-base_url: http://prayaggordy.github.io/D3-covid-map/website/
+base_url: https://mdcovidtracker.com/
 google_analytics: "UA-167555707-1"
 collections:
   posts:
@@ -20,7 +20,7 @@ navbar:
     - text: "About"
       href: about.html
     - text: "Dashboard"
-      href: ../../index.html
+      href: ../../../index.html
 output:
   distill::distill_article:
     css: styles.css

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
   <url>
-    <loc>http://prayaggordy.github.io/D3-covid-map/website/about.html</loc>
-    <lastmod>2020-08-11T19:18:06-04:00</lastmod>
+    <loc>https://mdcovidtracker.com/about.html</loc>
+    <lastmod>2020-08-12T13:15:12-04:00</lastmod>
   </url>
   <url>
-    <loc>http://prayaggordy.github.io/D3-covid-map/website/</loc>
-    <lastmod>2020-08-12T22:07:59-04:00</lastmod>
+    <loc>https://mdcovidtracker.com/</loc>
+    <lastmod>2020-08-13T02:27:21-04:00</lastmod>
   </url>
   <url>
-    <loc>http://prayaggordy.github.io/D3-covid-map/website/posts/2020-08-12-welcome-to-our-dashboard/</loc>
-    <lastmod>2020-08-13T00:34:01-04:00</lastmod>
+    <loc>https://mdcovidtracker.com/posts/2020-08-12-welcome-to-our-dashboard/</loc>
+    <lastmod>2020-08-13T02:14:27-04:00</lastmod>
   </url>
 </urlset>
