@@ -11,9 +11,10 @@
     <item>
       <title>Welcome to our dashboard!</title>
       <link>https://mdcovidtracker.com/posts/2020-08-12-welcome-to-our-dashboard</link>
-      <description>A short description of the post.</description>
+      <description>Reasoning, methodology, and more.</description>
       <guid>https://mdcovidtracker.com/posts/2020-08-12-welcome-to-our-dashboard</guid>
       <pubDate>Wed, 12 Aug 2020 00:00:00 +0000</pubDate>
+      <media:content url="https://mdcovidtracker.com/posts/2020-08-12-welcome-to-our-dashboard/dashboard.png" medium="image" type="image/png" width="2560" height="1526"/>
     </item>
   </channel>
 </rss>
