@@ -28,7 +28,6 @@
 <!--  https://schema.org/Article -->
 <meta property="article:published" itemprop="datePublished" content="2020-08-12"/>
 <meta property="article:created" itemprop="dateCreated" content="2020-08-12"/>
-<meta name="article:author" content="Adam Chazan, Prayag Gordy"/>
 
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
 <meta property="og:title" content="Maryland COVID-19 Tracker: Welcome to our dashboard!"/>
@@ -50,7 +49,7 @@
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output","draft","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Welcome to our dashboard!"]},{"type":"character","attributes":{},"value":["A short description of the post."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Adam Chazan, Prayag Gordy"]}]}]},{"type":"character","attributes":{},"value":["08-12-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["http://prayaggordy.github.io/D3-covid-map/website/posts/2020-08-12-welcome-to-our-dashboard/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","date","output","draft","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Welcome to our dashboard!"]},{"type":"character","attributes":{},"value":["A short description of the post."]},{"type":"character","attributes":{},"value":["08-12-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc","toc_depth"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[2]}]}]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["http://prayaggordy.github.io/D3-covid-map/website/posts/2020-08-12-welcome-to-our-dashboard/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -1350,7 +1349,7 @@ gtag('config', 'UA-167555707-1');
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Welcome to our dashboard!","description":"A short description of the post.","authors":[{"author":"Adam Chazan, Prayag Gordy","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#"}],"publishedDate":"2020-08-12T00:00:00.000-04:00","citationText":"Gordy, 2020"}
+{"title":"Welcome to our dashboard!","description":"A short description of the post.","authors":[],"publishedDate":"2020-08-12T00:00:00.000-04:00"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -1377,36 +1376,24 @@ gtag('config', 'UA-167555707-1');
 <p><p>A short description of the post.</p></p>
 </div>
 
-<div class="d-byline">
-  Adam Chazan, Prayag Gordy  
-  
-<br/>08-12-2020
-</div>
 
 <div class="d-article">
-<h1 id="table-of-contents">Table of contents</h1>
-<ol type="1">
-<li>Intro</li>
-<li>Elements
+<h3 class="d-toc-header">Table of Contents</h3>
+<nav class="d-toc" id="TOC">
 <ul>
-<li>Maps</li>
-<li>Change maps</li>
-<li>Total cases</li>
-<li>Testing</li>
+<li><a href="#intro">Intro</a></li>
+<li><a href="#construction">Construction</a></li>
+<li><a href="#elements">Elements</a><ul>
+<li><a href="#maps">Maps</a></li>
+<li><a href="#topline-numbers">Topline numbers</a></li>
+<li><a href="#line-charts">Line charts</a></li>
+<li><a href="#bar-charts">Bar charts</a></li>
+<li><a href="#tables">Tables</a></li>
 </ul></li>
-<li>Topline indicators</li>
-<li>Line charts
-<ul>
-<li>Hospitalizations</li>
-<li>Cases, deaths, positivity</li>
-</ul></li>
-<li>Bar charts</li>
-<li>Tables
-<ul>
-<li>Cases and deaths</li>
-<li>Testing</li>
-</ul></li>
-</ol>
+<li><a href="#resources">Resources</a></li>
+</ul>
+</nav>
+<hr class="d-toc-separator"/>
 <h1 id="intro">Intro</h1>
 <p>Our goal in this endeavor was to build a refined, statistically sound, and easy-to-use dashboard for the Maryland public.</p>
 <p>We consider the Maryland Department of Health (MDH) official dashboard difficult to use and focused on the wrong indicators. It is far more important, for example, to examine the change in new cases than the number of cumulative cases; additionally, MDH doesn’t adjust any of its data for population, which is crucial in a state as diverse as Maryland.</p>
@@ -1418,18 +1405,22 @@ gtag('config', 'UA-167555707-1');
 <h2 id="maps">Maps</h2>
 <h3 id="change-in-cases-maps">Change in cases maps</h3>
 <p>The most notable difference between our dashboard and the MDH official dashboard is the inclusion of a change in cases map. We are now months into the pandemic and little information can be gathered from total case counts. Notable outbreaks have occurred in recent weeks such as an outbreak at a crab packaging plant in Dorchester county and a steep increase in cases in the Baltimore area. Our map would clearly show outbreaks of this nature, while a total cases map does not offer sufficient information.</p>
-<p>Communicating this information well is especially important in combating the spread of the virus, as it is absolutely critical that residents are aware of the locations of outbreaks so that they are able to avoid them.</p>
+<p><del>Communicating this information well is especially important in combating the spread of the virus, as it is absolutely critical that residents are aware of the locations of outbreaks so that they are able to avoid them.</del></p>
 <p>To account for variation in daily case counts, our map compares the 7-day average in cases from today’s date with the average from 14 days prior. We then display a color based on the magnitude of the difference.</p>
 <p>The map’s scale is divergent, meaning that it displays two colors. Red represents an increase in cases and blue represents a decrease. The darker the color, the larger the difference.</p>
 <h3 id="total-cases-maps">Total cases maps</h3>
 <p>We have also included the total cases maps present in the MDH dashboard as well. While they do not offer a useful picture of the pandemic right now, they still provide useful context about the areas disproportionately affected over the course of the pandemic.</p>
 <h3 id="testing-map">Testing map</h3>
-<p>Similar to the MDH dashboard, we have included a map of tests administered. However, we have adjusted this map by population.</p>
-<p>Topline Numbers</p>
-<h1 id="line-charts">Line Charts</h1>
-<h1 id="bar-charts">Bar Charts</h1>
-<h1 id="tables">Tables</h1>
+<p>Similar to the MDH dashboard, we have included a map of tests administered. However, we have adjusted this map by population. We believe this metric is much more effective at quantifying the state’s testing response.</p>
+<h2 id="topline-numbers">Topline numbers</h2>
+<h2 id="line-charts">Line charts</h2>
+<h3 id="hospitalizations">Hospitalizations</h3>
+<h3 id="cases-deaths-positivity-rate">Cases, deaths, positivity rate</h3>
+<h2 id="bar-charts">Bar charts</h2>
+<h2 id="tables">Tables</h2>
 <p>We felt that it was important to allow the user to easily view the data for themselves.</p>
+<h3 id="cases-and-deaths">Cases and deaths</h3>
+<h3 id="testing">Testing</h3>
 <h1 id="resources">Resources</h1>
 <p><a href="https://observablehq.com/collection/@adamchzn/coronavirus-dashboard">Observable Collection</a><br />
 <a href="https://github.com/prayaggordy/D3-covid-map">Github</a></p>
