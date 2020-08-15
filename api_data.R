@@ -182,7 +182,7 @@ md_population_tested_county_today <- filter(md_population_tested_county, date ==
 counties_proper_names <- data.frame(County = c("Allegany", "Anne Arundel", "Baltimore County", "Baltimore City", "Calvert", "Caroline", "Carroll", "Cecil", "Charles", "Dorchester", "Frederick", "Garrett", "Harford", "Howard", "Kent", "Montgomery", "Prince George's", "Queen Anne's", "Somerset", "St. Mary's", "Talbot", "Washington", "Wicomico", "Worcester"), county = md_counties_today$county)
 
 md_counties_today_table <- inner_join(md_counties_today, counties_proper_names, by = "county") %>%
-	inner_join(md_population_tested_county_today) %>%
+	inner_join(md_population_tested_county_today, by = "county") %>%
 	mutate(Deaths = deaths + prob_deaths,
 				 deltas = NA) %>%
 	select(County, Cases = cases, Deaths, Tests = value, deltas)
