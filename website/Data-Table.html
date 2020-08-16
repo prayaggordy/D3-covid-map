@@ -1290,7 +1290,7 @@ HTMLWidgets.widget({
     if (data.caption) $table.prepend(data.caption);
 
     if (!data.selection) data.selection = {
-      mode: 'none', selected: null, target: 'row'
+      mode: 'none', selected: null, target: 'row', selectable: null
     };
     if (HTMLWidgets.shinyMode && data.selection.mode !== 'none' &&
         data.selection.target === 'row+column') {
@@ -1618,6 +1618,12 @@ HTMLWidgets.widget({
             // to avoid problems like 3.423/100 -> 0.034230000000000003
             return (x / scale).toFixed(d);
           };
+          var slider_min = function() {
+            return filter.noUiSlider('options').range.min;
+          };
+          var slider_max = function() {
+            return filter.noUiSlider('options').range.max;
+          };
           $input.on({
             focus: function() {
               $x0.show().trigger('show');
@@ -1640,7 +1646,7 @@ HTMLWidgets.widget({
               $x0.hide().trigger('hide');
             },
             input: function() {
-              if ($input.val() === '') filter.val([r1, r2]);
+              if ($input.val() === '') filter.val([slider_min(), slider_max()]);
             },
             change: function() {
               var v = $input.val().replace(/\s/g, '');
@@ -1650,8 +1656,8 @@ HTMLWidgets.widget({
                 $input.parent().addClass('has-error');
                 return;
               }
-              if (v[0] === '') v[0] = r1;
-              if (v[1] === '') v[1] = r2;
+              if (v[0] === '') v[0] = slider_min();
+              if (v[1] === '') v[1] = slider_max();
               $input.parent().removeClass('has-error');
               // treat date as UTC time at midnight
               var strTime = function(x) {
@@ -1667,8 +1673,8 @@ HTMLWidgets.widget({
                 v[0] = strTime(v[0]);
                 v[1] = strTime(v[1]);
               }
-              if (v[0] != r1) v[0] *= scale;
-              if (v[1] != r2) v[1] *= scale;
+              if (v[0] != slider_min()) v[0] *= scale;
+              if (v[1] != slider_max()) v[1] *= scale;
               filter.val(v);
             }
           });
@@ -1722,7 +1728,7 @@ HTMLWidgets.widget({
           var updateSlider = function(e) {
             var val = filter.val();
             // turn off filter if in full range
-            $td.data('filter', val[0] > r1 || val[1] < r2);
+            $td.data('filter', val[0] > slider_min() || val[1] < slider_max());
             var v1 = formatDate(val[0]), v2 = formatDate(val[1]), ival;
             if ($td.data('filter')) {
               ival = v1 + ' ... ' + v2;
@@ -1960,7 +1966,7 @@ HTMLWidgets.widget({
       id = el.id + '_' + id;
       if (type) id = id + ':' + type;
       // do not update if the new value is the same as old value
-      if (event !== 'cell_edit' && shinyData.hasOwnProperty(id) && shinyData[id] === JSON.stringify(value))
+      if (event !== 'cell_edit' && !/_clicked$/.test(event) && shinyData.hasOwnProperty(id) && shinyData[id] === JSON.stringify(value))
         return;
       shinyData[id] = JSON.stringify(value);
       if (HTMLWidgets.shinyMode && Shiny.setInputValue) {
@@ -2017,6 +2023,14 @@ HTMLWidgets.widget({
       return {row: info.row, col: info.column};
     }
 
+    var cleanSelectedValues = function() {
+      changeInput('rows_selected', []);
+      changeInput('columns_selected', []);
+      changeInput('cells_selected', transposeArray2D([]), 'shiny.matrix');
+    }
+    // #828 we should clean the selection on the server-side when the table reloads
+    cleanSelectedValues();
+
     // a flag to indicates if select extension is initialized or not
     var flagSelectExt = table.settings()[0]._select !== undefined;
     // the Select extension should only be used in the client mode and
@@ -2052,20 +2066,29 @@ HTMLWidgets.widget({
     }
 
     var selMode = data.selection.mode, selTarget = data.selection.target;
+    var selDisable = data.selection.selectable === false;
     if (inArray(selMode, ['single', 'multiple'])) {
       var selClass = inArray(data.style, ['bootstrap', 'bootstrap4']) ? 'active' : 'selected';
-      var selected = data.selection.selected, selected1, selected2;
       // selected1: row indices; selected2: column indices
-      if (selected === null) {
-        selected1 = selected2 = [];
-      } else if (selTarget === 'row') {
-        selected1 = $.makeArray(selected);
-      } else if (selTarget === 'column') {
-        selected2 = $.makeArray(selected);
-      } else if (selTarget === 'row+column') {
-        selected1 = $.makeArray(selected.rows);
-        selected2 = $.makeArray(selected.cols);
+      var initSel = function(x) {
+        if (x === null || typeof x === 'boolean' || selTarget === 'cell') {
+          return {rows: [], cols: []};
+        } else if (selTarget === 'row') {
+          return {rows: $.makeArray(x), cols: []};
+        } else if (selTarget === 'column') {
+          return {rows: [], cols: $.makeArray(x)};
+        } else if (selTarget === 'row+column') {
+          return {rows: $.makeArray(x.rows), cols: $.makeArray(x.cols)};
+        }
       }
+      var selected = data.selection.selected;
+      var selected1 = initSel(selected).rows, selected2 = initSel(selected).cols;
+      // selectable should contain either all positive or all non-positive values, not both
+      // positive values indicate "selectable" while non-positive values means "nonselectable"
+      // the assertion is performed on R side. (only column indicides could be zero which indicates
+      // the row name)
+      var selectable = data.selection.selectable;
+      var selectable1 = initSel(selectable).rows, selectable2 = initSel(selectable).cols;
 
       // After users reorder the rows or filter the table, we cannot use the table index
       // directly. Instead, we need this function to find out the rows between the two clicks.
@@ -2088,15 +2111,56 @@ HTMLWidgets.widget({
       // row, column, or cell selection
       var lastClickedRow;
       if (inArray(selTarget, ['row', 'row+column'])) {
+        // Get the current selected rows. It will also
+        // update the selected1's value based on the current row selection state
+        // Note we can't put this function inside selectRows() directly,
+        // the reason is method.selectRows() will override selected1's value but this
+        // function will add rows to selected1 (keep the existing selection), which is
+        // inconsistent with column and cell selection.
         var selectedRows = function() {
           var rows = table.rows('.' + selClass);
           var idx = rows.indexes().toArray();
-          if (!server) return addOne(idx);
+          if (!server) {
+            selected1 = addOne(idx);
+            return selected1;
+          }
           idx = idx.map(function(i) {
             return DT_rows_current[i];
           });
           selected1 = selMode === 'multiple' ? unique(selected1.concat(idx)) : idx;
           return selected1;
+        }
+        // Change selected1's value based on selectable1, then refresh the row state
+        var onlyKeepSelectableRows = function() {
+          if (selDisable) { // users can't select; useful when only want backend select
+            selected1 = [];
+            return;
+          }
+          if (selectable1.length === 0) return;
+          var nonselectable = selectable1[0] <= 0;
+          if (nonselectable) {
+            // should make selectable1 positive
+            selected1 = $(selected1).not(selectable1.map(function(i) { return -i; })).get();
+          } else {
+            selected1 = $(selected1).filter(selectable1).get();
+          }
+        }
+        // Change selected1's value based on selectable1, then
+        // refresh the row selection state according to values in selected1
+        var selectRows = function(ignoreSelectable) {
+          if (!ignoreSelectable) onlyKeepSelectableRows();
+          table.$('tr.' + selClass).removeClass(selClass);
+          if (selected1.length === 0) return;
+          if (server) {
+            table.rows({page: 'current'}).every(function() {
+              if (inArray(DT_rows_current[this.index()], selected1)) {
+                $(this.node()).addClass(selClass);
+              }
+            });
+          } else {
+            var selected0 = selected1.map(function(i) { return i - 1; });
+            $(table.rows(selected0).nodes()).addClass(selClass);
+          }
         }
         table.on('mousedown.dt', 'tbody tr', function(e) {
           var $this = $(this), thisRow = table.row(this);
@@ -2149,33 +2213,21 @@ HTMLWidgets.widget({
             // remove id from selected1 since its class .selected has been removed
             if (inArray(id, selected1)) selected1.splice($.inArray(id, selected1), 1);
           }
-          changeInput('rows_selected', selectedRows());
-          changeInput('row_last_clicked', serverRowIndex(thisRow.index()));
+          selectedRows(); // update selected1's value based on selClass
+          selectRows(false); // only keep the selectable rows
+          changeInput('rows_selected', selected1);
+          changeInput('row_last_clicked', serverRowIndex(thisRow.index()), null, null, {priority: 'event'});
           lastClickedRow = serverRowIndex(thisRow.index());
         });
-        changeInput('rows_selected', selected1);
-        var selectRows = function() {
-          table.$('tr.' + selClass).removeClass(selClass);
-          if (selected1.length === 0) return;
-          if (server) {
-            table.rows({page: 'current'}).every(function() {
-              if (inArray(DT_rows_current[this.index()], selected1)) {
-                $(this.node()).addClass(selClass);
-              }
-            });
-          } else {
-            var selected0 = selected1.map(function(i) { return i - 1; });
-            $(table.rows(selected0).nodes()).addClass(selClass);
-          }
-        }
-        selectRows();  // in case users have specified pre-selected rows
+        selectRows(false);  // in case users have specified pre-selected rows
         // restore selected rows after the table is redrawn (e.g. sort/search/page);
         // client-side tables will preserve the selections automatically; for
         // server-side tables, we have to *real* row indices are in `selected1`
-        if (server) table.on('draw.dt', selectRows);
-        methods.selectRows = function(selected) {
+        changeInput('rows_selected', selected1);
+        if (server) table.on('draw.dt', function(e) { selectRows(false); });
+        methods.selectRows = function(selected, ignoreSelectable) {
           selected1 = $.makeArray(selected);
-          selectRows();
+          selectRows(ignoreSelectable);
           changeInput('rows_selected', selected1);
         }
       }
@@ -2183,6 +2235,34 @@ HTMLWidgets.widget({
       if (inArray(selTarget, ['column', 'row+column'])) {
         if (selTarget === 'row+column') {
           $(table.columns().footer()).css('cursor', 'pointer');
+        }
+        // update selected2's value based on selectable2
+        var onlyKeepSelectableCols = function() {
+          if (selDisable) { // users can't select; useful when only want backend select
+            selected2 = [];
+            return;
+          }
+          if (selectable2.length === 0) return;
+          var nonselectable = selectable2[0] <= 0;
+          if (nonselectable) {
+            // need to make selectable2 positive
+            selected2 = $(selected2).not(selectable2.map(function(i) { return -i; })).get();
+          } else {
+            selected2 = $(selected2).filter(selectable2).get();
+          }
+        }
+        // update selected2 and then
+        // refresh the col selection state according to values in selected2
+        var selectCols = function(ignoreSelectable) {
+          if (!ignoreSelectable) onlyKeepSelectableCols();
+          // if selected2 is not a valide index (e.g., larger than the column number)
+          // table.columns(selected2) will fail and result in a blank table
+          // this is different from the table.rows(), where the out-of-range indexes
+          // doesn't affect at all
+          selected2 = $(selected2).filter(table.columns().indexes()).get();
+          table.columns().nodes().flatten().to$().removeClass(selClass);
+          if (selected2.length > 0)
+            table.columns(selected2).nodes().flatten().to$().addClass(selClass);
         }
         var callback = function() {
           var colIdx = selTarget === 'column' ? table.cell(this).index().column :
@@ -2197,6 +2277,7 @@ HTMLWidgets.widget({
             thisCol.addClass(selClass);
             selected2 = selMode === 'single' ? [colIdx] : unique(selected2.concat([colIdx]));
           }
+          selectCols(false); // update selected2 based on selectable
           changeInput('columns_selected', selected2);
         }
         if (selTarget === 'column') {
@@ -2204,49 +2285,51 @@ HTMLWidgets.widget({
         } else {
           $(table.table().footer()).on('click.dt', 'tr th', callback);
         }
+        selectCols(false);  // in case users have specified pre-selected columns
         changeInput('columns_selected', selected2);
-        var selectCols = function() {
-          table.columns().nodes().flatten().to$().removeClass(selClass);
-          if (selected2.length > 0)
-            table.columns(selected2).nodes().flatten().to$().addClass(selClass);
-        }
-        selectCols();  // in case users have specified pre-selected columns
-        if (server) table.on('draw.dt', selectCols);
-        methods.selectColumns = function(selected) {
+        if (server) table.on('draw.dt', function(e) { selectCols(false); });
+        methods.selectColumns = function(selected, ignoreSelectable) {
           selected2 = $.makeArray(selected);
-          selectCols();
+          selectCols(ignoreSelectable);
           changeInput('columns_selected', selected2);
         }
       }
 
       if (selTarget === 'cell') {
-        var selected3;
-        if (selected === null) {
-          selected3 = [];
-        } else {
-          selected3 = selected;
-        }
-        var findIndex = function(ij) {
-          for (var i = 0; i < selected3.length; i++) {
-            if (ij[0] === selected3[i][0] && ij[1] === selected3[i][1]) return i;
+        var selected3 = [], selectable3 = [];
+        if (selected !== null) selected3 = selected;
+        if (selectable !== null && typeof selectable !== 'boolean') selectable3 = selectable;
+        var findIndex = function(ij, sel) {
+          for (var i = 0; i < sel.length; i++) {
+            if (ij[0] === sel[i][0] && ij[1] === sel[i][1]) return i;
           }
           return -1;
         }
-        table.on('click.dt', 'tbody td', function() {
-          var $this = $(this), info = tweakCellIndex(table.cell(this));
-          if ($this.hasClass(selClass)) {
-            $this.removeClass(selClass);
-            selected3.splice(findIndex([info.row, info.col]), 1);
-          } else {
-            if (selMode === 'single') $(table.cells().nodes()).removeClass(selClass);
-            $this.addClass(selClass);
-            selected3 = selMode === 'single' ? [[info.row, info.col]] :
-              unique(selected3.concat([[info.row, info.col]]));
+         // Change selected3's value based on selectable3, then refresh the cell state
+        var onlyKeepSelectableCells = function() {
+          if (selDisable) { // users can't select; useful when only want backend select
+            selected3 = [];
+            return;
           }
-          changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
-        });
-        changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
-        var selectCells = function() {
+          if (selectable3.length === 0) return;
+          var nonselectable = selectable3[0][0] <= 0;
+          var out = [];
+          if (nonselectable) {
+            selected3.map(function(ij) {
+              // should make selectable3 positive
+              if (findIndex([-ij[0], -ij[1]], selectable3) === -1) { out.push(ij); }
+            });
+          } else {
+            selected3.map(function(ij) {
+              if (findIndex(ij, selectable3) > -1) { out.push(ij); }
+            });
+          }
+          selected3 = out;
+        }
+        // Change selected3's value based on selectable3, then
+        // refresh the cell selection state according to values in selected3
+        var selectCells = function(ignoreSelectable) {
+          if (!ignoreSelectable) onlyKeepSelectableCells();
           table.$('td.' + selClass).removeClass(selClass);
           if (selected3.length === 0) return;
           if (server) {
@@ -2261,11 +2344,27 @@ HTMLWidgets.widget({
             });
           }
         };
-        selectCells();  // in case users have specified pre-selected columns
-        if (server) table.on('draw.dt', selectCells);
-        methods.selectCells = function(selected) {
+        table.on('click.dt', 'tbody td', function() {
+          var $this = $(this), info = tweakCellIndex(table.cell(this));
+          if ($this.hasClass(selClass)) {
+            $this.removeClass(selClass);
+            selected3.splice(findIndex([info.row, info.col], selected3), 1);
+          } else {
+            if (selMode === 'single') $(table.cells().nodes()).removeClass(selClass);
+            $this.addClass(selClass);
+            selected3 = selMode === 'single' ? [[info.row, info.col]] :
+              unique(selected3.concat([[info.row, info.col]]));
+          }
+          selectCells(false); // must call this to update selected3 based on selectable3
+          changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
+        });
+        selectCells(false);  // in case users have specified pre-selected columns
+        changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
+
+        if (server) table.on('draw.dt', function(e) { selectCells(false); });
+        methods.selectCells = function(selected, ignoreSelectable) {
           selected3 = selected ? selected : [];
-          selectCells();
+          selectCells(ignoreSelectable);
           changeInput('cells_selected', transposeArray2D(selected3), 'shiny.matrix');
         }
       }
@@ -2317,7 +2416,7 @@ HTMLWidgets.widget({
     }
     // the current cell clicked on
     table.on('click.dt', 'tbody td', function() {
-      changeInput('cell_clicked', cellInfo(this));
+      changeInput('cell_clicked', cellInfo(this), null, null, {priority: 'event'});
     })
     changeInput('cell_clicked', {});
 
@@ -6568,8 +6667,8 @@ summary {
 </div>
 
 
-<div id="htmlwidget-7807f254a7367a946bff" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7807f254a7367a946bff">{"x":{"style":"bootstrap","filter":"none","data":[["Allegany","Anne Arundel","Baltimore County","Baltimore City","Calvert","Caroline","Carroll","Cecil","Charles","Dorchester","Frederick","Garrett","Harford","Howard","Kent","Montgomery","Prince George's","Queen Anne's","Somerset","St. Mary's","Talbot","Washington","Wicomico","Worcester"],[18,228,567,434,28,3,118,30,91,5,121,0,69,112,23,806,764,26,3,52,4,31,45,20],[25,40,69,71,31,9,70,29,58,15,49,0,27,36,117,77,84,53,12,47,11,21,44,39],["<span id=\"htmlwidget-29c1c51b85ac2093cf1f\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-29c1c51b85ac2093cf1f\">{\"x\":{\"values\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-7526caa6192c0bfb95b0\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-7526caa6192c0bfb95b0\">{\"x\":{\"values\":[0.285714285714286,0.285714285714286,0.285714285714286,0.285714285714286,0.285714285714286,0.428571428571429,0.714285714285714,0.428571428571429,0.714285714285714,0.714285714285714,1.14285714285714,1.14285714285714,1.14285714285714,1],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-426363e43994beee7b91\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-426363e43994beee7b91\">{\"x\":{\"values\":[3.28571428571429,3.42857142857143,3.28571428571429,3.42857142857143,3,2.71428571428571,2.42857142857143,1.71428571428571,1.71428571428571,1.71428571428571,1.71428571428571,1.71428571428571,1.85714285714286,1.71428571428571],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-9306f8118f4fbd62cf68\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-9306f8118f4fbd62cf68\">{\"x\":{\"values\":[2,1.71428571428571,1.71428571428571,1.85714285714286,1.71428571428571,1.85714285714286,2.28571428571429,2.14285714285714,2.14285714285714,2.57142857142857,2,2.14285714285714,1.85714285714286,1.71428571428571],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-26bb68cfe4332318e5a7\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-26bb68cfe4332318e5a7\">{\"x\":{\"values\":[0,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0,0,0,0,0,0],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-7811f075293e0dcfd50d\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-7811f075293e0dcfd50d\">{\"x\":{\"values\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-2d5ebc3306cede0e2269\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-2d5ebc3306cede0e2269\">{\"x\":{\"values\":[0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.285714285714286,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0,0,0],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-e240c5dec74d3fba13b3\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-e240c5dec74d3fba13b3\">{\"x\":{\"values\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-5b97ab0b967aa217446f\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-5b97ab0b967aa217446f\">{\"x\":{\"values\":[0,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0,0,0,0,0,0],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-649041081a620fafa95d\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-649041081a620fafa95d\">{\"x\":{\"values\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-000fb5c569d4f414a259\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-000fb5c569d4f414a259\">{\"x\":{\"values\":[0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0,0,0,0,0,0,0,0],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-803c6ea02ff856cbf907\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-803c6ea02ff856cbf907\">{\"x\":{\"values\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-56fa48bf5f2164da71a6\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-56fa48bf5f2164da71a6\">{\"x\":{\"values\":[0.142857142857143,0,0,0.142857142857143,0.142857142857143,0.142857142857143,0.285714285714286,0.285714285714286,0.285714285714286,0.285714285714286,0.142857142857143,0.142857142857143,0.142857142857143,0],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-56b4016ec5d58a9ed9fe\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-56b4016ec5d58a9ed9fe\">{\"x\":{\"values\":[0.714285714285714,0.857142857142857,0.571428571428571,0.571428571428571,0.571428571428571,0.571428571428571,0.571428571428571,0.142857142857143,0,0.428571428571429,0.571428571428571,0.857142857142857,0.857142857142857,0.857142857142857],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-9d948b1a962e3557c8ae\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-9d948b1a962e3557c8ae\">{\"x\":{\"values\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-6cc683c3963deb81f2a6\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-6cc683c3963deb81f2a6\">{\"x\":{\"values\":[1,0.857142857142857,0.857142857142857,1,0.857142857142857,1,1,1.14285714285714,1.71428571428571,1.85714285714286,1.71428571428571,1.42857142857143,1.28571428571429,1.71428571428571],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-fe911af9586976c6f8a7\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-fe911af9586976c6f8a7\">{\"x\":{\"values\":[1.28571428571429,1.57142857142857,1.71428571428571,1.85714285714286,1.85714285714286,1.85714285714286,1.85714285714286,2,1.71428571428571,1.42857142857143,1.42857142857143,1.71428571428571,2.42857142857143,2.57142857142857],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-69b22e86724bf0a3bbff\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-69b22e86724bf0a3bbff\">{\"x\":{\"values\":[0.285714285714286,0.285714285714286,0.285714285714286,0.285714285714286,0.285714285714286,0.285714285714286,0.285714285714286,0,0,0,0,0,0,0.142857142857143],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-438b48f2d03725f137f1\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-438b48f2d03725f137f1\">{\"x\":{\"values\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-6d72aca1c9859286cff9\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-6d72aca1c9859286cff9\">{\"x\":{\"values\":[0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0,0,0,0,0,0,0,0,0],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-a605bd4945bbeb137230\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-a605bd4945bbeb137230\">{\"x\":{\"values\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-ac98177bc0d1bd32e90b\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-ac98177bc0d1bd32e90b\">{\"x\":{\"values\":[0.142857142857143,0.142857142857143,0,0,0,0,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-62ad0ccc66185c12f4ae\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-62ad0ccc66185c12f4ae\">{\"x\":{\"values\":[0.285714285714286,0.285714285714286,0.285714285714286,0.285714285714286,0.285714285714286,0.285714285714286,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-2877e22baa2875b387f3\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-2877e22baa2875b387f3\">{\"x\":{\"values\":[0,0,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0.285714285714286,0.285714285714286,0.285714285714286,0.142857142857143,0.142857142857143,0.142857142857143,0.142857142857143,0],\"options\":{\"lineColor\":\"#724654\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":35,\"width\":125},\"width\":125,\"height\":35},\"evals\":[],\"jsHooks\":[]}<\/script>"]],"container":"<table class=\"table table-sm\">\n  <thead>\n    <tr>\n      <th>County<\/th>\n      <th>Deaths<\/th>\n      <th>Per 100,000 residents<\/th>\n      <th>14-day trend<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":25,"fnDrawCallback":"function(){\n                                              HTMLWidgets.staticRender();\n                                              }","columnDefs":[{"targets":[1,2],"render":"function(data, type, row, meta) { return DTWidget.formatCurrency(data, \"\", 0, 3, \",\", \".\", true); }"},{"className":"dt-right","targets":[1,2]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.fnDrawCallback","options.columnDefs.0.render"],"jsHooks":[]}</script>
+<div id="htmlwidget-e9566fd2695dab1be202" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e9566fd2695dab1be202">{"x":{"style":"bootstrap","filter":"none","data":[["Allegany","Anne Arundel","Baltimore County","Baltimore City","Calvert","Caroline","Carroll","Cecil","Charles","Dorchester","Frederick","Garrett","Harford","Howard","Kent","Montgomery","Prince George's","Queen Anne's","Somerset","St. Mary's","Talbot","Washington","Wicomico","Worcester"],[341,7648,13941,13425,737,461,1608,726,2165,408,3216,58,2150,4071,244,19003,24654,482,151,1048,420,1125,1401,729],[474,1347,1684,2184,809,1402,960,708,1373,1265,1294,197,856,1291,1245,1827,2721,977,587,940,1129,751,1371,1414],["<span id=\"htmlwidget-b44fa08e7114b1fc2dc7\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-b44fa08e7114b1fc2dc7\">{\"x\":{\"values\":[2.14285714285714,2.28571428571429,2.28571428571429,2.14285714285714,2,2.85714285714286,2.85714285714286,3.71428571428571,3.42857142857143,3.85714285714286,4.71428571428571,6.57142857142857,7.28571428571429,7.14285714285714],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-95e17c6f65fab85b43da\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-95e17c6f65fab85b43da\">{\"x\":{\"values\":[76.8571428571429,76.2857142857143,73.5714285714286,73.7142857142857,67.5714285714286,62.8571428571429,57.5714285714286,58.4285714285714,54.1428571428571,52.1428571428571,46.8571428571429,45.8571428571429,46.1428571428571,41],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-995b21556405d999394f\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-995b21556405d999394f\">{\"x\":{\"values\":[182.428571428571,181.857142857143,177.571428571429,166,156.714285714286,151.857142857143,154.571428571429,142.714285714286,125,117.571428571429,120.285714285714,115.714285714286,116.142857142857,101.428571428571],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-854b192b08346efa366f\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-854b192b08346efa366f\">{\"x\":{\"values\":[167,163.142857142857,161,153,149.571428571429,138.428571428571,138.571428571429,136.571428571429,149.857142857143,148.285714285714,141.142857142857,138.714285714286,138,125.428571428571],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-5bcfff130db4996c43bb\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-5bcfff130db4996c43bb\">{\"x\":{\"values\":[12.7142857142857,13.8571428571429,14.4285714285714,14.5714285714286,12,10.4285714285714,11.1428571428571,10.2857142857143,9.14285714285714,7.85714285714286,8.14285714285714,7.57142857142857,6.85714285714286,5.71428571428571],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-e9a2f130fd47143e8a21\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-e9a2f130fd47143e8a21\">{\"x\":{\"values\":[3.71428571428571,3.28571428571429,3.28571428571429,3.71428571428571,3.14285714285714,2.14285714285714,2.71428571428571,2.14285714285714,2,1.85714285714286,1.57142857142857,1.71428571428571,2.14285714285714,1.42857142857143],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-d7c815a61d53e1900106\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-d7c815a61d53e1900106\">{\"x\":{\"values\":[14.2857142857143,14.4285714285714,13.8571428571429,11.5714285714286,11.5714285714286,10,9.28571428571429,9,9.14285714285714,8.71428571428571,9.57142857142857,9.42857142857143,9.42857142857143,8.85714285714286],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-16a777d77971e0e9c9a7\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-16a777d77971e0e9c9a7\">{\"x\":{\"values\":[7.71428571428571,7.85714285714286,8.57142857142857,8.85714285714286,9.57142857142857,9.71428571428571,7.85714285714286,7.28571428571429,6.57142857142857,6,4.85714285714286,4.28571428571429,3.71428571428571,3.42857142857143],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-f6b896f0ac49935c411a\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-f6b896f0ac49935c411a\">{\"x\":{\"values\":[22.2857142857143,22.8571428571429,21.5714285714286,20.2857142857143,21.5714285714286,20.7142857142857,20.8571428571429,18.7142857142857,19.2857142857143,19.5714285714286,20.1428571428571,19.4285714285714,21.7142857142857,20.1428571428571],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-0476d504480b65da67d1\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-0476d504480b65da67d1\">{\"x\":{\"values\":[4.71428571428571,4.71428571428571,4.85714285714286,4.85714285714286,3.57142857142857,3.14285714285714,2.85714285714286,3.28571428571429,3.71428571428571,3.57142857142857,4.71428571428571,4.14285714285714,4.42857142857143,5.28571428571429],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-a6dfd29d39e51d3dff3a\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-a6dfd29d39e51d3dff3a\">{\"x\":{\"values\":[14.4285714285714,12.1428571428571,10.4285714285714,9.71428571428571,9.14285714285714,9.42857142857143,9.85714285714286,10.2857142857143,11,14,17.4285714285714,17.5714285714286,20.1428571428571,21.2857142857143],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-de7eba05ae684702ad8a\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-de7eba05ae684702ad8a\">{\"x\":{\"values\":[0.714285714285714,0.142857142857143,0.285714285714286,0.285714285714286,0.428571428571429,0.857142857142857,0.857142857142857,0.857142857142857,1,1.14285714285714,1.28571428571429,1.14285714285714,1.28571428571429,1.28571428571429],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-1210c2e799244c741801\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-1210c2e799244c741801\">{\"x\":{\"values\":[31.7142857142857,30.7142857142857,28.8571428571429,27.1428571428571,24.5714285714286,22,21.4285714285714,20.1428571428571,21.2857142857143,22.2857142857143,21.2857142857143,23.2857142857143,27.2857142857143,26],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-4f3386e401b386895c6f\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-4f3386e401b386895c6f\">{\"x\":{\"values\":[41,40,39.4285714285714,36.7142857142857,35.5714285714286,34.1428571428571,32,31.5714285714286,31.8571428571429,32,34,32.8571428571429,33,32.1428571428571],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-3f6caac5f8ddfc11e94e\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-3f6caac5f8ddfc11e94e\">{\"x\":{\"values\":[1.57142857142857,1.57142857142857,1.57142857142857,1,0.857142857142857,0.571428571428571,1.14285714285714,1.14285714285714,1.14285714285714,1.28571428571429,1.14285714285714,0.857142857142857,0.714285714285714,0.428571428571429],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-2eaf720bb420a7cb0636\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-2eaf720bb420a7cb0636\">{\"x\":{\"values\":[96.8571428571429,97.1428571428571,95.8571428571429,90.7142857142857,81.5714285714286,85,90.5714285714286,92.4285714285714,92.5714285714286,95,102.857142857143,97.1428571428571,95,87.2857142857143],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-3a3dcabc2b9e542f1c1a\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-3a3dcabc2b9e542f1c1a\">{\"x\":{\"values\":[158.571428571429,173.142857142857,158.857142857143,148.857142857143,136.571428571429,135.428571428571,136.285714285714,136,132.428571428571,134.571428571429,153.714285714286,152.857142857143,147.714285714286,136.714285714286],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-f42d0a6be44277301373\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-f42d0a6be44277301373\">{\"x\":{\"values\":[4.14285714285714,3.42857142857143,3.71428571428571,4,5.28571428571429,5.14285714285714,4.85714285714286,5,5,5.57142857142857,5.85714285714286,7,7,7.42857142857143],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-bd13d2ec187a7012ffa0\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-bd13d2ec187a7012ffa0\">{\"x\":{\"values\":[1.14285714285714,1.85714285714286,1.85714285714286,1.85714285714286,2,1.85714285714286,1.85714285714286,2.28571428571429,1.71428571428571,1.71428571428571,1.57142857142857,1.28571428571429,1.85714285714286,2.14285714285714],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-15dab7312ce6257dbdd4\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-15dab7312ce6257dbdd4\">{\"x\":{\"values\":[11.7142857142857,10.8571428571429,11.7142857142857,11,9.42857142857143,8.71428571428571,8.71428571428571,9.71428571428571,10.2857142857143,9.57142857142857,10.1428571428571,11,10.7142857142857,9.28571428571429],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-63e34cb6d63a26663d99\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-63e34cb6d63a26663d99\">{\"x\":{\"values\":[7.28571428571429,6.85714285714286,6.57142857142857,5.85714285714286,6.28571428571429,4.71428571428571,4.85714285714286,4.85714285714286,5,5,5.71428571428571,4,3.42857142857143,2.85714285714286],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-f571be923528a656fcc9\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-f571be923528a656fcc9\">{\"x\":{\"values\":[12.1428571428571,10.2857142857143,8.28571428571429,8.57142857142857,7.28571428571429,5.71428571428571,4.85714285714286,5.14285714285714,6.14285714285714,7.42857142857143,10,12.4285714285714,15.7142857142857,16.1428571428571],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-4356644e4314ad0d34e4\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-4356644e4314ad0d34e4\">{\"x\":{\"values\":[7,7.57142857142857,8,7.57142857142857,6.14285714285714,5.28571428571429,6.28571428571429,7.14285714285714,6.71428571428571,6.42857142857143,7.42857142857143,8.42857142857143,9.42857142857143,9],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>","<span id=\"htmlwidget-a457afcfb53d4a6511aa\" class=\"sparkline html-widget\"><\/span>\n<script type=\"application/json\" data-for=\"htmlwidget-a457afcfb53d4a6511aa\">{\"x\":{\"values\":[15,19,21.1428571428571,20.8571428571429,17.8571428571429,14.1428571428571,15.1428571428571,11.8571428571429,8.28571428571429,6.85714285714286,6.14285714285714,5,5.28571428571429,5],\"options\":{\"lineColor\":\"#E05F15\",\"fillColor\":false,\"lineWidth\":4,\"chartRangeMin\":0,\"chartRangeMax\":10,\"highlightLineColor\":\"\",\"highlightSpotColor\":\"\",\"spotColor\":\"\",\"minSpotColor\":\"\",\"maxSpotColor\":\"\",\"disableInteraction\":true,\"height\":20,\"width\":125},\"width\":125,\"height\":20},\"evals\":[],\"jsHooks\":[]}<\/script>"]],"container":"<table class=\"table\">\n  <thead>\n    <tr>\n      <th>County<\/th>\n      <th>Cases<\/th>\n      <th>Per 100,000 residents<\/th>\n      <th>14-day trend<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":25,"fnDrawCallback":"function(){\n                                              HTMLWidgets.staticRender();\n                                              }","columnDefs":[{"targets":1,"render":"function(data, type, row, meta) { return DTWidget.formatCurrency(data, \"\", 0, 3, \",\", \".\", true); }"},{"targets":2,"render":"function(data, type, row, meta) { return DTWidget.formatCurrency(data, \"\", 0, 3, \",\", \".\", true); }"},{"className":"dt-right","targets":[1,2]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.fnDrawCallback","options.columnDefs.0.render","options.columnDefs.1.render"],"jsHooks":[]}</script>
 
 
 
