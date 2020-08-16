@@ -106,9 +106,9 @@
   font-size: 0.8em;
 }
 .footer{
-  height: 50px;
+  height: 80px;
   width: 100%;
-  font-size: 0.7em;
+  font-size: 0.8em;
   background-color: #e7e7e7;
   color: gray;
   text-align: center;
@@ -214,8 +214,8 @@ text {
     border: #e7e7e7 solid 1px;
   }
   .footer{
-    font-size: 0.9em;
-    height: 60px;
+    font-size: 0.8em;
+    height: 70px;
   }
   .mapTitle{
     font-size: 20px;
@@ -255,6 +255,10 @@ text {
   }
   text {
     font-size: 10px;
+  }
+  .footer{
+    font-size: 0.9em;
+    height: 60px;
   }
 }
 @media (min-width: 992px) {
