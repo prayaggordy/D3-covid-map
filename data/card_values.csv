@@ -1,3 +1,3 @@
-cases,deaths,hospit,volume,positivity,negative
-"106,063","3,580",412,"1,814,420",3.21%,"1,169,019"
-+577,+6,-20,"+21,144",-1.13%,"+11,334"
+cases,deaths,hospit,volume,positivity,negative,last_updated
+"106,664","3,593",412,"1,841,511",2.81%,"1,184,606",August 28
++601,+13,+0,"+27,091",-0.4%,"+15,587",August 28
