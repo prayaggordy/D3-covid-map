@@ -1,5 +1,5 @@
 ---
-title: "Anne Arundel County sees an increase in COVID-19?"
+title: "Anne Arundel County sees an increase in COVID-19"
 description: |
   New daily cases and positivity rate are on the rise in the Maryland capital's county.
 date: 09-04-2020
