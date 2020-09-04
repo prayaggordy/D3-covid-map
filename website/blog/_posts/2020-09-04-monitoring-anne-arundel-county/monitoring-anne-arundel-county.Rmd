@@ -1,0 +1,51 @@
+---
+title: "Monitoring Anne Arundel County"
+description: |
+  A short description of the post.
+date: 09-04-2020
+output:
+  distill::distill_article:
+    self_contained: false
+draft: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+easypackages::libraries("tidyverse", "zoo")
+
+source("../../silver_chips.R")
+```
+
+```{r}
+cases <- read_csv("../../../../data/md_counties_cases.csv")
+testing <- read_csv("../../../../data/md_population_tested_county.csv")
+```
+
+```{r message=FALSE, warning=FALSE}
+df <- inner_join(cases, testing) %>% group_by(fips) %>% mutate(new_tests = value - lag(value), pos_rate = new_cases/new_tests, pos_rate_avg = zoo::rollmeanr(pos_rate, fill = NA, k = 7)) %>% ungroup()
+```
+
+```{r}
+aa_county <- filter(df, fips == "24003")
+
+statewide <- group_by(df, date) %>% summarize(new_cases = sum(new_cases), new_tests = sum(new_tests)) %>% ungroup() %>% mutate(pos_rate = new_cases/new_tests, pos_rate_avg = zoo::rollmeanr(pos_rate, fill = NA, k = 7))
+```
+
+```{r fig.width=5}
+ggplot(aa_county %>% filter(date >= as.Date("2020-08-04")), aes(x = date, y = pos_rate_avg)) + 
+	geom_point(size = 3, alpha = 0.5, color = "cadetblue3") + 
+	geom_smooth(data = statewide %>% filter(date >= as.Date("2020-08-04")), alpha = 0.25, size = 1.5, color = "gray", se = F) + 
+	geom_smooth(se = F, alpha = 0.8, color = "cadetblue4", size = 1.5) + 
+	theme_silver_chips_minimal() + 
+	scale_y_continuous(labels = scales::percent) + labs(y = "7-day average positivity rate", x = NULL, title = "Positivity rate increasing in Anne Arundel County", subtitle = "The gray line shows the statewide positivity rate") + 
+	theme(plot.title.position = "plot", panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank()) + 
+	scale_x_date(date_labels = "%B %d")
+```
+
+
+
+
+
+
+
