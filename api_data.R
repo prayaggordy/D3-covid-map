@@ -170,7 +170,7 @@ md_statewide <- inner_join(md_statewide_cases, md_statewide_deaths, by = "date")
 
 md_population_tested_county <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_TotalPopulationTestedByCounty/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("2020-06-15"), "county") %>%
-	mutate(date = as.Date(str_sub(gsub("[^0-9_]", "", name), start = 2), "%m_%d_%y"),
+	mutate(date = as.Date(ifelse(str_sub(name, end = 2) == "d_", str_sub(gsub("[^0-9_]", "", name), start = 2), gsub("[^0-9_]", "", name)), "%m_%d_%y"),
 				 county = gsub(" ", "_", gsub("[.']", "", tolower(county)))) %>%  # woah... I actually know how to use gsub??
 	select(-name) %>%
 	inner_join(md_fips, by = "county")
@@ -224,4 +224,3 @@ lapply(dfs, save_dfs)
 render(here("website", "Data Table.RMD"), params = list(indic = "Cases"), output_file = here("website", "cases_table.html"))
 render(here("website", "Data Table.RMD"), params = list(indic = "Deaths"), output_file = here("website", "deaths_table.html"))
 render(here("website", "Data Table.RMD"), params = list(indic = "Tests"), output_file = here("website", "tests_table.html"))
-
