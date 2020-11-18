@@ -179,6 +179,13 @@ md_population_tested_county_today <- filter(md_population_tested_county, date ==
 	inner_join(pop_county) %>%
 	mutate(tests_per_100k = value/population*100000)
 
+md_daily_volume_tested_county <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_DailyTestingVolumeByCounty/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
+	md_api_pivot(as.Date("2020-06-15"), "county") %>%
+	mutate(date = as.Date(ifelse(str_sub(name, end = 2) == "d_", str_sub(gsub("[^0-9_]", "", name), start = 2), gsub("[^0-9_]", "", name)), "%m_%d_%y"),
+				 county = gsub(" ", "_", gsub("[.']", "", tolower(county)))) %>%  # woah... I actually know how to use gsub??
+	select(-name) %>%
+	inner_join(md_fips, by = "county")
+
 counties_proper_names <- data.frame(County = c("Allegany", "Anne Arundel", "Baltimore County", "Baltimore City", "Calvert", "Caroline", "Carroll", "Cecil", "Charles", "Dorchester", "Frederick", "Garrett", "Harford", "Howard", "Kent", "Montgomery", "Prince George's", "Queen Anne's", "Somerset", "St. Mary's", "Talbot", "Washington", "Wicomico", "Worcester"), county = md_counties_today$county)
 
 md_counties_today_table <- inner_join(md_counties_today, counties_proper_names, by = "county") %>%
@@ -217,7 +224,7 @@ card_values$positivity[2] <- ifelse(card_values$positivity[2] < 0, card_values$p
 save_dfs <- function(df)
 	write_csv(get(df), paste0("data/", df, ".csv"))
 
-dfs <- c("md_counties_cases", "md_counties_deaths", "md_counties_prob_deaths", "md_counties", "md_counties_today", "md_zips", "md_zips_today", "age_data", "sex_data", "race_data", "hospit_data", "md_negatives", "md_isolation", "md_volume", "md_ever_hospit", "md_statewide", "md_population_tested_county", "md_population_tested_county_today", "md_counties_today_table", "md_counties_trend_table", "card_values")
+dfs <- c("md_counties_cases", "md_counties_deaths", "md_counties_prob_deaths", "md_counties", "md_counties_today", "md_zips", "md_zips_today", "age_data", "sex_data", "race_data", "hospit_data", "md_negatives", "md_isolation", "md_volume", "md_ever_hospit", "md_statewide", "md_population_tested_county", "md_population_tested_county_today", "md_daily_volume_tested_county", "md_counties_today_table", "md_counties_trend_table", "card_values")
 
 lapply(dfs, save_dfs)
 
