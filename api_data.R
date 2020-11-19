@@ -1,4 +1,4 @@
-easypackages::libraries("tidyverse", "jsonify", "janitor", "zoo", "scales", "htmltools", "DT", "here", "sparkline", "rmarkdown")
+easypackages::libraries("tidyverse", "jsonify", "janitor", "zoo", "scales", "htmltools", "DT", "here", "sparkline", "rmarkdown", "RcppRoll")
 
 pop_county <- read_csv("population/county.csv")
 pop_zip <- read_csv("population/zip.csv")
@@ -186,6 +186,13 @@ md_daily_volume_tested_county <- md_api("https://services.arcgis.com/njFNhDsUCen
 	select(-name) %>%
 	inner_join(md_fips, by = "county")
 
+md_statewide_pos_rate <- md_volume %>%
+	mutate(rolling_new_cases = roll_sum(number_of_positives, 7, align = "right", fill = NA),
+				 rolling_new_tests = roll_sum(number_of_tests, 7, align = "right", fill = NA),
+				 rolling_posi_rate = round(rolling_new_cases/rolling_new_tests*100, 2)) %>%
+	filter(!is.na(rolling_new_cases)) %>%
+	select(date, rolling_posi_rate)
+
 counties_proper_names <- data.frame(County = c("Allegany", "Anne Arundel", "Baltimore County", "Baltimore City", "Calvert", "Caroline", "Carroll", "Cecil", "Charles", "Dorchester", "Frederick", "Garrett", "Harford", "Howard", "Kent", "Montgomery", "Prince George's", "Queen Anne's", "Somerset", "St. Mary's", "Talbot", "Washington", "Wicomico", "Worcester"), county = md_counties_today$county)
 
 md_counties_today_table <- inner_join(md_counties_today, counties_proper_names, by = "county") %>%
@@ -212,7 +219,7 @@ card_values <- data.frame(
 	deaths = c(slice(md_statewide_deaths, n()) %>% pull(deaths) %>% comma(), slice(md_statewide_deaths, n()) %>% pull(new_deaths) %>% comma() %>% paste0("+", .)),
 	hospit = c(filter(md_hospit, date == max(date), name == "Total") %>% pull(value) %>% comma(), filter(md_hospit, name == "Total") %>% mutate(new_hospit = value - lag(value)) %>% slice(n()) %>% pull(new_hospit)),
 	volume = c(slice(md_tested_statewide, n()) %>% pull(tested) %>% comma(), mutate(md_tested_statewide, new_tests = tested - lag(tested)) %>% slice(n()) %>% pull(new_tests) %>% comma() %>% paste0("+", .)),
-	positivity = c(slice(md_volume, n()) %>% pull(percent_positive) %>% paste0(., "%"), mutate(md_volume, delta_pos = percent_positive - lag(percent_positive)) %>% slice(n()) %>% pull(delta_pos) %>% paste0(., "%")),
+	positivity = c(slice(md_statewide_pos_rate, n()) %>% pull(rolling_posi_rate) %>% paste0(., "%"), mutate(md_statewide_pos_rate, delta_pos = round(rolling_posi_rate - lag(rolling_posi_rate), 2)) %>% slice(n()) %>% pull(delta_pos) %>% paste0(., "%")),
 	negative = c(slice(md_negatives, n()) %>% pull(negatives) %>% comma(), mutate(md_negatives, new_neg = negatives - lag(negatives)) %>% slice(n()) %>% pull(new_neg) %>% comma() %>% paste0("+", .)),
 	last_updated = c(format(max(md_statewide_cases$date), "%B %d"), format(max(md_statewide_cases$date), "%B %d")),
 	stringsAsFactors = F

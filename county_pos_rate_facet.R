@@ -12,7 +12,7 @@ df <- inner_join(cases, tests, by = c("county", "fips", "date")) %>%
 	group_by(county, fips) %>%
 	mutate(rolling_new_cases = roll_sum(new_cases, 7, align = "right", fill = NA),
 				 rolling_new_tests = roll_sum(new_tests, 7, align = "right", fill = NA),
-				 rolling_posi_rate = new_cases/new_tests) %>%
+				 rolling_posi_rate = rolling_new_cases/rolling_new_tests) %>%
 	ungroup() %>%
 	filter(!is.na(rolling_new_cases)) %>%
 	inner_join(counties_proper_names, by = "county") %>%

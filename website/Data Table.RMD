@@ -6,7 +6,7 @@ params:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F, message = FALSE, warning = FALSE)
-easypackages::libraries("tidyverse", "DT", "sparkline", "here", "zoo", "scales")
+easypackages::libraries("tidyverse", "DT", "sparkline", "here", "zoo", "scales", "RcppRoll")
 ```
 
 ```{r Read CSV, message=FALSE, warning=FALSE}
@@ -16,25 +16,46 @@ new_col <- paste("new", tolower(params$indic), sep = "_") %>%
 pop <- read_csv(here("population", "county.csv"))
 cases <- read_csv(here("data", "md_counties_cases.csv")) 
 deaths <- read_csv(here("data", "md_counties_deaths.csv"))
-tests <- read_csv(here("data", "md_population_tested_county.csv")) %>% 
+daily_tests <- read_csv(here("data", "md_daily_volume_tested_county.csv")) %>% 
+	rename(new_tests = value) %>% 
+	inner_join(cases, by = c("date", "county", "fips")) %>% 
+	mutate(rolling_new_cases = roll_sum(new_cases, 7, align = "right", fill = NA),
+				 rolling_new_tests = roll_sum(new_tests, 7, align = "right", fill = NA),
+				 positivity = rolling_new_cases/rolling_new_tests) %>% 
+	select(county, date, fips, positivity)
+population_tested <- read_csv(here("data", "md_population_tested_county.csv")) %>% 
 	rename(tests = value) %>% 
 	inner_join(cases, by = c("date", "county", "fips")) %>% 
-	mutate(new_tests = tests - lag(tests),
-				 positivity = new_cases/new_tests*100) %>% 
-	select(county, date, fips, tests, positivity)
+	select(county, date, fips, tests)
+
+tests <- inner_join(daily_tests, population_tested)
+
 totalData <- read_csv(here("data", "md_counties_today_table.csv"))
 
 counties_proper_names <- data.frame(County = c("Allegany", "Anne Arundel", "Baltimore County", "Baltimore City", "Calvert", "Caroline", "Carroll", "Cecil", "Charles", "Dorchester", "Frederick", "Garrett", "Harford", "Howard", "Kent", "Montgomery", "Prince George's", "Queen Anne's", "Somerset", "St. Mary's", "Talbot", "Washington", "Wicomico", "Worcester"), county = cases %>% filter(county != "unknown") %>% pull(county) %>% unique())
 
 trendData <- inner_join(cases, deaths, by = c("county", "date", "fips")) %>%
 	inner_join(tests, by = c("county", "date", "fips")) %>%
-	select(county, date, new_col) %>%
-  group_by(county) %>%
-	mutate(rolling_avg = rollmeanr(get(new_col), 7, fill = NA)) %>%  # `get()` lets us refer to the column by the string we defined above
-	filter(date > max(date) - 14) %>%
-  ungroup() %>%
-	inner_join(counties_proper_names, by = "county") %>%
-	select(County, date, new_col, rolling_avg)
+	select(county, date, new_col)
+
+if (params$indic != "tests") {
+	trendData <- trendData %>%
+		group_by(county) %>%
+		mutate(rolling_avg = rollmeanr(get(new_col), 7, fill = NA)) %>%  # `get()` lets us refer to the column by the string we defined above
+		filter(date > max(date) - 14) %>%
+		ungroup() %>%
+		inner_join(counties_proper_names, by = "county") %>%
+		select(County, date, new_col, rolling_avg)
+} else {
+		trendData <- trendData %>%
+		group_by(county) %>%
+		mutate(rolling_avg = positivity*100) %>%  # `get()` lets us refer to the column by the string we defined above
+		filter(date > max(date) - 14) %>%
+		ungroup() %>%
+		inner_join(counties_proper_names, by = "county") %>%
+		select(County, date, new_col, rolling_avg)
+}
+
 ```
 
 ```{r Trend lines}
@@ -76,7 +97,7 @@ data <- select(totalData, County, params$indic) %>%
 if (params$indic == "Tests") {
 	data <- inner_join(data, filter(trendData, date == max(date)), by = "County") %>% 
 		mutate(rolling_avg = percent(rolling_avg/100, accuracy = 0.01)) %>% 
-		select(County, Tests, `Per 100,000 residents`, `7-day average positivity rate` = rolling_avg)
+		select(County, `Population tested` = Tests, `Per 100,000 residents`, `7-day average positivity rate` = rolling_avg)
 }
 ```
 
