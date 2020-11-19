@@ -19,9 +19,11 @@ deaths <- read_csv(here("data", "md_counties_deaths.csv"))
 daily_tests <- read_csv(here("data", "md_daily_volume_tested_county.csv")) %>% 
 	rename(new_tests = value) %>% 
 	inner_join(cases, by = c("date", "county", "fips")) %>% 
+	group_by(county, fips) %>% 
 	mutate(rolling_new_cases = roll_sum(new_cases, 7, align = "right", fill = NA),
 				 rolling_new_tests = roll_sum(new_tests, 7, align = "right", fill = NA),
 				 positivity = rolling_new_cases/rolling_new_tests) %>% 
+	ungroup() %>% 
 	select(county, date, fips, positivity)
 population_tested <- read_csv(here("data", "md_population_tested_county.csv")) %>% 
 	rename(tests = value) %>% 
