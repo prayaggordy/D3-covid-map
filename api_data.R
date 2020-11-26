@@ -1,4 +1,4 @@
-easypackages::libraries("tidyverse", "jsonify", "janitor", "zoo", "scales", "htmltools", "DT", "here", "sparkline", "rmarkdown", "RcppRoll")
+easypackages::libraries("tidyverse", "jsonify", "janitor", "zoo", "scales", "htmltools", "DT", "here", "sparkline", "rmarkdown")
 
 pop_county <- read_csv("population/county.csv")
 pop_zip <- read_csv("population/zip.csv")
@@ -179,20 +179,6 @@ md_population_tested_county_today <- filter(md_population_tested_county, date ==
 	inner_join(pop_county) %>%
 	mutate(tests_per_100k = value/population*100000)
 
-md_daily_volume_tested_county <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_DailyTestingVolumeByCounty/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
-	md_api_pivot(as.Date("2020-06-15"), "county") %>%
-	mutate(date = as.Date(ifelse(str_sub(name, end = 2) == "d_", str_sub(gsub("[^0-9_]", "", name), start = 2), gsub("[^0-9_]", "", name)), "%m_%d_%y"),
-				 county = gsub(" ", "_", gsub("[.']", "", tolower(county)))) %>%  # woah... I actually know how to use gsub??
-	select(-name) %>%
-	inner_join(md_fips, by = "county")
-
-md_statewide_pos_rate <- md_volume %>%
-	mutate(rolling_new_cases = roll_sum(number_of_positives, 7, align = "right", fill = NA),
-				 rolling_new_tests = roll_sum(number_of_tests, 7, align = "right", fill = NA),
-				 rolling_posi_rate = round(rolling_new_cases/rolling_new_tests*100, 2)) %>%
-	filter(!is.na(rolling_new_cases)) %>%
-	select(date, rolling_posi_rate)
-
 counties_proper_names <- data.frame(County = c("Allegany", "Anne Arundel", "Baltimore County", "Baltimore City", "Calvert", "Caroline", "Carroll", "Cecil", "Charles", "Dorchester", "Frederick", "Garrett", "Harford", "Howard", "Kent", "Montgomery", "Prince George's", "Queen Anne's", "Somerset", "St. Mary's", "Talbot", "Washington", "Wicomico", "Worcester"), county = md_counties_today$county)
 
 md_counties_today_table <- inner_join(md_counties_today, counties_proper_names, by = "county") %>%
@@ -219,7 +205,7 @@ card_values <- data.frame(
 	deaths = c(slice(md_statewide_deaths, n()) %>% pull(deaths) %>% comma(), slice(md_statewide_deaths, n()) %>% pull(new_deaths) %>% comma() %>% paste0("+", .)),
 	hospit = c(filter(md_hospit, date == max(date), name == "Total") %>% pull(value) %>% comma(), filter(md_hospit, name == "Total") %>% mutate(new_hospit = value - lag(value)) %>% slice(n()) %>% pull(new_hospit)),
 	volume = c(slice(md_tested_statewide, n()) %>% pull(tested) %>% comma(), mutate(md_tested_statewide, new_tests = tested - lag(tested)) %>% slice(n()) %>% pull(new_tests) %>% comma() %>% paste0("+", .)),
-	positivity = c(slice(md_statewide_pos_rate, n()) %>% pull(rolling_posi_rate) %>% paste0(., "%"), mutate(md_statewide_pos_rate, delta_pos = round(rolling_posi_rate - lag(rolling_posi_rate), 2)) %>% slice(n()) %>% pull(delta_pos) %>% paste0(., "%")),
+	positivity = c(slice(md_volume, n()) %>% pull(percent_positive) %>% paste0(., "%"), mutate(md_volume, delta_pos = percent_positive - lag(percent_positive)) %>% slice(n()) %>% pull(delta_pos) %>% paste0(., "%")),
 	negative = c(slice(md_negatives, n()) %>% pull(negatives) %>% comma(), mutate(md_negatives, new_neg = negatives - lag(negatives)) %>% slice(n()) %>% pull(new_neg) %>% comma() %>% paste0("+", .)),
 	last_updated = c(format(max(md_statewide_cases$date), "%B %d"), format(max(md_statewide_cases$date), "%B %d")),
 	stringsAsFactors = F
@@ -231,7 +217,7 @@ card_values$positivity[2] <- ifelse(card_values$positivity[2] < 0, card_values$p
 save_dfs <- function(df)
 	write_csv(get(df), paste0("data/", df, ".csv"))
 
-dfs <- c("md_counties_cases", "md_counties_deaths", "md_counties_prob_deaths", "md_counties", "md_counties_today", "md_zips", "md_zips_today", "age_data", "sex_data", "race_data", "hospit_data", "md_negatives", "md_isolation", "md_volume", "md_ever_hospit", "md_statewide", "md_population_tested_county", "md_population_tested_county_today", "md_daily_volume_tested_county", "md_counties_today_table", "md_counties_trend_table", "card_values")
+dfs <- c("md_counties_cases", "md_counties_deaths", "md_counties_prob_deaths", "md_counties", "md_counties_today", "md_zips", "md_zips_today", "age_data", "sex_data", "race_data", "hospit_data", "md_negatives", "md_isolation", "md_volume", "md_ever_hospit", "md_statewide", "md_population_tested_county", "md_population_tested_county_today", "md_counties_today_table", "md_counties_trend_table", "card_values")
 
 lapply(dfs, save_dfs)
 
