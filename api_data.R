@@ -151,7 +151,7 @@ md_isolation <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest
 	mutate(date = seq.Date(as.Date("2020-03-27"), as.Date("2020-03-27") + n() - 1, by = "day"))
 
 md_volume <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_TestingVolume/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
-	mutate(date = seq.Date(as.Date("2020-03-23"), as.Date("2020-03-23") + n() - 1, by = "day"))
+	mutate(date = seq.Date(as.Date("2020-03-24"), as.Date("2020-03-24") + n() - 1, by = "day"))  # today's data has yesterday's date?? weird in MDH reporting
 
 md_ever_hospit <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_TotalHospitalizations/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	mutate(date = seq.Date(as.Date("2020-03-13"), as.Date("2020-03-13") + n() - 1, by = "day"))
