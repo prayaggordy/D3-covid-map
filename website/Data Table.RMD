@@ -1,7 +1,7 @@
 ---
 output: html_document
 params:
-  indic: "Cases"
+  indic: "Tests"
 ---
 
 ```{r setup, include=FALSE}
@@ -38,7 +38,7 @@ trendData <- inner_join(cases, deaths, by = c("county", "date", "fips")) %>%
 	inner_join(tests, by = c("county", "date", "fips")) %>%
 	select(county, date, new_col)
 
-if (params$indic != "tests") {
+if (params$indic != "Tests") {
 	trendData <- trendData %>%
 		group_by(county) %>%
 		mutate(rolling_avg = rollmeanr(get(new_col), 7, fill = NA)) %>%  # `get()` lets us refer to the column by the string we defined above
@@ -47,13 +47,10 @@ if (params$indic != "tests") {
 		inner_join(counties_proper_names, by = "county") %>%
 		select(County, date, new_col, rolling_avg)
 } else {
-		trendData <- trendData %>%
-		group_by(county) %>%
-		mutate(rolling_avg = positivity*100) %>%  # `get()` lets us refer to the column by the string we defined above
+	trendData <- trendData %>%
 		filter(date > max(date) - 14) %>%
-		ungroup() %>%
 		inner_join(counties_proper_names, by = "county") %>%
-		select(County, date, new_col, rolling_avg)
+		select(County, date, new_col, rolling_avg = positivity)
 }
 
 ```
