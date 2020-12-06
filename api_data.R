@@ -151,7 +151,7 @@ md_isolation <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest
 	mutate(date = seq.Date(as.Date("2020-03-27"), as.Date("2020-03-27") + n() - 1, by = "day"))
 
 md_volume <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_TestingVolume/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
-	mutate(date = seq.Date(as.Date("2020-03-23"), as.Date("2020-03-23") + n() - 1, by = "day"))
+	mutate(date = seq.Date(as.Date("2020-03-24"), as.Date("2020-03-24") + n() - 1, by = "day"))
 
 md_ever_hospit <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_TotalHospitalizations/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	mutate(date = seq.Date(as.Date("2020-03-13"), as.Date("2020-03-13") + n() - 1, by = "day"))
@@ -228,7 +228,7 @@ card_values <- data.frame(
 	cases = c(slice(md_statewide_cases, n()) %>% pull(cases) %>% comma(), slice(md_statewide_cases, n()) %>% pull(new_cases) %>% comma() %>% paste0("+", .)),
 	deaths = c(slice(md_statewide_deaths, n()) %>% pull(deaths) %>% comma(), slice(md_statewide_deaths, n()) %>% pull(new_deaths) %>% comma() %>% paste0("+", .)),
 	hospit = c(filter(md_hospit, date == max(date), name == "Total") %>% pull(value) %>% comma(), filter(md_hospit, name == "Total") %>% mutate(new_hospit = value - lag(value)) %>% slice(n()) %>% pull(new_hospit)),
-	volume = c(slice(md_tested_statewide, n()) %>% pull(tested) %>% comma(), mutate(md_tested_statewide, new_tests = tested - lag(tested)) %>% slice(n()) %>% pull(new_tests) %>% comma() %>% paste0("+", .)),
+	volume = c(pull(md_volume, number_of_tests) %>% sum() %>% comma(), slice(md_volume, n()) %>% pull(number_of_tests) %>% comma() %>% paste0("+", .)),
 	positivity = c(slice(md_statewide_pos_rate, n()) %>% pull(rolling_posi_rate) %>% paste0(., "%"), mutate(md_statewide_pos_rate, delta_pos = round(rolling_posi_rate - lag(rolling_posi_rate), 2)) %>% slice(n()) %>% pull(delta_pos) %>% paste0(., "%")),
 	negative = c(slice(md_negatives, n()) %>% pull(negatives) %>% comma(), mutate(md_negatives, new_neg = negatives - lag(negatives)) %>% slice(n()) %>% pull(new_neg) %>% comma() %>% paste0("+", .)),
 	last_updated = c(format(max(md_statewide_cases$date), "%B %d"), format(max(md_statewide_cases$date), "%B %d")),
