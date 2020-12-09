@@ -3,6 +3,8 @@ easypackages::libraries("tidyverse", "jsonify", "janitor", "zoo", "scales", "htm
 pop_county <- read_csv("population/county.csv")
 pop_zip <- read_csv("population/zip.csv")
 
+md_hospit_county_today <- read_csv("data/md_hospit_county_today.csv")
+
 md_api <- function(api_url) {
 	suppressWarnings(from_json(api_url)[["features"]]$attributes) %>%
 		clean_names() %>%
@@ -231,7 +233,8 @@ card_values <- data.frame(
 	volume = c(pull(md_volume, number_of_tests) %>% sum() %>% comma(), slice(md_volume, n()) %>% pull(number_of_tests) %>% comma() %>% paste0("+", .)),
 	positivity = c(slice(md_statewide_pos_rate, n()) %>% pull(rolling_posi_rate) %>% paste0(., "%"), mutate(md_statewide_pos_rate, delta_pos = round(rolling_posi_rate - lag(rolling_posi_rate), 2)) %>% slice(n()) %>% pull(delta_pos) %>% paste0(., "%")),
 	negative = c(slice(md_negatives, n()) %>% pull(negatives) %>% comma(), mutate(md_negatives, new_neg = negatives - lag(negatives)) %>% slice(n()) %>% pull(new_neg) %>% comma() %>% paste0("+", .)),
-	last_updated = c(format(max(md_statewide_cases$date), "%B %d"), format(max(md_statewide_cases$date), "%B %d")),
+	last_updated = c(gsub(" 0", " ", format(max(md_statewide_cases$date), "%B %d")), gsub(" 0", " ", format(max(md_statewide_cases$date), "%B %d"))),
+	last_updated_hospit = c(paste(gsub(" 0", " ", format(max(md_hospit_county_today$collection_week), "%B %d")), gsub(" 0", " ", format(max(md_hospit_county_today$collection_week) + 6, "%B %d")), sep = " to "), paste(gsub(" 0", " ", format(max(md_hospit_county_today$collection_week), "%B %d")), gsub(" 0", " ", format(max(md_hospit_county_today$collection_week) + 6, "%B %d")), sep = " to ")),
 	stringsAsFactors = F
 )
 

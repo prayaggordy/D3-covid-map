@@ -49,6 +49,7 @@
           $("#new_posit").text(results[2][4]);
           $("#new_negat").text(results[2][5]);
           $("#last_update").text(results[1][6]);
+          $("#hospit_dates").text(results[1][7])
         }
       });
     }
@@ -208,7 +209,7 @@
 					<div class="col-12 order-2 order-md-1 mapContainer">
 						<div class="toggleMap toggleMapVisible mapTitle" id="countyNewCasesTitle">Change in confirmed cases over the last two weeks (by county)</div>
 						<div class="toggleMap toggleMapVisible map" id="countyNewCases"></div>
-            <div class="toggleMap mapTitle" id="countyCurrHospitTitle">Percent of hospital beds in use (by county)</div>
+            <div class="toggleMap mapTitle" id="countyCurrHospitTitle">Percent of hospital beds in use from <span id="hospit_dates"></span> (by county)</div>
             <div class="toggleMap map" id="countyCurrHospit"></div>
             <div class="toggleMap mapTitle" id="countyTotalCasesTitle">Total confirmed cases per 100,000 by county</div>
 						<div class="toggleMap map" id="countyTotalCases"></div>
