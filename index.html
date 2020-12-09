@@ -67,7 +67,7 @@
   <script type="module">
 		// county current hospitalizations map
 		import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-		import define from "https://api.observablehq.com/@adamchzn/md-counties-hospital-capacity@918.js?v=3";
+		import define from "https://api.observablehq.com/@adamchzn/md-counties-hospital-capacity.js?v=3";
 		const inspect = Inspector.into("#countyCurrHospit");
 		(new Runtime).module(define, name => name === "chart" ? inspect() : undefined);
 	</script>
