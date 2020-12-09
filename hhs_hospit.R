@@ -34,3 +34,4 @@ md_hospit_county <- mutate_all(md_hospit_granular, ~na_if(., -999999)) %>%
 	select(county = county.y, fips, collection_week, inpatient_beds, inpatient_beds_occupied, inpatient_percent_occupied, icu_beds, icu_beds_occupied, icu_percent_occupied)
 
 write_csv(md_hospit_county, "data/md_hospit_county.csv")
+write_csv(filter(md_hospit_county, collection_week == max(collection_week)), "data/md_hospit_county_today.csv")
