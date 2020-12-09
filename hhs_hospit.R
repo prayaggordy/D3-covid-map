@@ -30,6 +30,7 @@ md_hospit_county <- mutate_all(md_hospit_granular, ~na_if(., -999999)) %>%
 	ungroup() %>%
 	complete(fips, collection_week) %>%
 	inner_join(md_fips, by = "fips") %>%
+	filter(!is.na(collection_week)) %>%
 	arrange(collection_week, fips) %>%
 	select(county = county.y, fips, collection_week, inpatient_beds, inpatient_beds_occupied, inpatient_percent_occupied, icu_beds, icu_beds_occupied, icu_percent_occupied)
 
