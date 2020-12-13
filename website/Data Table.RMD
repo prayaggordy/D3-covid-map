@@ -1,7 +1,7 @@
 ---
 output: html_document
 params:
-  indic: "Tests"
+  indic: "Deaths"
 ---
 
 ```{r setup, include=FALSE}
