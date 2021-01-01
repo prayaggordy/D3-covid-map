@@ -1,3 +1,3 @@
-cases,deaths,hospit,volume,positivity,negative,last_updated,last_updated_hospit
-"280,219","5,774","1,734","5,756,406",8.57%,"2,538,142",January 1,December 18 to December 24
-"+3,557",+47,-39,"+53,503",+0.31%,"+12,336",January 1,December 18 to December 24
+cases,deaths,hospit,volume,positivity,vaccinated,last_updated,last_updated_hospit
+"280,219","5,774","1,734","5,700,161",8.57%,"54,060",January 1,December 18 to December 24
+"+3,557",+47,-39,"+53,503",+0.31%,"+7,047",January 1,December 18 to December 24
