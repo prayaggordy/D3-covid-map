@@ -183,8 +183,10 @@ md_population_tested_county_today <- filter(md_population_tested_county, date ==
 
 md_daily_volume_tested_county <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_DailyTestingVolumeByCounty/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("2020-06-15"), "county") %>%
-	mutate(date = as.Date(ifelse(str_sub(name, end = 2) == "d_", str_sub(gsub("[^0-9_]", "", name), start = 2), gsub("[^0-9_]", "", name)), "%m_%d_%y"),
+	rowwise() %>%
+	mutate(date = str_split(name, "_") %>% unlist() %>% tail(3) %>% str_replace_all(., "[^[:digit:]]", "") %>% paste(., collapse = "_") %>% as.Date(., "%m_%d_%Y"),
 				 county = gsub(" ", "_", gsub("[.']", "", tolower(county)))) %>%  # woah... I actually know how to use gsub??
+	ungroup() %>%
 	select(-name) %>%
 	inner_join(md_fips, by = "county")
 
