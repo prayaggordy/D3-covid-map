@@ -5,7 +5,7 @@ md_fips <- read_csv("md_fips.csv") %>%
 	filter(!is.na(fips))
 
 # IMPORTANT: NOT UPLOADING THE FILE TO GITHUB SINCE IT'S TOO BIG
-national_hospit <- read_csv("/Users/Prayag/Downloads/reported_hospital_capacity_admissions_facility_level_weekly_average_timeseries_20210103.csv")
+national_hospit <- read_csv("/Users/Prayag/Downloads/reported_hospital_capacity_admissions_facility_level_weekly_average_timeseries_20210110.csv")
 
 md_hospit_granular <- filter(national_hospit, state == "MD") %>%
 	mutate(collection_week = as.Date(collection_week))
