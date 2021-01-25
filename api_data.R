@@ -72,8 +72,10 @@ md_counties <- inner_join(md_counties_cases, md_counties_deaths, by = c("county"
 md_counties_today <- filter(md_counties, date == max(date))
 
 md_zips <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_MASTER_ZIP_CODE_CASES/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
-	md_api_pivot(as.Date("2020-04-11"), "zip_code") %>%
+	pivot_longer(-zip_code) %>%
+	mutate(date = str_remove_all(name, "[:alpha:]") %>% as.Date("%m_%d_%Y")) %>%
 	select(date, zip = zip_code, cases = value) %>%
+	arrange(date, zip) %>%
 	group_by(zip) %>%
 	mutate(new_cases = pmax(cases - lag(cases), 0)) %>%
 	ungroup() %>%
