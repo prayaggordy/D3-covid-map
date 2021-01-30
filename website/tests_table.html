@@ -458,13 +458,13 @@ color: #d14;
   function tryEval(code) {
     var result = null;
     try {
-      result = eval("(" + code + ")");
+      result = eval(code);
     } catch(error) {
       if (!error instanceof SyntaxError) {
         throw error;
       }
       try {
-        result = eval(code);
+        result = eval("(" + code + ")");
       } catch(e) {
         if (e instanceof SyntaxError) {
           throw error;
@@ -1264,7 +1264,7 @@ HTMLWidgets.widget({
     //  (b) Never want to fill the container (we want the pagination
     //      level to determine the size of the container)
     if (window.FlexDashboard && !window.FlexDashboard.isFillPage()) {
-      data.options.paging = true;
+      data.options.bPaginate = true;
       data.fillContainer = false;
     }
 
@@ -1331,7 +1331,7 @@ HTMLWidgets.widget({
 
       // if we aren't paginating then move around the info/filter controls
       // to save space at the bottom and rephrase the info callback
-      if (data.options.paging === false) {
+      if (data.options.bPaginate === false) {
 
         // we know how to do this cleanly for bootstrap, not so much
         // for other themes/layouts
@@ -1348,20 +1348,17 @@ HTMLWidgets.widget({
     }
 
     // auto hide navigation if requested
-    // Note, this only works on client-side processing mode as on server-side,
-    // cells (data.data) is null; In addition, we require the pageLength option
-    // being provided explicitly to enable this. Despite we may be able to deduce
-    // the default value of pageLength, it may complicate things so we'd rather
-    // put this responsiblity to users and warn them on the R side.
-    if (data.autoHideNavigation === true && data.options.paging !== false) {
-      // strip all nav if length >= cells
-      if ((cells instanceof Array) && data.options.pageLength >= cells.length)
-        options.dom = bootstrapActive ? "<'row'<'col-sm-12'tr>>" : "t";
-      // alternatively lean things out for flexdashboard mobile portrait
-      else if (bootstrapActive && window.FlexDashboard && window.FlexDashboard.isMobilePhone())
-        options.dom = "<'row'<'col-sm-12'f>>" +
-                      "<'row'<'col-sm-12'tr>>"  +
-                      "<'row'<'col-sm-12'p>>";
+    if (data.autoHideNavigation === true) {
+      if (bootstrapActive && data.options.bPaginate !== false) {
+        // strip all nav if length >= cells
+        if ((cells instanceof Array) && data.options.iDisplayLength >= cells.length)
+          options.dom = "<'row'<'col-sm-12'tr>>";
+        // alternatively lean things out for flexdashboard mobile portrait
+        else if (window.FlexDashboard && window.FlexDashboard.isMobilePhone())
+          options.dom = "<'row'<'col-sm-12'f>>" +
+                        "<'row'<'col-sm-12'tr>>"  +
+                        "<'row'<'col-sm-12'p>>";
+      }
     }
 
     $.extend(true, options, data.options || {});
@@ -2428,16 +2425,16 @@ HTMLWidgets.widget({
       if (this.className === '') e.stopPropagation();
     });
 
-    methods.addRow = function(data, rowname, resetPaging) {
-      var n = table.columns().indexes().length, d = n - data.length;
+    methods.addRow = function(data, rowname) {
+      var data0 = table.row(0).data(), n = data0.length, d = n - data.length;
       if (d === 1) {
         data = rowname.concat(data)
       } else if (d !== 0) {
         console.log(data);
-        console.log(table.columns().indexes());
+        console.log(data0);
         throw 'New data must be of the same length as current data (' + n + ')';
       };
-      table.row.add(data).draw(resetPaging);
+      table.row.add(data).draw();
     }
 
     methods.updateSearch = function(keywords) {
@@ -6513,15 +6510,6 @@ padding-right: inherit;
 });
 </script>
 
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
-
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
   pre:not([class]) {
@@ -6566,7 +6554,6 @@ h6 {
   text-align: left;
 }
 </style>
-
 
 
 
@@ -6680,8 +6667,8 @@ summary {
 </div>
 
 
-<div id="htmlwidget-89f8d4822a344abbae9f" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-89f8d4822a344abbae9f">{"x":{"style":"bootstrap","filter":"none","data":[["Allegany","Anne Arundel","Baltimore County","Baltimore City","Calvert","Caroline","Carroll","Cecil","Charles","Dorchester","Frederick","Garrett","Harford","Howard","Kent","Montgomery","Prince George's","Queen Anne's","Somerset","St. Mary's","Talbot","Washington","Wicomico","Worcester"],[40961,264281,378109,344835,29267,14549,66033,35061,60314,17149,126729,11132,96782,148766,10870,522036,397847,20260,12809,41788,18389,73791,45800,24910],[56908,46553,45686,56098,32133,44256,39418,34200,38253,53157,51003,37895,38555,47178,55479,50189,43903,41050,49769,37468,49418,49256,44826,48309],["9.23%","9.48%","6.48%","6.42%","9.29%","8.30%","7.51%","10.16%","8.79%","6.86%","10.81%","14.22%","7.82%","5.93%","5.81%","7.85%","10.90%","12.76%","16.41%","7.92%","8.60%","17.66%","13.51%","13.96%"]],"container":"<table class=\"table\">\n  <thead>\n    <tr>\n      <th>County<\/th>\n      <th>Population tested<\/th>\n      <th>Per 100,000 residents<\/th>\n      <th>7-day average positivity rate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":25,"fnDrawCallback":"function(){\n                                              HTMLWidgets.staticRender();\n                                              }","columnDefs":[{"targets":1,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatCurrency(data, \"\", 0, 3, \",\", \".\", true);\n  }"},{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatCurrency(data, \"\", 0, 3, \",\", \".\", true);\n  }"},{"className":"dt-right","targets":[1,2]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.fnDrawCallback","options.columnDefs.0.render","options.columnDefs.1.render"],"jsHooks":[]}</script>
+<div id="htmlwidget-8061f79d7f8ce53f3da8" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8061f79d7f8ce53f3da8">{"x":{"style":"bootstrap","filter":"none","data":[["Allegany","Anne Arundel","Baltimore County","Baltimore City","Calvert","Caroline","Carroll","Cecil","Charles","Dorchester","Frederick","Garrett","Harford","Howard","Kent","Montgomery","Prince George's","Queen Anne's","Somerset","St. Mary's","Talbot","Washington","Wicomico","Worcester"],[40961,264281,378109,344835,29267,14549,66033,35061,60314,17149,126729,11132,96782,148766,10870,522036,397847,20260,12809,41788,18389,73791,45800,24910],[56908,46553,45686,56098,32133,44256,39418,34200,38253,53157,51003,37895,38555,47178,55479,50189,43903,41050,49769,37468,49418,49256,44826,48309],["9.23%","9.48%","6.48%","6.42%","9.29%","8.30%","7.51%","10.16%","8.79%","6.86%","10.81%","14.22%","7.82%","5.93%","5.81%","7.85%","10.90%","12.76%","16.41%","7.92%","8.60%","17.66%","13.51%","13.96%"]],"container":"<table class=\"table\">\n  <thead>\n    <tr>\n      <th>County<\/th>\n      <th>Population tested<\/th>\n      <th>Per 100,000 residents<\/th>\n      <th>7-day average positivity rate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":25,"fnDrawCallback":"function(){\n                                              HTMLWidgets.staticRender();\n                                              }","columnDefs":[{"targets":1,"render":"function(data, type, row, meta) { return DTWidget.formatCurrency(data, \"\", 0, 3, \",\", \".\", true); }"},{"targets":2,"render":"function(data, type, row, meta) { return DTWidget.formatCurrency(data, \"\", 0, 3, \",\", \".\", true); }"},{"className":"dt-right","targets":[1,2]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.fnDrawCallback","options.columnDefs.0.render","options.columnDefs.1.render"],"jsHooks":[]}</script>
 
 
 
@@ -6692,7 +6679,7 @@ summary {
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
