@@ -51,7 +51,8 @@ md_counties_cases <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis
   
 
 md_counties_vaccinations_today <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MD_COVID19_VaccinationByCounty/FeatureServer/0/query?where=1%3D1&outFields=OBJECTID,county,FirstDose,SecondDose,PercentFirstDose,PercentSecondDose,SingleDose,FullyVaccinated,PercentFullyVaccinated,PercentSingleDose&returnGeometry=false&outSR=4326&f=json") %>% 
-  filter(county != "Unknown")
+  filter(county != "Unknown") %>% 
+  mutate(percent_first_dose = percent_first_dose/100, percent_second_dose = percent_second_dose/100, percent_fully_vaccinated = percent_fully_vaccinated/100)
   # md_api_pivot(as.Date("3/15/2020", "%m/%d/%y"))
   # select(date, fi = name, cases = value) %>%
   
