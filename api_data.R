@@ -45,6 +45,17 @@ md_counties_cases <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis
 	inner_join(pop_county, by = c("county", "fips")) %>%
 	mutate(per_100k = cases/population)
 
+#md_counties_vax <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MD_COVID19_TotalVaccinationsCountyFirstandSecondDose/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json")
+  # md_api_pivot(as.Date("3/15/2020", "%m/%d/%y"))
+# select(date, county = name, cases = value) %>%
+  
+
+md_counties_vaccinations_today <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MD_COVID19_VaccinationByCounty/FeatureServer/0/query?where=1%3D1&outFields=OBJECTID,county,FirstDose,SecondDose,PercentFirstDose,PercentSecondDose,SingleDose,FullyVaccinated,PercentFullyVaccinated,PercentSingleDose&returnGeometry=false&outSR=4326&f=json") %>% 
+  filter(county != "Unknown")
+  # md_api_pivot(as.Date("3/15/2020", "%m/%d/%y"))
+  # select(date, fi = name, cases = value) %>%
+  
+
 md_counties_deaths <- md_api("https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MDCOVID19_ConfirmedDeathsByCounty/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json") %>%
 	md_api_pivot(as.Date("4/3/2020", "%m/%d/%y")) %>%
 	select(date, county = name, deaths = value) %>%
@@ -257,7 +268,7 @@ card_values$positivity[2] <- ifelse(card_values$positivity[2] < 0, card_values$p
 save_dfs <- function(df)
 	write_csv(get(df), paste0("data/", df, ".csv"))
 
-dfs <- c("md_counties_cases", "md_counties_deaths", "md_counties_prob_deaths", "md_counties", "md_counties_today", "md_zips", "md_zips_today", "age_data", "sex_data", "race_data", "hospit_data", "md_negatives", "md_isolation", "md_volume", "md_ever_hospit", "md_statewide", "md_population_tested_county", "md_population_tested_county_today", "md_daily_volume_tested_county", "md_total_volume_tested_county", "md_counties_pos", "md_counties_today_table", "md_counties_trend_table", "card_values")
+dfs <- c("md_counties_cases", "md_counties_deaths", "md_counties_prob_deaths", "md_counties", "md_counties_today", "md_zips", "md_zips_today", "age_data", "sex_data", "race_data", "hospit_data", "md_negatives", "md_isolation", "md_volume", "md_ever_hospit", "md_statewide", "md_population_tested_county", "md_population_tested_county_today", "md_daily_volume_tested_county", "md_total_volume_tested_county", "md_counties_pos", "md_counties_today_table", "md_counties_trend_table", "card_values", "md_counties_vaccinations_today")
 
 lapply(dfs, save_dfs)
 
