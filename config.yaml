@@ -1,10 +1,10 @@
 data:
   county:
-  	cases_by_county: "https://opendata.arcgis.com/datasets/0573e90adab5434f97b082590c503bc1_0.csv"
-  	deaths_by_county: "https://opendata.arcgis.com/datasets/3dbd3e633b344c7c9a0d166b1d6a2b03_0.geojson"
-  	vaccinations_by_county: "https://opendata.arcgis.com/datasets/89c9c1236ca848188d93beb5928f4162_0.csv"
-  	testing_by_county: "https://opendata.arcgis.com/datasets/fdedcfbed9af43f8b79c87c53229a0d8_0.csv"
-  	positivity_by_county: "https://opendata.arcgis.com/datasets/54d028e340f44e88945e26579eecd447_0.csv"
+    cases_by_county: "https://opendata.arcgis.com/datasets/0573e90adab5434f97b082590c503bc1_0.csv"
+    deaths_by_county: "https://opendata.arcgis.com/datasets/3dbd3e633b344c7c9a0d166b1d6a2b03_0.csv"
+    vaccinations_by_county: "https://opendata.arcgis.com/datasets/89c9c1236ca848188d93beb5928f4162_0.csv"
+    testing_by_county: "https://opendata.arcgis.com/datasets/fdedcfbed9af43f8b79c87c53229a0d8_0.csv"
+    positivity_by_county: "https://opendata.arcgis.com/datasets/54d028e340f44e88945e26579eecd447_0.csv"
   statewide:
     cases_statewide: "https://opendata.arcgis.com/datasets/18582de727934249b92c52542395a3bf_0.csv"
     deaths_statewide: "https://opendata.arcgis.com/datasets/096cca5f77404a06babb9367530136b9_0.csv"
