@@ -21,7 +21,7 @@ data:
   positivity_statewide: "https://opendata.arcgis.com/datasets/e5d044bda3a44bfa8ba224145617cda0_0.csv"
 
 census:
-  population:
+  population_county:
     geography: "county"
     variable: "P1_001N"
     year: "2020"
